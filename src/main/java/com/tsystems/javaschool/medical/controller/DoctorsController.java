@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class DoctorsController {
+
     @RequestMapping(value = "/doctorsList", method = RequestMethod.GET)
     public String printHello() {
-        return "hello";
+        return "12312312";
     }
 }
 
