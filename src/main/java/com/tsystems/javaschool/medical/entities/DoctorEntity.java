@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.medical.models;
+package com.tsystems.javaschool.medical.entities;
 import javax.persistence.*;
 
 @Entity
