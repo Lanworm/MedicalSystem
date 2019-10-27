@@ -3,9 +3,7 @@ package com.tsystems.javaschool.medical.controller;
 import com.tsystems.javaschool.medical.dto.DoctorDto;
 import com.tsystems.javaschool.medical.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +16,23 @@ public class DoctorsController {
     private DoctorService doctorService;
 
     @RequestMapping(value = "/doctorsList", method = RequestMethod.GET)
-    public List<DoctorDto> printHello() {
-        System.out.println(doctorService.getDoctorsList());
+    public List<DoctorDto> getDoctorsList() {
+        return doctorService.getDoctorsList();
+    }
+
+    @RequestMapping(value = "/doctor", method = RequestMethod.PUT)
+    public List<DoctorDto> addDoctor(
+            @RequestParam(value = "firstName") String firstName,
+            @RequestParam(value = "secondName") String secondName,
+            @RequestParam(value = "lastName") String lastName
+    ) {
+        doctorService.addDoctor(firstName, secondName, lastName);
+        return doctorService.getDoctorsList();
+    }
+
+    @RequestMapping(value = "/doctor/{id}", method = RequestMethod.DELETE)
+    public List<DoctorDto> deleteDoctor(@PathVariable("id") final int doctorId) {
+        doctorService.deleteDoctor(doctorId);
         return doctorService.getDoctorsList();
     }
 }

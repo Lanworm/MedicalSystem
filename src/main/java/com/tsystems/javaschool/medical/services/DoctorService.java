@@ -19,13 +19,22 @@ public class DoctorService {
         List<DoctorDto> list = new LinkedList<>();
         Iterable<DoctorEntity> all = doctorRepository.findAll();
         for (DoctorEntity a : all) {
-            DoctorDto doctorDto = new DoctorDto();
-            doctorDto.setId(a.getId());
-            doctorDto.setFirstName(a.getFirstName());
-            doctorDto.setSecondName(a.getSecondName());
-            doctorDto.setLastName(a.getLastName());
-            list.add(doctorDto);
+            list.add(new DoctorDto(a));
         }
         return list;
+    }
+
+    public void addDoctor(String firstName, String secondName, String lastName) {
+       DoctorEntity doctorEntity = new DoctorEntity();
+       doctorEntity.setFirstName(firstName);
+       doctorEntity.setSecondName(secondName);
+       doctorEntity.setLastName(lastName);
+        doctorRepository.save(doctorEntity);
+    }
+
+    public void deleteDoctor(int id) {
+        DoctorEntity doctorEntity = new DoctorEntity();
+        doctorEntity.setId(id);
+        doctorRepository.delete(doctorEntity);
     }
 }

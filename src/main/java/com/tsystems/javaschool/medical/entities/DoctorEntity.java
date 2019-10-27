@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.medical.entities;
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "doctors", schema = "public", catalog = "med")
@@ -8,6 +9,7 @@ public class DoctorEntity {
     private String firstName;
     private String secondName;
     private String lastName;
+
 
     @Id
     @Basic
@@ -58,9 +60,9 @@ public class DoctorEntity {
         DoctorEntity that = (DoctorEntity) o;
 
         if (id != that.id) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (secondName != null ? !secondName.equals(that.secondName) : that.secondName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (!Objects.equals(firstName, that.firstName)) return false;
+        if (!Objects.equals(secondName, that.secondName)) return false;
+        if (!Objects.equals(lastName, that.lastName)) return false;
 
         return true;
     }

@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.medical.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tsystems.javaschool.medical.entities.DoctorEntity;
 
 import java.io.Serializable;
 
@@ -14,6 +15,14 @@ public class DoctorDto implements Serializable {
     private String secondName;
     @JsonProperty("last_name")
     private String lastName;
+
+    public DoctorDto(DoctorEntity a) {
+        this.id = a.getId();
+        this.firstName = a.getFirstName();
+        this.secondName = a.getSecondName();
+        this.lastName = a.getLastName();
+    }
+
 
     public Integer getId() {
         return id;
