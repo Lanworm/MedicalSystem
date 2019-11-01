@@ -1,7 +1,7 @@
-package com.tsystems.javaschool.medical.dto;
+package com.tsystems.javaschool.medical.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tsystems.javaschool.medical.entities.DoctorEntity;
+import com.tsystems.javaschool.medical.backend.entities.DoctorEntity;
 
 import java.io.Serializable;
 

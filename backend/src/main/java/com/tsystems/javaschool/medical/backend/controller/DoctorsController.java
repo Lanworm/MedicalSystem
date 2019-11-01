@@ -1,7 +1,7 @@
-package com.tsystems.javaschool.medical.controller;
+package com.tsystems.javaschool.medical.backend.controller;
 
-import com.tsystems.javaschool.medical.dto.DoctorDto;
-import com.tsystems.javaschool.medical.services.DoctorService;
+import com.tsystems.javaschool.medical.backend.dto.DoctorDto;
+import com.tsystems.javaschool.medical.backend.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

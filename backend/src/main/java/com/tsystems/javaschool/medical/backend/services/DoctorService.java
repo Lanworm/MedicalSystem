@@ -1,8 +1,8 @@
-package com.tsystems.javaschool.medical.services;
+package com.tsystems.javaschool.medical.backend.services;
 
-import com.tsystems.javaschool.medical.dto.DoctorDto;
-import com.tsystems.javaschool.medical.repositories.DoctorRepository;
-import com.tsystems.javaschool.medical.entities.DoctorEntity;
+import com.tsystems.javaschool.medical.backend.dto.DoctorDto;
+import com.tsystems.javaschool.medical.backend.entities.DoctorEntity;
+import com.tsystems.javaschool.medical.backend.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

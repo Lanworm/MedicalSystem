@@ -25,7 +25,7 @@
         </property>
         <!--поиск сущностей в этом пакете-->
         <property name="packagesToScan"
-                  value="com.tsystems.javaschool.medical.entities"/>
+                  value="com.tsystems.javaschool.medical.backend.entities"/>
         <!--детали конфигурации поставщика постоянства (hibernate) -->
         <property name="jpaProperties">
             <props>
@@ -52,9 +52,9 @@
     <context:annotation-config/>
 
     <!--Scanning components in base-package (look for annotations) -->
-    <context:component-scan base-package="com.tsystems.javaschool.medical"/>
+    <context:component-scan base-package="com.tsystems.javaschool.medical.backend"/>
 
     <!-- Need for Repository abstraction -->
-    <jpa:repositories base-package="com.tsystems.javaschool.medical.repositories" entity-manager-factory-ref="emf"
+    <jpa:repositories base-package="com.tsystems.javaschool.medical.backend.repositories" entity-manager-factory-ref="emf"
                       transaction-manager-ref="transactionManager"/>
 </beans>

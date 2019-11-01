@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.medical.entities;
+package com.tsystems.javaschool.medical.backend.entities;
 import java.util.Objects;
 
 @javax.persistence.Entity
