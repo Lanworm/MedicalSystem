@@ -15,6 +15,7 @@ public class DoctorsController {
     @Autowired
     private DoctorService doctorService;
 
+
     @RequestMapping(value = "/doctorsList", method = RequestMethod.GET)
     public List<DoctorDto> getDoctorsList() {
         return doctorService.getDoctorsList();

@@ -1,9 +1,8 @@
 package com.tsystems.javaschool.medical.entities;
-import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
-@Table(name = "doctors", schema = "public", catalog = "med")
+@javax.persistence.Entity
+@javax.persistence.Table(name = "doctors", schema = "public", catalog = "med")
 public class DoctorEntity {
     private int id;
     private String firstName;
@@ -11,9 +10,11 @@ public class DoctorEntity {
     private String lastName;
 
 
-    @Id
-    @Basic
-    @Column(name = "id")
+    @javax.persistence.Id
+    @javax.persistence.Basic
+    @javax.persistence.SequenceGenerator(name = "doctors_seq", sequenceName = "doctors_id_seq", allocationSize = 1)
+    @javax.persistence.GeneratedValue(generator = "doctors_seq", strategy = javax.persistence.GenerationType.SEQUENCE)
+    @javax.persistence.Column(name = "id")
     public int getId() {
         return id;
     }
@@ -22,8 +23,8 @@ public class DoctorEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "first_name")
+    @javax.persistence.Basic
+    @javax.persistence.Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -32,8 +33,8 @@ public class DoctorEntity {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "second_name")
+    @javax.persistence.Basic
+    @javax.persistence.Column(name = "second_name")
     public String getSecondName() {
         return secondName;
     }
@@ -42,8 +43,8 @@ public class DoctorEntity {
         this.secondName = secondName;
     }
 
-    @Basic
-    @Column(name = "last_name")
+    @javax.persistence.Basic
+    @javax.persistence.Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
