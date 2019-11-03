@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.medical.backend.entities;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -8,8 +9,8 @@ import java.util.Objects;
 public class ProceduresEntity {
     private int id;
     private String description;
-    private Object createdAt;
-    private Object updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
     private String deleted;
 
     @Id
@@ -34,21 +35,21 @@ public class ProceduresEntity {
 
     @Basic
     @Column(name = "created_at")
-    public Object getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Object createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
     @Basic
     @Column(name = "updated_at")
-    public Object getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Object updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

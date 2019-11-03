@@ -13,7 +13,6 @@ public class TherapyLogEntity {
     private Timestamp updatedAt;
     private String deleted;
     private PatientsEntity patientsByPatientId;
-    private AnamnesisEntity anamnesisByAnamnesId;
     private PrescriptionsEntity prescriptionsByPrescriptionnId;
     private DiagnosesEntity diagnosesByDiagnoseId;
 
@@ -92,16 +91,6 @@ public class TherapyLogEntity {
 
     public void setPatientsByPatientId(PatientsEntity patientsByPatientId) {
         this.patientsByPatientId = patientsByPatientId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "anamnes_id", referencedColumnName = "id")
-    public AnamnesisEntity getAnamnesisByAnamnesId() {
-        return anamnesisByAnamnesId;
-    }
-
-    public void setAnamnesisByAnamnesId(AnamnesisEntity anamnesisByAnamnesId) {
-        this.anamnesisByAnamnesId = anamnesisByAnamnesId;
     }
 
     @ManyToOne

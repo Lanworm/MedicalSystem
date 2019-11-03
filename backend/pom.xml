@@ -37,6 +37,12 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.5</version>
+        </dependency>
         <!--driver for connection to MYSql database -->
         <dependency>
             <groupId>org.postgresql</groupId>

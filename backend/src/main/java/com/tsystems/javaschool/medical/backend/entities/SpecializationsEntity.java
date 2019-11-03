@@ -15,6 +15,8 @@ public class SpecializationsEntity {
 
     @Id
     @Column(name = "id")
+    @javax.persistence.SequenceGenerator(name = "specializations_item_id", sequenceName = "specializations_item_id", allocationSize = 1)
+    @javax.persistence.GeneratedValue(generator = "specializations_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
     public int getId() {
         return id;
     }

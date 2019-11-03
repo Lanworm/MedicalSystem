@@ -12,7 +12,7 @@ public class ScheduleEntity {
     private Timestamp startTime;
     private Timestamp endTime;
     private Timestamp createdAt;
-    private Object updatedAt;
+    private Timestamp updatedAt;
     private String deleted;
 
     @Id
@@ -67,11 +67,11 @@ public class ScheduleEntity {
 
     @Basic
     @Column(name = "updated_at")
-    public Object getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Object updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -14,7 +14,7 @@ public class DiagnosesEntity {
     private String deleted;
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     public int getId() {
         return id;
     }
