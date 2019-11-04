@@ -15,6 +15,8 @@ public class RoomsEntity {
 
     @Id
     @Column(name = "id")
+    @javax.persistence.SequenceGenerator(name = "rooms_item_id", sequenceName = "rooms_item_id", allocationSize = 1)
+    @javax.persistence.GeneratedValue(generator = "rooms_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
     public int getId() {
         return id;
     }
