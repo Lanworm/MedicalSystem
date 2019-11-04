@@ -35,7 +35,7 @@ public class SpecializationsController {
     }
 
     @RequestMapping(value = "/specializations", method = RequestMethod.POST)
-    public List<SpecializationsDto> deleteSpecialization(@RequestBody final SpecializationsDto params) {
+    public List<SpecializationsDto> editSpecialization(@RequestBody final SpecializationsDto params) {
         specializationsService.updateSpecialization(params);
         return specializationsService.getSpecializationsList();
     }

@@ -177,3 +177,13 @@ CREATE SEQUENCE public.staff_item_id
 
 ALTER SEQUENCE public.staff_item_id
     OWNER TO postgres;
+
+CREATE SEQUENCE public.patients_item_id
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.patients_item_id
+    OWNER TO postgres;

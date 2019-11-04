@@ -37,7 +37,7 @@ public class StaffController {
     }
 
     @RequestMapping(value = "/staff", method = RequestMethod.POST)
-    public List<StaffDto> deleteSpecialization(@RequestBody final StaffDto params) {
+    public List<StaffDto> editSpecialization(@RequestBody final StaffDto params) {
         staffService.updateSpecialization(params);
         return staffService.getStaffList();
     }

@@ -17,6 +17,8 @@ public class PatientsEntity {
     private String deleted;
 
     @Id
+    @javax.persistence.SequenceGenerator(name = "patients_item_id", sequenceName = "patients_item_id", allocationSize = 1)
+    @javax.persistence.GeneratedValue(generator = "patients_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
     @Column(name = "id")
     public int getId() {
         return id;
