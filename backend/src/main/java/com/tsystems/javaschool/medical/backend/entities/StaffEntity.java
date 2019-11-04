@@ -18,6 +18,8 @@ public class StaffEntity {
 
     @Id
     @Column(name = "id")
+    @javax.persistence.SequenceGenerator(name = "staff_item_id", sequenceName = "staff_item_id", allocationSize = 1)
+    @javax.persistence.GeneratedValue(generator = "staff_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
     public int getId() {
         return id;
     }
