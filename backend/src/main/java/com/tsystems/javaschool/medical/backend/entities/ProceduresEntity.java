@@ -15,6 +15,9 @@ public class ProceduresEntity {
 
     @Id
     @Column(name = "id")
+    @javax.persistence.SequenceGenerator(name = "procedures_item_id", sequenceName = "procedures_item_id", allocationSize = 1)
+    @javax.persistence.GeneratedValue(generator = "procedures_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
+
     public int getId() {
         return id;
     }
