@@ -8,6 +8,10 @@ import java.util.Objects;
 @Table(name = "events", schema = "public", catalog = "med")
 public class EventsEntity {
     private int id;
+    private PatientsEntity patientsByPatientId;
+    private ProceduresEntity proceduresByProcedureId;
+    private RoomsEntity roomsByRoomId;
+    private StaffEntity staffByStaffId;
     private String status;
     private Timestamp startDate;
     private Timestamp endDate;
@@ -16,6 +20,8 @@ public class EventsEntity {
     private String deleted;
 
     @Id
+    @javax.persistence.SequenceGenerator(name = "events_item_id", sequenceName = "events_item_id", allocationSize = 1)
+    @javax.persistence.GeneratedValue(generator = "events_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -102,5 +108,45 @@ public class EventsEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, status, startDate, endDate, createdAt, updatedAt, deleted);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false)
+    public PatientsEntity getPatientByPatientId() {
+        return patientsByPatientId;
+    }
+
+    public void setPatientByPatientId(PatientsEntity patientsByPatientId) {
+        this.patientsByPatientId = patientsByPatientId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "procedure_id", referencedColumnName = "id", nullable = false)
+    public ProceduresEntity getProcedureByProcedureId() {
+        return proceduresByProcedureId;
+    }
+
+    public void setProcedureByProcedureId(ProceduresEntity proceduresByProcedureId) {
+        this.proceduresByProcedureId = proceduresByProcedureId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
+    public RoomsEntity getRoomByRoomId() {
+        return roomsByRoomId;
+    }
+
+    public void setRoomByRoomId(RoomsEntity roomsByRoomId) {
+        this.roomsByRoomId = roomsByRoomId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = false)
+    public StaffEntity getStaffByStaffId() {
+        return staffByStaffId;
+    }
+
+    public void setStaffByStaffId(StaffEntity staffByStaffId) {
+        this.staffByStaffId = staffByStaffId;
     }
 }
