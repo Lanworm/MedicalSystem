@@ -5,12 +5,12 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DoctorService {
-
+export class StaffService {
   constructor(private http: HttpClient) {
 
   }
+
   getAll(): Observable<any> {
-    return this.http.get('/api/doctorsList');
+    return this.http.get('/api/staff');
   }
 }

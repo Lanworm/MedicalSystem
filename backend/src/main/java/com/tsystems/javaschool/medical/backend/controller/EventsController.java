@@ -1,11 +1,10 @@
 package com.tsystems.javaschool.medical.backend.controller;
 
+import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.dto.EventsDto;
 import com.tsystems.javaschool.medical.backend.services.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,30 +16,25 @@ public class EventsController {
     private EventsService eventsService;
 
     @RequestMapping(value = "/events", method = RequestMethod.GET)
-    public List<EventsDto> getPatientsList() {
+    public List<EventsDto> getEventsList() {
         return eventsService.getEventsList();
     }
 
-//    @RequestMapping(value = "/patients", method = RequestMethod.PUT)
-//    public List<PatientsDto> addPatients(
-//            @RequestParam(value = "first_name") String firstName,
-//            @RequestParam(value = "second_name") String secondName,
-//            @RequestParam(value = "last_name") String lastName,
-//            @RequestParam(value = "insurance_number") String insuranceNumber
-//    ) {
-//        patientsService.addPatient(firstName, secondName, lastName, insuranceNumber);
-//        return patientsService.getPatientsList();
-//    }
-//
-//    @RequestMapping(value = "/patients/{id}", method = RequestMethod.DELETE)
-//    public List<PatientsDto> deletePatients(@PathVariable("id") final int Id) {
-//        patientsService.deletePatient(Id);
-//        return patientsService.getPatientsList();
-//    }
-//
-//    @RequestMapping(value = "/patients", method = RequestMethod.POST)
-//    public List< PatientsDto> editPatients(@RequestBody final  PatientsDto params) {
-//        patientsService.updatePatient(params);
-//        return patientsService.getPatientsList();
-//    }
+    @RequestMapping(value = "/events", method = RequestMethod.PUT)
+    public List<EventsDto> addEvent(@RequestBody EventRequestDto params) {
+        eventsService.addEvent(params);
+        return eventsService.getEventsList();
+    }
+
+    @RequestMapping(value = "/events/{id}", method = RequestMethod.DELETE)
+    public List<EventsDto> deleteEvent(@PathVariable("id") int id) {
+        eventsService.deleteEvent(id);
+        return eventsService.getEventsList();
+    }
+
+    @RequestMapping(value = "/events", method = RequestMethod.POST)
+    public List< EventsDto> editEvent(@RequestBody EventRequestDto params) {
+        eventsService.updateEvent(params);
+        return eventsService.getEventsList();
+    }
 }

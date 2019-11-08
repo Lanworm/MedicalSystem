@@ -2,6 +2,7 @@ package com.tsystems.javaschool.medical.backend.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,11 +13,25 @@ public class RoomsEntity {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private String deleted;
+//    private List<EventsEntity> eventsByRoom;
+//
+//    @OneToMany(
+//            mappedBy = "roomByRoomId",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    public List<EventsEntity> getEventsByRoom() {
+//        return eventsByRoom;
+//    }
+//
+//    public void setEventsByRoom(List<EventsEntity> eventsByRoom) {
+//        this.eventsByRoom = eventsByRoom;
+//    }
 
     @Id
     @Column(name = "id")
-    @javax.persistence.SequenceGenerator(name = "rooms_item_id", sequenceName = "rooms_item_id", allocationSize = 1)
-    @javax.persistence.GeneratedValue(generator = "rooms_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "rooms_item_id", sequenceName = "rooms_item_id", allocationSize = 1)
+    @GeneratedValue(generator = "rooms_item_id", strategy = GenerationType.SEQUENCE)
     public int getId() {
         return id;
     }

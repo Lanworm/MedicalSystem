@@ -11,17 +11,14 @@ import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
 
 @Service
 public class StaffService {
     private ModelMapper modelMapper = new ModelMapper();
-    private Date date = new Date();
-    private Timestamp currentDate = new Timestamp(date.getTime());
-
 
     public List<StaffDto> getStaffList() {
 
@@ -55,8 +52,8 @@ public class StaffService {
         staffEntity.setSecondName(secondName);
         staffEntity.setLastName(lastName);
         staffEntity.setSpecializationsBySpecializationId(specializationsEntity);
-        staffEntity.setCreatedAt(currentDate);
-        staffEntity.setUpdatedAt(currentDate);
+        staffEntity.setCreatedAt(getCurrentTimestamp());
+        staffEntity.setUpdatedAt(getCurrentTimestamp());
         staffEntity.setDeleted("N");
 
         session.persist(staffEntity);
@@ -70,7 +67,7 @@ public class StaffService {
 
         StaffEntity staffsEntity = session.load(StaffEntity.class, id);
         staffsEntity.setDeleted("Y");
-        staffsEntity.setUpdatedAt(currentDate);
+        staffsEntity.setUpdatedAt(getCurrentTimestamp());
         staffsEntity.setId(id);
 
         session.update(staffsEntity);
@@ -85,7 +82,7 @@ public class StaffService {
 
         StaffEntity staffsEntity = session.load(StaffEntity.class, params.getId());
         SpecializationsEntity specializationsEntity = session.load(SpecializationsEntity.class, params.getSpecializationId());
-        staffsEntity.setUpdatedAt(currentDate);
+        staffsEntity.setUpdatedAt(getCurrentTimestamp());
 
         staffsEntity.setFirstName(params.getFirstName());
         staffsEntity.setSecondName(params.getSecondName());

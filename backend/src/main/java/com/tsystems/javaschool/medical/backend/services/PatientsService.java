@@ -10,17 +10,14 @@ import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
 
 @Service
 public class PatientsService {
     private ModelMapper modelMapper = new ModelMapper();
-    private Date date = new Date();
-    private Timestamp currentDate = new Timestamp(date.getTime());
-
 
     public List<PatientsDto> getPatientsList() {
 
@@ -29,15 +26,12 @@ public class PatientsService {
         Criteria criteria = session.createCriteria(PatientsEntity.class);
         criteria.addOrder(Order.asc("lastName"));
         criteria.add(Restrictions.eq("deleted", "N"));
-
         List list = criteria.list();
         List<PatientsDto> result = new ArrayList<>();
-
         for (Object a : list) {
             PatientsDto patientsDto = modelMapper.map(a, PatientsDto.class);
             result.add(patientsDto);
         }
-
         session.getTransaction().commit();
         session.close();
         return result;
@@ -51,8 +45,8 @@ public class PatientsService {
         patientsEntity.setSecondName(secondName);
         patientsEntity.setLastName(lastName);
         patientsEntity.setInsuranceNumber(insuranceNumber);
-        patientsEntity.setCreatedAt(currentDate);
-        patientsEntity.setUpdatedAt(currentDate);
+        patientsEntity.setCreatedAt(getCurrentTimestamp());
+        patientsEntity.setUpdatedAt(getCurrentTimestamp());
         patientsEntity.setDeleted("N");
         session.persist(patientsEntity);
         session.getTransaction().commit();
@@ -64,7 +58,7 @@ public class PatientsService {
         session.getTransaction().begin();
         PatientsEntity patientsEntity = session.load(PatientsEntity.class, id);
         patientsEntity.setDeleted("Y");
-        patientsEntity.setUpdatedAt(currentDate);
+        patientsEntity.setUpdatedAt(getCurrentTimestamp());
         patientsEntity.setId(id);
         session.update(patientsEntity);
         session.getTransaction().commit();
@@ -75,7 +69,7 @@ public class PatientsService {
         Session session = HibernateSessionFactory.openSession();
         session.getTransaction().begin();
         PatientsEntity patientsEntity = session.load(PatientsEntity.class, params.getId());
-        patientsEntity.setUpdatedAt(currentDate);
+        patientsEntity.setUpdatedAt(getCurrentTimestamp());
         patientsEntity.setFirstName(params.getFirstName());
         patientsEntity.setSecondName(params.getSecondName());
         patientsEntity.setLastName(params.getLastName());

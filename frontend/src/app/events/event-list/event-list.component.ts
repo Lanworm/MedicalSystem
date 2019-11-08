@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {EventsService} from '../../shared/events/events.service';
+import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {TIME_FORMAT} from '../../constants';
+import {EventsService} from '../../shared/events/events.service';
 
 @Component({
   selector: 'app-event-list',
@@ -9,29 +9,49 @@ import {TIME_FORMAT} from '../../constants';
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
-  public persons: Array<any>;
-  dtOptions: DataTables.Settings = {};
+  @Input() openDialog;
+  @Input() update;
+  @Input() openDeleteDialog;
+
+  statusColors = {
+    DONE: 'green',
+    IN_WORK: 'yellow',
+    CANCELED: 'red',
+    ASSIGNED: 'blue'
+  };
 
   constructor(private eventService: EventsService) {
   }
 
+  getTableData = (dataTablesParameters: any, callback) => {
+    this.eventService.getAll().subscribe(resp => {
+      callback({
+        recordsTotal: 20,
+        recordsFiltered: resp.recordsFiltered,
+        data: resp
+      });
+    });
+  }
+
   ngOnInit(): void {
-    this.dtOptions = {
+
+    // @ts-ignore
+    $('#eventTableList').DataTable({
       searching: false,
       // serverSide: true,
       processing: true,
-      paging: false,
-      ajax: (dataTablesParameters: any, callback) => {
-        this.eventService.getAll().subscribe(resp => {
-          this.persons = resp;
-          console.log(resp);
-          callback({
-            recordsTotal: 2,
-            // recordsFiltered: resp.recordsFiltered,
-            data: resp
-          });
+      rowCallback: (row: Node, data: any[]) => {
+        $('td i[edit]', row).unbind('click');
+        $('td i[edit]', row).bind('click', () => {
+          this.openDialog(data);
         });
+        $('td i[delete]', row).unbind('click');
+        $('td i[delete]', row).bind('click', () => {
+          this.openDeleteDialog(data);
+        });
+        return row;
       },
+      ajax: this.getTableData,
       columns: [
         {
           title: 'From',
@@ -67,10 +87,28 @@ export class EventListComponent implements OnInit {
         },
         {
           data: 'status',
-          title: 'Status'
+          title: 'Status',
+          render: (data, type, row) => {
+            return ('<a class="ui ' + this.statusColors[row.status] + ' label">' + row.status + '</a>');
+          },
+        },
+        {
+          data: 'status',
+          orderable: false,
+          className: 'ui center aligned',
+          render: () => {
+            return ('<i class="edit link icon" edit></i>');
+          },
+        },
+        {
+          data: 'status',
+          orderable: false,
+          className: 'ui center aligned',
+          render: () => {
+            return ('<i class="trash link icon" delete></i>');
+          },
         },
       ]
-    }
-    ;
+    });
   }
 }

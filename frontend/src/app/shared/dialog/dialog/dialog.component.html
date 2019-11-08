@@ -1,0 +1,21 @@
+<div class="ui dimmer modals page transition visible active" style="display: flex !important;">
+  <div class="ui basic modal active">
+    <div class="ui icon header">
+      <i [class]="icon"></i>
+      {{title}}
+    </div>
+    <div class="content">
+    {{description}}
+    </div>
+    <div class="actions">
+      <div class="ui red basic cancel inverted button" (click)="onCancel()">
+        <i class="remove icon"></i>
+        No
+      </div>
+      <div class="ui green ok inverted button" (click)="onConfirm()">
+        <i class="checkmark icon"></i>
+        Yes
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,16 +10,14 @@ import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
 
 @Service
 public class RoomsService {
     private ModelMapper modelMapper = new ModelMapper();
-    private Date date = new Date();
-    private Timestamp currentDate = new Timestamp(date.getTime());
 
     public List<RoomsDto> getRoomsList() {
 
@@ -42,8 +40,8 @@ public class RoomsService {
     public void addRoom(String description) {
         RoomsEntity roomsEntity = new RoomsEntity();
         roomsEntity.setDescription(description);
-        roomsEntity.setCreatedAt(currentDate);
-        roomsEntity.setUpdatedAt(currentDate);
+        roomsEntity.setCreatedAt(getCurrentTimestamp());
+        roomsEntity.setUpdatedAt(getCurrentTimestamp());
         roomsEntity.setDeleted("N");
         Session session = HibernateSessionFactory.openSession();
         session.getTransaction().begin();
@@ -57,7 +55,7 @@ public class RoomsService {
         session.getTransaction().begin();
         RoomsEntity roomsEntity = session.load(RoomsEntity.class, id);
         roomsEntity.setDeleted("Y");
-        roomsEntity.setUpdatedAt(currentDate);
+        roomsEntity.setUpdatedAt(getCurrentTimestamp());
         roomsEntity.setId(id);
         session.update(roomsEntity);
         session.getTransaction().commit();
@@ -68,7 +66,7 @@ public class RoomsService {
         Session session = HibernateSessionFactory.openSession();
         session.getTransaction().begin();
         RoomsEntity roomsEntity = session.load(RoomsEntity.class, params.getId());
-        roomsEntity.setUpdatedAt(currentDate);
+        roomsEntity.setUpdatedAt(getCurrentTimestamp());
         roomsEntity.setId(params.getId());
         roomsEntity.setDescription(params.getDescription());
         session.update(roomsEntity);

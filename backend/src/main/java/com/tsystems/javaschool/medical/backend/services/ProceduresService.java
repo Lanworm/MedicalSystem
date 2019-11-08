@@ -10,16 +10,14 @@ import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
 
 @Service
 public class ProceduresService {
     private ModelMapper modelMapper = new ModelMapper();
-    private Date date = new Date();
-    private Timestamp currentDate = new Timestamp(date.getTime());
 
     public List<ProceduresDto> getProceduresList() {
 
@@ -42,8 +40,8 @@ public class ProceduresService {
     public void addProcedure(String description) {
         ProceduresEntity proceduresEntity = new ProceduresEntity();
         proceduresEntity.setDescription(description);
-        proceduresEntity.setCreatedAt(currentDate);
-        proceduresEntity.setUpdatedAt(currentDate);
+        proceduresEntity.setCreatedAt(getCurrentTimestamp());
+        proceduresEntity.setUpdatedAt(getCurrentTimestamp());
         proceduresEntity.setDeleted("N");
         Session session = HibernateSessionFactory.openSession();
         session.getTransaction().begin();
@@ -57,7 +55,7 @@ public class ProceduresService {
         session.getTransaction().begin();
         ProceduresEntity proceduresEntity = session.load(ProceduresEntity.class, id);
         proceduresEntity.setDeleted("Y");
-        proceduresEntity.setUpdatedAt(currentDate);
+        proceduresEntity.setUpdatedAt(getCurrentTimestamp());
         proceduresEntity.setId(id);
         session.update(proceduresEntity);
         session.getTransaction().commit();
@@ -68,7 +66,7 @@ public class ProceduresService {
         Session session = HibernateSessionFactory.openSession();
         session.getTransaction().begin();
         ProceduresEntity proceduresEntity = session.load(ProceduresEntity.class, params.getId());
-        proceduresEntity.setUpdatedAt(currentDate);
+        proceduresEntity.setUpdatedAt(getCurrentTimestamp());
         proceduresEntity.setId(params.getId());
         proceduresEntity.setDescription(params.getDescription());
         session.update(proceduresEntity);

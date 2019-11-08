@@ -9,16 +9,14 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
 
 public class ScheduleService {
 
     private ModelMapper modelMapper = new ModelMapper();
-    private Date date = new Date();
-    private Timestamp currentDate = new Timestamp(date.getTime());
 
     public List<SpecializationsDto> getSchedule() {
 
@@ -45,8 +43,8 @@ public class ScheduleService {
         SpecializationsEntity specializationsEntity = new SpecializationsEntity();
 
         specializationsEntity.setDescription(description);
-        specializationsEntity.setCreatedAt(currentDate);
-        specializationsEntity.setUpdatedAt(currentDate);
+        specializationsEntity.setCreatedAt(getCurrentTimestamp());
+        specializationsEntity.setUpdatedAt(getCurrentTimestamp());
         specializationsEntity.setDeleted("N");
 
         Session session = HibernateSessionFactory.openSession();
@@ -62,7 +60,7 @@ public class ScheduleService {
 
         SpecializationsEntity specializationsEntity = session.load(SpecializationsEntity.class, id);
         specializationsEntity.setDeleted("Y");
-        specializationsEntity.setUpdatedAt(currentDate);
+        specializationsEntity.setUpdatedAt(getCurrentTimestamp());
         specializationsEntity.setId(id);
 
         session.update(specializationsEntity);
@@ -76,7 +74,7 @@ public class ScheduleService {
         session.getTransaction().begin();
 
         SpecializationsEntity specializationsEntity = session.load(SpecializationsEntity.class, params.getId());
-        specializationsEntity.setUpdatedAt(currentDate);
+        specializationsEntity.setUpdatedAt(getCurrentTimestamp());
         specializationsEntity.setId(params.getId());
         specializationsEntity.setDescription(params.getDescription());
 
