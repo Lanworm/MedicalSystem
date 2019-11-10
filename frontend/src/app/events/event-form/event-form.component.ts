@@ -83,7 +83,6 @@ export class EventFormComponent implements OnInit {
       this.roomList = result[2];
       this.staffList = result[3];
     });
-
     this.patientControl = new FormControl(patientId);
     this.procedureControl = new FormControl(procedureId);
     this.roomControl = new FormControl(roomId);

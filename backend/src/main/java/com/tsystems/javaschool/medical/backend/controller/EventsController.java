@@ -1,12 +1,10 @@
 package com.tsystems.javaschool.medical.backend.controller;
 
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
-import com.tsystems.javaschool.medical.backend.dto.EventsDto;
 import com.tsystems.javaschool.medical.backend.services.EventsService;
+import com.tsystems.javaschool.medical.backend.util.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -16,25 +14,31 @@ public class EventsController {
     private EventsService eventsService;
 
     @RequestMapping(value = "/events", method = RequestMethod.GET)
-    public List<EventsDto> getEventsList() {
-        return eventsService.getEventsList();
+    public BaseResponse getEventsList(
+            @RequestParam(value = "start") int page,
+            @RequestParam(value = "length") int size,
+            @RequestParam(value = "orderBy") String orderBy,
+            @RequestParam(value = "orderDir") String orderDir
+
+    ) {
+        return eventsService.getEventsList(page, size, orderBy, orderDir);
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.PUT)
-    public List<EventsDto> addEvent(@RequestBody EventRequestDto params) {
+    public BaseResponse addEvent(@RequestBody EventRequestDto params) {
         eventsService.addEvent(params);
-        return eventsService.getEventsList();
+        return eventsService.getEventsList(1, 10, null, null);
     }
 
     @RequestMapping(value = "/events/{id}", method = RequestMethod.DELETE)
-    public List<EventsDto> deleteEvent(@PathVariable("id") int id) {
+    public BaseResponse deleteEvent(@PathVariable("id") int id) {
         eventsService.deleteEvent(id);
-        return eventsService.getEventsList();
+        return eventsService.getEventsList(1, 10, null, null);
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.POST)
-    public List< EventsDto> editEvent(@RequestBody EventRequestDto params) {
+    public BaseResponse editEvent(@RequestBody EventRequestDto params) {
         eventsService.updateEvent(params);
-        return eventsService.getEventsList();
+        return eventsService.getEventsList(1, 10, null, null);
     }
 }

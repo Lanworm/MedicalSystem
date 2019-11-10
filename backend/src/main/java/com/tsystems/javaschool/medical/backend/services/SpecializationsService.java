@@ -2,12 +2,13 @@ package com.tsystems.javaschool.medical.backend.services;
 
 import com.tsystems.javaschool.medical.backend.dto.SpecializationsDto;
 import com.tsystems.javaschool.medical.backend.entities.SpecializationsEntity;
-import com.tsystems.javaschool.medical.backend.util.HibernateSessionFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,11 +19,14 @@ import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentT
 @Service
 public class SpecializationsService {
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     private ModelMapper modelMapper = new ModelMapper();
 
     public List<SpecializationsDto> getSpecializationsList() {
 
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         Criteria criteria = session.createCriteria(SpecializationsEntity.class);
         criteria.addOrder(Order.asc("description"));
@@ -49,7 +53,7 @@ public class SpecializationsService {
         specializationsEntity.setUpdatedAt(getCurrentTimestamp());
         specializationsEntity.setDeleted("N");
 
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         session.persist(specializationsEntity);
         session.getTransaction().commit();
@@ -57,7 +61,7 @@ public class SpecializationsService {
     }
 
     public void deleteSpecialization(int id) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
 
         SpecializationsEntity specializationsEntity = session.load(SpecializationsEntity.class, id);
@@ -72,7 +76,7 @@ public class SpecializationsService {
     }
 
     public void updateSpecialization(SpecializationsDto params) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
 
         SpecializationsEntity specializationsEntity = session.load(SpecializationsEntity.class, params.getId());

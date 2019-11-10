@@ -1,104 +1,49 @@
 package com.tsystems.javaschool.medical.backend.services;
 
+import com.tsystems.javaschool.medical.backend.dao.EventsRepository;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.dto.EventsDto;
-import com.tsystems.javaschool.medical.backend.entities.*;
-import com.tsystems.javaschool.medical.backend.util.HibernateSessionFactory;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
+import com.tsystems.javaschool.medical.backend.util.BaseResponse;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
-
 @Service
 public class EventsService {
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public List<EventsDto> getEventsList() {
+    @Autowired
+    EventsRepository eventsRepository;
 
-        Session session = HibernateSessionFactory.openSession();
-        session.getTransaction().begin();
-        Criteria criteria = session.createCriteria(EventsEntity.class);
-        criteria.add(Restrictions.eq("deleted", "N"));
+    public BaseResponse getEventsList(int start, int length, String orderBy, String orderDir) {
 
-        List list = criteria.list();
-        List<EventsDto> result = new ArrayList<>();
-
-        for (Object a : list) {
+        BaseResponse baseResponse = new BaseResponse();
+        List<EventsDto> eventsList = new ArrayList<>();
+        List<EventsEntity> eventsEntityList = eventsRepository.getAll(start, length, orderBy, orderDir);
+        for (Object a : eventsEntityList) {
             EventsDto eventsDto = modelMapper.map(a, EventsDto.class);
-            result.add(eventsDto);
+            eventsList.add(eventsDto);
         }
-
-        session.getTransaction().commit();
-        session.close();
-        return result;
+        baseResponse.getList().addAll(eventsList);
+        baseResponse.setRecords(eventsRepository.getCount());
+        return baseResponse;
     }
 
     public void addEvent(EventRequestDto params) {
-        Session session = HibernateSessionFactory.openSession();
-        session.getTransaction().begin();
-
-        EventsEntity eventsEntity = new EventsEntity();
-        PatientsEntity patientsEntity = session.load(PatientsEntity.class, params.getPatientId());
-        ProceduresEntity proceduresEntity = session.load(ProceduresEntity.class, params.getProcedureId());
-        RoomsEntity roomsEntity = session.load(RoomsEntity.class, params.getRoomId());
-        StaffEntity staffEntity = session.load(StaffEntity.class, params.getStaffId());
-
-        eventsEntity.setPatientByPatientId(patientsEntity);
-        eventsEntity.setProcedureByProcedureId(proceduresEntity);
-        eventsEntity.setRoomByRoomId(roomsEntity);
-        eventsEntity.setStaffByStaffId(staffEntity);
-        eventsEntity.setStatus(params.getStatus());
-        eventsEntity.setStartDate(params.getStartDate());
-        eventsEntity.setEndDate(params.getEndDate());
-        eventsEntity.setCreatedAt(getCurrentTimestamp());
-        eventsEntity.setUpdatedAt(getCurrentTimestamp());
-        eventsEntity.setDeleted("N");
-
-        session.persist(eventsEntity);
-        session.getTransaction().commit();
-        session.close();
+        eventsRepository.create(params);
     }
 
     public void deleteEvent(int id) {
-        Session session = HibernateSessionFactory.openSession();
-        session.getTransaction().begin();
-        EventsEntity eventsEntity = session.load(EventsEntity.class, id);
-        eventsEntity.setDeleted("Y");
-        eventsEntity.setUpdatedAt(getCurrentTimestamp());
-        eventsEntity.setId(id);
-        session.update(eventsEntity);
-        session.getTransaction().commit();
-        session.close();
+        eventsRepository.delete(id);
     }
 
     public void updateEvent(EventRequestDto params) {
-        Session session = HibernateSessionFactory.openSession();
-        session.getTransaction().begin();
-
-        EventsEntity eventsEntity = session.load(EventsEntity.class, params.getId());
-        PatientsEntity patientsEntity = session.load(PatientsEntity.class, params.getPatientId());
-        ProceduresEntity proceduresEntity = session.load(ProceduresEntity.class, params.getProcedureId());
-        RoomsEntity roomsEntity = session.load(RoomsEntity.class, params.getRoomId());
-        StaffEntity staffEntity = session.load(StaffEntity.class, params.getStaffId());
-
-        eventsEntity.setPatientByPatientId(patientsEntity);
-        eventsEntity.setProcedureByProcedureId(proceduresEntity);
-        eventsEntity.setRoomByRoomId(roomsEntity);
-        eventsEntity.setStaffByStaffId(staffEntity);
-        eventsEntity.setStatus(params.getStatus());
-        eventsEntity.setStartDate(params.getStartDate());
-        eventsEntity.setEndDate(params.getEndDate());
-        eventsEntity.setUpdatedAt(getCurrentTimestamp());
-
-        session.update(eventsEntity);
-        session.getTransaction().commit();
-        session.close();
+        eventsRepository.update(params);
     }
 }

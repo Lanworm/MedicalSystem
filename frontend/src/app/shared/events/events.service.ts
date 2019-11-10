@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-
+import {getQuerySearch} from '../../utils/url';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +10,8 @@ export class EventsService {
 
   }
 
-  getAll(): Observable<any> {
-    return this.http.get('/api/events');
+  getAll(params): Observable<any> {
+    return this.http.get('/api/events' + getQuerySearch(params));
   }
 
   addEvent(params): Observable<any> {

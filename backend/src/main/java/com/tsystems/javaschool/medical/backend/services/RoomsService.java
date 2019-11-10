@@ -2,12 +2,13 @@ package com.tsystems.javaschool.medical.backend.services;
 
 import com.tsystems.javaschool.medical.backend.dto.RoomsDto;
 import com.tsystems.javaschool.medical.backend.entities.RoomsEntity;
-import com.tsystems.javaschool.medical.backend.util.HibernateSessionFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,9 +20,12 @@ import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentT
 public class RoomsService {
     private ModelMapper modelMapper = new ModelMapper();
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     public List<RoomsDto> getRoomsList() {
 
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         Criteria criteria = session.createCriteria(RoomsEntity.class);
         criteria.addOrder(Order.asc("description"));
@@ -43,7 +47,7 @@ public class RoomsService {
         roomsEntity.setCreatedAt(getCurrentTimestamp());
         roomsEntity.setUpdatedAt(getCurrentTimestamp());
         roomsEntity.setDeleted("N");
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         session.persist(roomsEntity);
         session.getTransaction().commit();
@@ -51,7 +55,7 @@ public class RoomsService {
     }
 
     public void deleteRoom(int id) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         RoomsEntity roomsEntity = session.load(RoomsEntity.class, id);
         roomsEntity.setDeleted("Y");
@@ -63,7 +67,7 @@ public class RoomsService {
     }
 
     public void updateRoom(RoomsDto params) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         RoomsEntity roomsEntity = session.load(RoomsEntity.class, params.getId());
         roomsEntity.setUpdatedAt(getCurrentTimestamp());

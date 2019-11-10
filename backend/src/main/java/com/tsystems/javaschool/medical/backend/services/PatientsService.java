@@ -2,12 +2,13 @@ package com.tsystems.javaschool.medical.backend.services;
 
 import com.tsystems.javaschool.medical.backend.dto.PatientsDto;
 import com.tsystems.javaschool.medical.backend.entities.PatientsEntity;
-import com.tsystems.javaschool.medical.backend.util.HibernateSessionFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,9 +20,12 @@ import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentT
 public class PatientsService {
     private ModelMapper modelMapper = new ModelMapper();
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     public List<PatientsDto> getPatientsList() {
 
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         Criteria criteria = session.createCriteria(PatientsEntity.class);
         criteria.addOrder(Order.asc("lastName"));
@@ -38,7 +42,7 @@ public class PatientsService {
     }
 
     public void addPatient(String firstName, String secondName, String lastName, String insuranceNumber) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         PatientsEntity patientsEntity = new PatientsEntity();
         patientsEntity.setFirstName(firstName);
@@ -54,7 +58,7 @@ public class PatientsService {
     }
 
     public void deletePatient(int id) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         PatientsEntity patientsEntity = session.load(PatientsEntity.class, id);
         patientsEntity.setDeleted("Y");
@@ -66,7 +70,7 @@ public class PatientsService {
     }
 
     public void updatePatient(PatientsDto params) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         PatientsEntity patientsEntity = session.load(PatientsEntity.class, params.getId());
         patientsEntity.setUpdatedAt(getCurrentTimestamp());

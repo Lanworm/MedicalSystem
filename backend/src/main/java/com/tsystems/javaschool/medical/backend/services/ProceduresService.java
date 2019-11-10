@@ -2,12 +2,13 @@ package com.tsystems.javaschool.medical.backend.services;
 
 import com.tsystems.javaschool.medical.backend.dto.ProceduresDto;
 import com.tsystems.javaschool.medical.backend.entities.ProceduresEntity;
-import com.tsystems.javaschool.medical.backend.util.HibernateSessionFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,9 +20,12 @@ import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentT
 public class ProceduresService {
     private ModelMapper modelMapper = new ModelMapper();
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     public List<ProceduresDto> getProceduresList() {
 
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         Criteria criteria = session.createCriteria(ProceduresEntity.class);
         criteria.addOrder(Order.asc("description"));
@@ -43,7 +47,7 @@ public class ProceduresService {
         proceduresEntity.setCreatedAt(getCurrentTimestamp());
         proceduresEntity.setUpdatedAt(getCurrentTimestamp());
         proceduresEntity.setDeleted("N");
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         session.persist(proceduresEntity);
         session.getTransaction().commit();
@@ -51,7 +55,7 @@ public class ProceduresService {
     }
 
     public void deleteProcedure(int id) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         ProceduresEntity proceduresEntity = session.load(ProceduresEntity.class, id);
         proceduresEntity.setDeleted("Y");
@@ -63,7 +67,7 @@ public class ProceduresService {
     }
 
     public void updateProcedure(ProceduresDto params) {
-        Session session = HibernateSessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         ProceduresEntity proceduresEntity = session.load(ProceduresEntity.class, params.getId());
         proceduresEntity.setUpdatedAt(getCurrentTimestamp());

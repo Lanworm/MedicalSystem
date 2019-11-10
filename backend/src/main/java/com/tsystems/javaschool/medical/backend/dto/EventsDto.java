@@ -1,24 +1,21 @@
 package com.tsystems.javaschool.medical.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tsystems.javaschool.medical.backend.entities.PatientsEntity;
-import com.tsystems.javaschool.medical.backend.entities.ProceduresEntity;
-import com.tsystems.javaschool.medical.backend.entities.RoomsEntity;
-import com.tsystems.javaschool.medical.backend.entities.StaffEntity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class EventsDto {
+public class EventsDto implements Serializable, Comparable<EventsDto> {
     @JsonProperty("id")
     private int id;
     @JsonProperty("patient")
-    private PatientsEntity patientsByPatientId;
+    private PatientsDto patientByPatientId;
     @JsonProperty("procedure")
-    private ProceduresEntity proceduresByProcedureId;
+    private ProceduresDto proceduresByProcedureId;
     @JsonProperty("room")
-    private RoomsEntity roomsByRoomId;
+    private RoomsDto roomsByRoomId;
     @JsonProperty("staff")
-    private StaffEntity staffByStaffId;
+    private StaffDto staffByStaffId;
     @JsonProperty("status")
     private String status;
     @JsonProperty("start_date")
@@ -40,35 +37,35 @@ public class EventsDto {
         this.id = id;
     }
 
-    public PatientsEntity getPatientsByPatientId() {
-        return patientsByPatientId;
+    public PatientsDto getPatientByPatientId() {
+        return patientByPatientId;
     }
 
-    public void setPatientsByPatientId(PatientsEntity patientsByPatientId) {
-        this.patientsByPatientId = patientsByPatientId;
+    public void setPatientByPatientId(PatientsDto patientByPatientId) {
+        this.patientByPatientId = patientByPatientId;
     }
 
-    public ProceduresEntity getProceduresByProcedureId() {
+    public ProceduresDto getProceduresByProcedureId() {
         return proceduresByProcedureId;
     }
 
-    public void setProceduresByProcedureId(ProceduresEntity proceduresByProcedureId) {
+    public void setProceduresByProcedureId(ProceduresDto proceduresByProcedureId) {
         this.proceduresByProcedureId = proceduresByProcedureId;
     }
 
-    public RoomsEntity getRoomsByRoomId() {
+    public RoomsDto getRoomsByRoomId() {
         return roomsByRoomId;
     }
 
-    public void setRoomsByRoomId(RoomsEntity roomsByRoomId) {
+    public void setRoomsByRoomId(RoomsDto roomsByRoomId) {
         this.roomsByRoomId = roomsByRoomId;
     }
 
-    public StaffEntity getStaffByStaffId() {
+    public StaffDto getStaffByStaffId() {
         return staffByStaffId;
     }
 
-    public void setStaffByStaffId(StaffEntity staffByStaffId) {
+    public void setStaffByStaffId(StaffDto staffByStaffId) {
         this.staffByStaffId = staffByStaffId;
     }
 
@@ -118,5 +115,10 @@ public class EventsDto {
 
     public void setDeleted(String deleted) {
         this.deleted = deleted;
+    }
+
+    @Override
+    public int compareTo(EventsDto o) {
+        return 0;
     }
 }

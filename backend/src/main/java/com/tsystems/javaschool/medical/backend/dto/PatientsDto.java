@@ -2,9 +2,10 @@ package com.tsystems.javaschool.medical.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class PatientsDto {
+public class PatientsDto implements Serializable, Comparable<PatientsDto> {
 
     @JsonProperty("id")
     private int id;
@@ -85,5 +86,10 @@ public class PatientsDto {
 
     public void setDeleted(String deleted) {
         this.deleted = deleted;
+    }
+
+    @Override
+    public int compareTo(PatientsDto o) {
+        return 0;
     }
 }

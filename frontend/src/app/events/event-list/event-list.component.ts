@@ -24,21 +24,26 @@ export class EventListComponent implements OnInit {
   }
 
   getTableData = (dataTablesParameters: any, callback) => {
-    this.eventService.getAll().subscribe(resp => {
+    console.log(dataTablesParameters);
+    const {start, length, order, columns} = dataTablesParameters;
+    const orderDir = order[0].dir;
+    const orderBy = columns[order[0].column].name;
+
+    this.eventService.getAll({start, length, orderBy, orderDir}).subscribe(resp => {
       callback({
-        recordsTotal: 20,
-        recordsFiltered: resp.recordsFiltered,
-        data: resp
+        recordsTotal: resp.records,
+        recordsFiltered: resp.records,
+        data: resp.list
       });
     });
-  }
+  };
 
   ngOnInit(): void {
 
     // @ts-ignore
     $('#eventTableList').DataTable({
       searching: false,
-      // serverSide: true,
+      serverSide: true,
       processing: true,
       rowCallback: (row: Node, data: any[]) => {
         $('td i[edit]', row).unbind('click');
@@ -54,38 +59,45 @@ export class EventListComponent implements OnInit {
       ajax: this.getTableData,
       columns: [
         {
+          name: 'startDate',
           title: 'From',
           render: (data, type, row) => {
             return moment(row.start_date).format(TIME_FORMAT);
           },
         },
         {
+          name: 'endDate',
           title: 'To',
           render: (data, type, row) => {
             return moment(row.end_date).format(TIME_FORMAT);
           },
         },
         {
+          name: 'patientsByPatientId',
           render: (data, type, row) => {
-            return row.patient.firstName + ' ' + row.patient.secondName + ' ' + row.patient.lastName;
+            return row.patient.first_name + ' ' + row.patient.second_name + ' ' + row.patient.last_name;
           },
           title: 'Patient'
         },
         {
+          name: 'procedure_id',
           title: 'Procedure',
           data: 'procedure.description'
         },
         {
+          name: 'room_id',
           title: 'Room',
           data: 'room.description'
         },
         {
+          name: 'staff_id',
           render: (data, type, row) => {
-            return row.staff.firstName + ' ' + row.staff.secondName + ' ' + row.staff.lastName;
+            return row.staff.first_name + ' ' + row.staff.second_name + ' ' + row.staff.last_name;
           },
           title: 'Doctor'
         },
         {
+          name: 'status',
           data: 'status',
           title: 'Status',
           render: (data, type, row) => {
@@ -93,7 +105,6 @@ export class EventListComponent implements OnInit {
           },
         },
         {
-          data: 'status',
           orderable: false,
           className: 'ui center aligned',
           render: () => {
@@ -101,7 +112,6 @@ export class EventListComponent implements OnInit {
           },
         },
         {
-          data: 'status',
           orderable: false,
           className: 'ui center aligned',
           render: () => {
