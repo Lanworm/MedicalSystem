@@ -20,7 +20,8 @@ public class ScheduleService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     public List<SpecializationsDto> getSchedule() {
 

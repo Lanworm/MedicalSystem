@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.medical.backend.services;
 
-import com.tsystems.javaschool.medical.backend.dao.EventsRepository;
+import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.dto.EventsDto;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
@@ -19,31 +19,31 @@ public class EventsService {
     private ModelMapper modelMapper;
 
     @Autowired
-    EventsRepository eventsRepository;
+    EventRepository eventRepository;
 
     public BaseResponse getEventsList(int start, int length, String orderBy, String orderDir) {
 
         BaseResponse baseResponse = new BaseResponse();
         List<EventsDto> eventsList = new ArrayList<>();
-        List<EventsEntity> eventsEntityList = eventsRepository.getAll(start, length, orderBy, orderDir);
+        List<EventsEntity> eventsEntityList = eventRepository.getAll(start, length, orderBy, orderDir);
         for (Object a : eventsEntityList) {
             EventsDto eventsDto = modelMapper.map(a, EventsDto.class);
             eventsList.add(eventsDto);
         }
         baseResponse.getList().addAll(eventsList);
-        baseResponse.setRecords(eventsRepository.getCount());
+        baseResponse.setRecords(eventRepository.getCount());
         return baseResponse;
     }
 
     public void addEvent(EventRequestDto params) {
-        eventsRepository.create(params);
+        eventRepository.create(params);
     }
 
     public void deleteEvent(int id) {
-        eventsRepository.delete(id);
+        eventRepository.delete(id);
     }
 
     public void updateEvent(EventRequestDto params) {
-        eventsRepository.update(params);
+        eventRepository.update(params);
     }
 }

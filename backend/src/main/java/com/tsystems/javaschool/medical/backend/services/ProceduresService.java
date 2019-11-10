@@ -18,7 +18,8 @@ import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentT
 
 @Service
 public class ProceduresService {
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private SessionFactory sessionFactory;

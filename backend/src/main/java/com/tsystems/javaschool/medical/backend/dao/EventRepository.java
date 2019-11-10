@@ -17,7 +17,7 @@ import java.util.List;
 import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
 
 @Repository
-public class EventsRepository {
+public class EventRepository {
 
     private SessionFactory sessionFactory;
 

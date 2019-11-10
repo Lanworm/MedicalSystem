@@ -2,21 +2,13 @@ package com.tsystems.javaschool.medical.backend.services;
 
 import com.tsystems.javaschool.medical.backend.dao.StaffRepository;
 import com.tsystems.javaschool.medical.backend.dto.StaffDto;
-import com.tsystems.javaschool.medical.backend.entities.SpecializationsEntity;
 import com.tsystems.javaschool.medical.backend.entities.StaffEntity;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
 
 @Service
 public class StaffService {
