@@ -1,12 +1,8 @@
 package com.tsystems.javaschool.medical.backend.services;
 
+import com.tsystems.javaschool.medical.backend.dao.RoomRepository;
 import com.tsystems.javaschool.medical.backend.dto.RoomsDto;
 import com.tsystems.javaschool.medical.backend.entities.RoomsEntity;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,68 +10,35 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
-
 @Service
 public class RoomsService {
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private RoomRepository roomRepository;
 
     public List<RoomsDto> getRoomsList() {
-
-        Session session = sessionFactory.openSession();
-        session.getTransaction().begin();
-        Criteria criteria = session.createCriteria(RoomsEntity.class);
-        criteria.addOrder(Order.asc("description"));
-        criteria.add(Restrictions.eq("deleted", "N"));
-        List list = criteria.list();
+        List<RoomsEntity> roomsEntities = roomRepository.getAll();
         List<RoomsDto> result = new ArrayList<>();
-        for (Object a : list) {
-            RoomsDto roomsDto = modelMapper.map(a, RoomsDto.class);
+        for (Object entity : roomsEntities) {
+            RoomsDto roomsDto = modelMapper.map(entity, RoomsDto.class);
             result.add(roomsDto);
         }
-        session.getTransaction().commit();
-        session.close();
+
         return result;
     }
 
     public void addRoom(String description) {
-        RoomsEntity roomsEntity = new RoomsEntity();
-        roomsEntity.setDescription(description);
-        roomsEntity.setCreatedAt(getCurrentTimestamp());
-        roomsEntity.setUpdatedAt(getCurrentTimestamp());
-        roomsEntity.setDeleted("N");
-        Session session = sessionFactory.openSession();
-        session.getTransaction().begin();
-        session.persist(roomsEntity);
-        session.getTransaction().commit();
-        session.close();
+        roomRepository.create(description);
     }
 
     public void deleteRoom(int id) {
-        Session session = sessionFactory.openSession();
-        session.getTransaction().begin();
-        RoomsEntity roomsEntity = session.load(RoomsEntity.class, id);
-        roomsEntity.setDeleted("Y");
-        roomsEntity.setUpdatedAt(getCurrentTimestamp());
-        roomsEntity.setId(id);
-        session.update(roomsEntity);
-        session.getTransaction().commit();
-        session.close();
+        roomRepository.delete(id);
     }
 
     public void updateRoom(RoomsDto params) {
-        Session session = sessionFactory.openSession();
-        session.getTransaction().begin();
-        RoomsEntity roomsEntity = session.load(RoomsEntity.class, params.getId());
-        roomsEntity.setUpdatedAt(getCurrentTimestamp());
-        roomsEntity.setId(params.getId());
-        roomsEntity.setDescription(params.getDescription());
-        session.update(roomsEntity);
-        session.getTransaction().commit();
-        session.close();
+        roomRepository.update(params);
     }
 }
