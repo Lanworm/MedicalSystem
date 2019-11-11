@@ -25,6 +25,7 @@ public class RoomRepository {
         this.sessionFactory = sessionFactory;
     }
 
+    @Transactional
     public List<RoomsEntity> getAll() {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(RoomsEntity.class);

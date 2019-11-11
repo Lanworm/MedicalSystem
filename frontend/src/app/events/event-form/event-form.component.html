@@ -20,6 +20,7 @@
             <div class="ui calendar" id="endDate">
               <div class="ui input left icon select_full_width">
                 <i class="calendar icon"></i>
+
                 <input type="text" placeholder="Date/Time" [formControl]="toControl">
               </div>
             </div>
@@ -27,6 +28,7 @@
         </div>
         <div class="ui row">
           <div class="four wide column">
+            <label>Patient</label>
             <select class="ui dropdown select_full_width" [formControl]="patientControl">
               <option *ngFor="let item of patientsList" [value]="item.id">
                 {{item.first_name + ' ' + item.second_name + ' ' + item.last_name}}
@@ -34,6 +36,7 @@
             </select>
           </div>
           <div class="four wide column">
+            <label>Procedure</label>
             <select class="ui dropdown select_full_width" [formControl]="procedureControl">
               <option *ngFor="let item of procedureList" [value]="item.id">
                 {{item.description}}
@@ -41,6 +44,7 @@
             </select>
           </div>
           <div class="two wide column ">
+            <label>Room</label>
             <select class="ui dropdown select_full_width" [formControl]="roomControl">
               <option *ngFor="let item of roomList" [value]="item.id">
                 {{item.description}}
@@ -48,6 +52,7 @@
             </select>
           </div>
           <div class="four wide column">
+            <label>Doctor</label>
             <select class="ui dropdown select_full_width" [formControl]="staffControl">
               <option *ngFor="let item of staffList" [value]="item.id">
                 {{item.first_name + ' ' + item.second_name + ' ' + item.last_name}}
@@ -55,6 +60,7 @@
             </select>
           </div>
           <div class="two wide column">
+            <label>Status</label>
             <select class="ui dropdown select_full_width" [formControl]="statusControl">
               <option *ngFor="let item of eventStatus" [value]="item.key">
                 {{item.value}}
