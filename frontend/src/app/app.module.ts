@@ -11,23 +11,36 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {DialogComponent} from './shared/dialog/dialog/dialog.component';
 import {NotFoundComponent} from './404/not-found/not-found.component';
 import {RouterModule, Routes} from '@angular/router';
-import { MenuComponent } from './menu/menu.component';
+import {MenuComponent} from './menu/menu.component';
+import {LoginComponent} from './login/login.component';
+import {DashboardsComponent} from './dashboards/dashboards.component';
 
 const routes: Routes = [
-  {
-    path: 'events',
-    component: EventsComponent,
 
+  {
+    path: 'dashboard',
+    component: DashboardsComponent,
+    children: [
+      {
+        path: 'events',
+        component: EventsComponent,
+      },
+    ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: '',
-    redirectTo: '/events',
+    redirectTo: 'dashboard/events',
     pathMatch: 'full'
   },
   {
     path: '**',
     component: NotFoundComponent
-  }
+  },
+
 ];
 
 @NgModule({
@@ -39,6 +52,8 @@ const routes: Routes = [
     DialogComponent,
     NotFoundComponent,
     MenuComponent,
+    LoginComponent,
+    DashboardsComponent,
   ],
   imports: [
     BrowserModule,
