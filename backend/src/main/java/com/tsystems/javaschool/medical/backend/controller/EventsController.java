@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.medical.backend.controller;
 
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
+import com.tsystems.javaschool.medical.backend.dto.EventUpdateDto;
 import com.tsystems.javaschool.medical.backend.services.EventsService;
 import com.tsystems.javaschool.medical.backend.util.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.POST)
-    public BaseResponse editEvent(@RequestBody EventRequestDto params) {
-        eventsService.updateEvent(params);
-        return eventsService.getEventsList(1, 10, null, null);
+    public EventUpdateDto editEvent(@RequestBody EventRequestDto params) {
+        return eventsService.updateEvent(params);
     }
 }

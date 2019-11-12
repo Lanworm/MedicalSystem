@@ -1,5 +1,7 @@
 package com.tsystems.javaschool.medical.backend.dao;
 
+import com.tsystems.javaschool.medical.backend.component.EventStatusChanger;
+import com.tsystems.javaschool.medical.backend.component.EventStatusChangerImpl;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.entities.*;
 import org.hibernate.Criteria;
@@ -22,8 +24,8 @@ public class EventRepository {
     private SessionFactory sessionFactory;
 
     @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory){
-        this.sessionFactory=sessionFactory;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Transactional
@@ -102,6 +104,7 @@ public class EventRepository {
         ProceduresEntity proceduresEntity = session.load(ProceduresEntity.class, params.getProcedureId());
         RoomsEntity roomsEntity = session.load(RoomsEntity.class, params.getRoomId());
         StaffEntity staffEntity = session.load(StaffEntity.class, params.getStaffId());
+
         eventsEntity.setPatientByPatientId(patientsEntity);
         eventsEntity.setProcedureByProcedureId(proceduresEntity);
         eventsEntity.setRoomByRoomId(roomsEntity);
@@ -111,5 +114,14 @@ public class EventRepository {
         eventsEntity.setEndDate(params.getEndDate());
         eventsEntity.setUpdatedAt(getCurrentTimestamp());
         session.update(eventsEntity);
+    }
+
+    @Transactional
+    public EventsEntity getEventById(int eventId) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(EventsEntity.class);
+        criteria.add(Restrictions.eq("id", eventId));
+        EventsEntity result = (EventsEntity) criteria.uniqueResult();
+        return result;
     }
 }

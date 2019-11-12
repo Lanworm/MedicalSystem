@@ -1,8 +1,13 @@
 package com.tsystems.javaschool.medical.backend.services;
 
+import com.tsystems.javaschool.medical.backend.CustomExeption;
+import com.tsystems.javaschool.medical.backend.component.EventStatusChangerImpl;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
+import com.tsystems.javaschool.medical.backend.dto.EventUpdateDto;
 import com.tsystems.javaschool.medical.backend.dto.EventsDto;
+import com.tsystems.javaschool.medical.backend.dto.MsgDto;
+import com.tsystems.javaschool.medical.backend.dto.enums.MsgStatus;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
 import com.tsystems.javaschool.medical.backend.util.BaseResponse;
 import org.modelmapper.ModelMapper;
@@ -10,19 +15,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class EventsService {
 
     private final ModelMapper modelMapper;
-
     private final EventRepository eventRepository;
+    private final EventStatusChangerImpl eventStatusChanger;
 
     @Autowired
-    public EventsService(ModelMapper modelMapper, EventRepository eventRepository) {
+    public EventsService(ModelMapper modelMapper, EventRepository eventRepository, EventStatusChangerImpl eventStatusChanger) {
         this.modelMapper = modelMapper;
         this.eventRepository = eventRepository;
+        this.eventStatusChanger = eventStatusChanger;
     }
 
     public BaseResponse getEventsList(int start, int length, String orderBy, String orderDir) {
@@ -49,7 +57,24 @@ public class EventsService {
         eventRepository.delete(id);
     }
 
-    public void updateEvent(EventRequestDto params) {
-        eventRepository.update(params);
+    public EventUpdateDto updateEvent(EventRequestDto params) {
+        EventUpdateDto eventUpdateDto = new EventUpdateDto();
+        List<MsgDto> msgDtoList = new ArrayList<>();
+        MsgDto msgDto = new MsgDto();
+        try {
+            eventStatusChanger.changeStatus(params.getId(), params.getStatus());
+            eventRepository.update(params);
+            msgDto.setMessage("Update success");
+            msgDto.setStatus(MsgStatus.SUCCESS);
+            msgDtoList.add(msgDto);
+            eventUpdateDto.setMsg(msgDtoList);
+        }
+        catch (CustomExeption e){
+            msgDto.setMessage(e.getMessage());
+            msgDto.setStatus(MsgStatus.ERROR);
+            msgDtoList.add(msgDto);
+            eventUpdateDto.setMsg(msgDtoList);
+        }
+        return eventUpdateDto;
     }
 }

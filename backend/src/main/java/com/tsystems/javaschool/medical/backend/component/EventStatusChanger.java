@@ -4,6 +4,6 @@ import com.tsystems.javaschool.medical.backend.CustomExeption;
 
 public interface EventStatusChanger {
 
-    void changeStatus(int eventId, String newStatus) throws CustomExeption;
+    void changeStatus(int eventId , String newStatus) throws CustomExeption;
 
 }
