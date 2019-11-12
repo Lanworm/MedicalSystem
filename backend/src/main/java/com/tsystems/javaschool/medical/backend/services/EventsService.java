@@ -15,21 +15,27 @@ import java.util.List;
 @Service
 public class EventsService {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    private final EventRepository eventRepository;
 
     @Autowired
-    EventRepository eventRepository;
+    public EventsService(ModelMapper modelMapper, EventRepository eventRepository) {
+        this.modelMapper = modelMapper;
+        this.eventRepository = eventRepository;
+    }
 
     public BaseResponse getEventsList(int start, int length, String orderBy, String orderDir) {
 
         BaseResponse baseResponse = new BaseResponse();
         List<EventsDto> eventsList = new ArrayList<>();
         List<EventsEntity> eventsEntityList = eventRepository.getAll(start, length, orderBy, orderDir);
+
         for (Object a : eventsEntityList) {
             EventsDto eventsDto = modelMapper.map(a, EventsDto.class);
             eventsList.add(eventsDto);
         }
+
         baseResponse.getList().addAll(eventsList);
         baseResponse.setRecords(eventRepository.getCount());
         return baseResponse;
