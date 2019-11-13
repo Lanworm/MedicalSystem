@@ -28,7 +28,7 @@ public class EventRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<EventsEntity> getAll(int start, int length, String orderBy, String orderDir) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(EventsEntity.class);
@@ -52,7 +52,7 @@ public class EventRepository {
         return eventsEntityList;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public long getCount() {
         Session session = sessionFactory.getCurrentSession();
 

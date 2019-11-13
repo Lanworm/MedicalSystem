@@ -26,15 +26,13 @@ public class EventsController {
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.PUT)
-    public BaseResponse addEvent(@RequestBody EventRequestDto params) {
+    public void addEvent(@RequestBody EventRequestDto params) {
         eventsService.addEvent(params);
-        return eventsService.getEventsList(1, 10, null, null);
     }
 
     @RequestMapping(value = "/events/{id}", method = RequestMethod.DELETE)
-    public BaseResponse deleteEvent(@PathVariable("id") int id) {
+    public void deleteEvent(@PathVariable("id") int id) {
         eventsService.deleteEvent(id);
-        return eventsService.getEventsList(1, 10, null, null);
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.POST)

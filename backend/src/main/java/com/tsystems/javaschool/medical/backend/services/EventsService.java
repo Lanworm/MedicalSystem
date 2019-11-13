@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -38,6 +36,7 @@ public class EventsService {
         BaseResponse baseResponse = new BaseResponse();
         List<EventsDto> eventsList = new ArrayList<>();
         List<EventsEntity> eventsEntityList = eventRepository.getAll(start, length, orderBy, orderDir);
+        long count = eventRepository.getCount();
 
         for (Object a : eventsEntityList) {
             EventsDto eventsDto = modelMapper.map(a, EventsDto.class);
@@ -45,7 +44,7 @@ public class EventsService {
         }
 
         baseResponse.getList().addAll(eventsList);
-        baseResponse.setRecords(eventRepository.getCount());
+        baseResponse.setRecords(count);
         return baseResponse;
     }
 
