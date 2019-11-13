@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {PatientService} from '../../shared/patients/patient.service';
-import {EventsService} from '../../shared/events/events.service';
-import {ProcedureService} from '../../shared/procedures/procedure.service';
-import {RoomService} from '../../shared/rooms/room.service';
-import {StaffService} from '../../shared/staff/staff.service';
+import {PatientService} from '../../services/patients/patient.service';
+import {EventsService} from '../../services/events/events.service';
+import {ProcedureService} from '../../services/procedures/procedure.service';
+import {RoomService} from '../../services/rooms/room.service';
+import {StaffService} from '../../services/staff/staff.service';
 import * as moment from 'moment';
 
 

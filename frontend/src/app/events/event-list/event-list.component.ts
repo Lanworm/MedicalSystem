@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {TIME_FORMAT} from '../../constants';
-import {EventsService} from '../../shared/events/events.service';
+import {EventsService} from '../../services/events/events.service';
 
 @Component({
   selector: 'app-event-list',
@@ -24,7 +24,6 @@ export class EventListComponent implements OnInit {
   }
 
   getTableData = (dataTablesParameters: any, callback) => {
-    console.log(dataTablesParameters);
     const {start, length, order, columns} = dataTablesParameters;
     const orderDir = order[0].dir;
     const orderBy = columns[order[0].column].name;
@@ -35,7 +34,14 @@ export class EventListComponent implements OnInit {
         recordsFiltered: resp.records,
         data: resp.list
       });
-    });
+    }, error => {
+      callback({
+        recordsTotal: 0,
+        recordsFiltered: 0,
+        data: []
+      });
+      }
+    );
   };
 
   ngOnInit(): void {

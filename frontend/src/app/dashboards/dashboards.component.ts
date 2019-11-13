@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpErrorInterceptor} from '../utils/http-error.interceptor';
 
 @Component({
   selector: 'app-dashboards',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardsComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
 
-  ngOnInit() {
+}
+
+ngOnInit() {
+
   }
 
 }

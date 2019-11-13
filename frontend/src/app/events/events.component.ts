@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {EventsService} from '../shared/events/events.service';
+import {Component, OnInit, Output} from '@angular/core';
+import {EventsService} from '../services/events/events.service';
+import {throwError} from 'rxjs';
 
 @Component({
   selector: 'app-events',
