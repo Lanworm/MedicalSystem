@@ -1,6 +1,5 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EventsService} from '../services/events/events.service';
-import {throwError} from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -17,6 +16,7 @@ export class EventsComponent implements OnInit {
     icon: 'trash alternate icon',
     title: 'Delete event'
   };
+  public dialogError;
 
   constructor(private eventService: EventsService) {
   }
@@ -28,6 +28,7 @@ export class EventsComponent implements OnInit {
 
   public closeDialog = () => {
     this.showDialog = false;
+    this.dialogError = null;
   };
 
   public openDeleteDialog = (data) => {
@@ -55,10 +56,15 @@ export class EventsComponent implements OnInit {
   submitForm = (params) => {
     if (this.dialogData) {
       params.id = this.dialogData.id;
-      this.eventService.updateEvent(params).subscribe(() => {
-          this.closeDialog();
-          const table = $('#eventTableList').DataTable();
-          table.ajax.reload();
+      this.eventService.updateEvent(params).subscribe((res) => {
+          if (res.msg) {
+            this.dialogError = res.msg;
+          } else {
+            this.dialogError = null;
+            this.closeDialog();
+            const table = $('#eventTableList').DataTable();
+            table.ajax.reload();
+          }
         }, error => {
           console.error(error);
           this.closeDialog();

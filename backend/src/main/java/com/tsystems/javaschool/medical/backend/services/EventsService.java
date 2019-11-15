@@ -63,10 +63,6 @@ public class EventsService {
         try {
             eventStatusChanger.changeStatus(params.getId(), params.getStatus());
             eventRepository.update(params);
-            msgDto.setMessage("Update success");
-            msgDto.setStatus(MsgStatus.SUCCESS);
-            msgDtoList.add(msgDto);
-            eventUpdateDto.setMsg(msgDtoList);
         }
         catch (EventStatusChangerExeption e){
             msgDto.setMessage(e.getMessage());

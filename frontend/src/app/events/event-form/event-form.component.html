@@ -72,6 +72,7 @@
       <br/>
     </div>
     <div class="actions">
+      <p class="dialog_error" *ngFor="let error of dialogError">{{error.message}}</p>
       <div class="ui black deny button" (click)="closeDialog()">
         Cancel
       </div>

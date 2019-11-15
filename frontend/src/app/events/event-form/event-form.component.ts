@@ -18,6 +18,7 @@ export class EventFormComponent implements OnInit {
   @Input() closeDialog;
   @Input() showDialog: boolean;
   @Input() submitForm;
+  @Input() dialogError;
   public patientsList: Array<any> = [];
   public procedureList: Array<any> = [];
   public roomList: Array<any> = [];
