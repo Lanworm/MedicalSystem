@@ -54,7 +54,7 @@ public class EventRepository {
     public long getCount() {
         Session session = sessionFactory.getCurrentSession();
 
-        String hql = "select count(*) from  EventsEntity";
+        String hql = "select count(*) from  EventsEntity where deleted='N'";
         Query query = session.createQuery(hql);
         Long count = (Long) query.uniqueResult();
 
