@@ -4,16 +4,20 @@ import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.dto.EventUpdateDto;
 import com.tsystems.javaschool.medical.backend.services.EventsService;
 import com.tsystems.javaschool.medical.backend.util.BaseResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class EventsController {
 
-    @Autowired
-    private EventsService eventsService;
 
+    private final EventsService eventsService;
+
+    public EventsController(EventsService eventsService) {
+        this.eventsService = eventsService;
+    }
+
+    @ExceptionHandler(Exception.class)
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public BaseResponse getEventsList(
             @RequestParam(value = "start") int page,

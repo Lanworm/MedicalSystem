@@ -2,7 +2,6 @@ package com.tsystems.javaschool.medical.backend.controller;
 
 import com.tsystems.javaschool.medical.backend.dto.SpecializationsDto;
 import com.tsystems.javaschool.medical.backend.services.SpecializationsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class SpecializationsController {
 
-    @Autowired
-    private SpecializationsService specializationsService;
+    private final SpecializationsService specializationsService;
+
+    public SpecializationsController(SpecializationsService specializationsService) {
+        this.specializationsService = specializationsService;
+    }
 
 
     @RequestMapping(value = "/specializations", method = RequestMethod.GET)

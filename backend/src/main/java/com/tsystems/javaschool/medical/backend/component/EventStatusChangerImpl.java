@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.medical.backend.component;
 
-import com.tsystems.javaschool.medical.backend.CustomExeption;
+import com.tsystems.javaschool.medical.backend.EventStatusChangerExeption;
 import com.tsystems.javaschool.medical.backend.component.enums.EventStatus;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
@@ -18,11 +18,11 @@ public class EventStatusChangerImpl implements EventStatusChanger {
     }
 
     @Override
-    public void changeStatus(int eventId, String newStatus) throws CustomExeption {
+    public void changeStatus(int eventId, String newStatus) throws EventStatusChangerExeption {
         EventsEntity eventsEntity = eventRepository.getEventById(eventId);
         String eventStatus = eventsEntity.getStatus();
         if (eventStatus.equals(EventStatus.IN_WORK.getValue())  && newStatus.equals(EventStatus.ASSIGNED.getValue())) {
-            throw new CustomExeption("Event status can not be changet to " + newStatus + " because he is already in status " + eventStatus);
+            throw new EventStatusChangerExeption("Event status can not be changet to " + newStatus + " because he is already in status " + eventStatus);
         }
     }
 }

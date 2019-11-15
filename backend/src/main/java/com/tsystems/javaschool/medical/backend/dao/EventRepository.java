@@ -1,7 +1,5 @@
 package com.tsystems.javaschool.medical.backend.dao;
 
-import com.tsystems.javaschool.medical.backend.component.EventStatusChanger;
-import com.tsystems.javaschool.medical.backend.component.EventStatusChangerImpl;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.entities.*;
 import org.hibernate.Criteria;

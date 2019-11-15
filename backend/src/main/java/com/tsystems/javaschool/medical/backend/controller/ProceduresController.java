@@ -2,7 +2,6 @@ package com.tsystems.javaschool.medical.backend.controller;
 
 import com.tsystems.javaschool.medical.backend.dto.ProceduresDto;
 import com.tsystems.javaschool.medical.backend.services.ProceduresService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +10,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProceduresController {
 
-    @Autowired
-    private ProceduresService proceduresService;
 
+    private final ProceduresService proceduresService;
+
+    public ProceduresController(ProceduresService proceduresService) {
+        this.proceduresService = proceduresService;
+    }
 
     @RequestMapping(value = "/procedures", method = RequestMethod.GET)
     public List<ProceduresDto> getProcedures() {

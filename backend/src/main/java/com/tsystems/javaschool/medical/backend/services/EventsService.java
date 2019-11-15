@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.medical.backend.services;
 
-import com.tsystems.javaschool.medical.backend.CustomExeption;
+import com.tsystems.javaschool.medical.backend.EventStatusChangerExeption;
 import com.tsystems.javaschool.medical.backend.component.EventStatusChangerImpl;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
@@ -68,7 +68,7 @@ public class EventsService {
             msgDtoList.add(msgDto);
             eventUpdateDto.setMsg(msgDtoList);
         }
-        catch (CustomExeption e){
+        catch (EventStatusChangerExeption e){
             msgDto.setMessage(e.getMessage());
             msgDto.setStatus(MsgStatus.ERROR);
             msgDtoList.add(msgDto);

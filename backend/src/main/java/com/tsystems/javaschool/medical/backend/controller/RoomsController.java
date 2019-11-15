@@ -2,7 +2,6 @@ package com.tsystems.javaschool.medical.backend.controller;
 
 import com.tsystems.javaschool.medical.backend.dto.RoomsDto;
 import com.tsystems.javaschool.medical.backend.services.RoomsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class RoomsController {
 
-    @Autowired
-    private RoomsService roomsService;
+    private final RoomsService roomsService;
+
+    public RoomsController(RoomsService roomsService) {
+        this.roomsService = roomsService;
+    }
 
 
     @RequestMapping(value = "/rooms", method = RequestMethod.GET)

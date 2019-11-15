@@ -2,7 +2,6 @@ package com.tsystems.javaschool.medical.backend.controller;
 
 import com.tsystems.javaschool.medical.backend.dto.PatientsDto;
 import com.tsystems.javaschool.medical.backend.services.PatientsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +10,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class PatientsController {
 
-    @Autowired
-    private PatientsService patientsService;
+
+    private final PatientsService patientsService;
+
+    public PatientsController(PatientsService patientsService) {
+        this.patientsService = patientsService;
+    }
 
     @RequestMapping(value = "/patients", method = RequestMethod.GET)
     public List<PatientsDto> getPatientsList() {
@@ -37,7 +40,7 @@ public class PatientsController {
     }
 
     @RequestMapping(value = "/patients", method = RequestMethod.POST)
-    public List< PatientsDto> editPatients(@RequestBody final  PatientsDto params) {
+    public List<PatientsDto> editPatients(@RequestBody final PatientsDto params) {
         patientsService.updatePatient(params);
         return patientsService.getPatientsList();
     }
