@@ -65,38 +65,38 @@ export class EventListComponent implements OnInit {
       ajax: this.getTableData,
       columns: [
         {
-          name: 'startDate',
+          name: 'from',
           title: 'From',
           render: (data, type, row) => {
             return moment(row.start_date).format(TIME_FORMAT);
           },
         },
         {
-          name: 'endDate',
+          name: 'to',
           title: 'To',
           render: (data, type, row) => {
             return moment(row.end_date).format(TIME_FORMAT);
           },
         },
         {
-          name: 'patientsByPatientId',
+          name: 'patient',
           render: (data, type, row) => {
             return row.patient.first_name + ' ' + row.patient.second_name + ' ' + row.patient.last_name;
           },
           title: 'Patient'
         },
         {
-          name: 'procedure_id',
+          name: 'procedure',
           title: 'Procedure',
           data: 'procedure.description'
         },
         {
-          name: 'room_id',
+          name: 'room',
           title: 'Room',
           data: 'room.description'
         },
         {
-          name: 'staff_id',
+          name: 'doctor',
           render: (data, type, row) => {
             return row.staff.first_name + ' ' + row.staff.second_name + ' ' + row.staff.last_name;
           },

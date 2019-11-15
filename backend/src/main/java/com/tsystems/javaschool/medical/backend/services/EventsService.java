@@ -10,9 +10,12 @@ import com.tsystems.javaschool.medical.backend.dto.MsgDto;
 import com.tsystems.javaschool.medical.backend.dto.enums.MsgStatus;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
 import com.tsystems.javaschool.medical.backend.util.BaseResponse;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.List;
 @Service
 public class EventsService {
 
+    static final Logger rootLogger = LogManager.getLogger(EventsService.class);
     private final ModelMapper modelMapper;
     private final EventRepository eventRepository;
     private final EventStatusChangerImpl eventStatusChanger;
@@ -31,6 +35,7 @@ public class EventsService {
         this.eventStatusChanger = eventStatusChanger;
     }
 
+    @Transactional(readOnly = true)
     public BaseResponse getEventsList(int start, int length, String orderBy, String orderDir) {
 
         BaseResponse baseResponse = new BaseResponse();
@@ -69,6 +74,7 @@ public class EventsService {
             msgDto.setStatus(MsgStatus.ERROR);
             msgDtoList.add(msgDto);
             eventUpdateDto.setMsg(msgDtoList);
+            rootLogger.error(e.getMessage());
         }
         return eventUpdateDto;
     }

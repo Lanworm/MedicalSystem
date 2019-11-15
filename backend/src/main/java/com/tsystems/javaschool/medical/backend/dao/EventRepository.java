@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
@@ -26,7 +27,7 @@ public class EventRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional(readOnly = true)
+
     public List<EventsEntity> getAll(int start, int length, String orderBy, String orderDir) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(EventsEntity.class);
@@ -34,23 +35,40 @@ public class EventRepository {
         criteria.setMaxResults(length);
         criteria.setFirstResult(start);
 
-        Criteria crit = criteria.createCriteria("patientByPatientId");
-        crit.addOrder(Order.desc("firstName"));
+        HashMap filterMap = new HashMap() {{
+            put("patient", new HashMap() {{ put("table", "patientByPatientId");put("field", "firstName"); }});
+            put("room", new HashMap() {{ put("table", "roomByRoomId");put("field", "description"); }});
+            put("procedure", new HashMap() {{ put("table", "procedureByProcedureId");put("field", "description"); }});
+            put("doctor", new HashMap() {{ put("table", "staffByStaffId");put("field", "firstName"); }});
+            put("from", new HashMap() {{put("table", null);put("field", "startDate"); }});
+            put("to", new HashMap() {{ put("table", null);put("field", "endDate"); }});
+            put("status", new HashMap() {{put("table", null);put("field", "status"); }});
+        }};
 
-//        if (orderBy != null && !orderBy.isEmpty() && orderDir != null && !orderDir.isEmpty()) {
-//            if (orderDir.equals("desc")) {
-//                criteria.addOrder(Order.desc(orderBy));
-//            } else if (orderDir.equals("asc")) {
-//                criteria.addOrder(Order.asc(orderBy));
-//            }
-//        }
+        if (filterMap.containsKey(orderBy)) {
+            HashMap params = (HashMap) filterMap.get(orderBy);
+            if (params.get("table") == null) {
+                if (orderDir.equals("desc")) {
+                    criteria.addOrder(Order.desc(params.get("field").toString()));
+                } else if (orderDir.equals("asc")) {
+                    criteria.addOrder(Order.asc(params.get("field").toString()));
+                }
+            } else {
+                Criteria secondCriteria = criteria.createCriteria(params.get("table").toString());
+                if (orderDir.equals("desc")) {
+                    secondCriteria.addOrder(Order.desc(params.get("field").toString()));
+                } else if (orderDir.equals("asc")) {
+                    secondCriteria.addOrder(Order.asc(params.get("field").toString()));
+                }
+            }
+        }
 
         List<EventsEntity> eventsEntityList = criteria.list();
 
         return eventsEntityList;
     }
 
-    @Transactional(readOnly = true)
+
     public long getCount() {
         Session session = sessionFactory.getCurrentSession();
 

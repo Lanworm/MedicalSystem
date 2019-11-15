@@ -17,14 +17,12 @@ public class EventsController {
         this.eventsService = eventsService;
     }
 
-    @ExceptionHandler(Exception.class)
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public BaseResponse getEventsList(
             @RequestParam(value = "start") int page,
             @RequestParam(value = "length") int size,
             @RequestParam(value = "orderBy") String orderBy,
             @RequestParam(value = "orderDir") String orderDir
-
     ) {
         return eventsService.getEventsList(page, size, orderBy, orderDir);
     }
