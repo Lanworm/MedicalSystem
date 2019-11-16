@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
-import {TIME_FORMAT} from '../../constants';
+import {TIME_FORMAT, USER_ROLES} from '../../constants';
 import {EventsService} from '../../services/events/events.service';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-event-list',
@@ -20,7 +21,7 @@ export class EventListComponent implements OnInit {
     ASSIGNED: 'blue'
   };
 
-  constructor(private eventService: EventsService) {
+  constructor(private eventService: EventsService, private authService: AuthService) {
   }
 
   getTableData = (dataTablesParameters: any, callback) => {
@@ -29,17 +30,17 @@ export class EventListComponent implements OnInit {
     const orderBy = columns[order[0].column].name;
 
     this.eventService.getAll({start, length, orderBy, orderDir}).subscribe(resp => {
-      callback({
-        recordsTotal: resp.records,
-        recordsFiltered: resp.records,
-        data: resp.list
-      });
-    }, error => {
-      callback({
-        recordsTotal: 0,
-        recordsFiltered: 0,
-        data: []
-      });
+        callback({
+          recordsTotal: resp.records,
+          recordsFiltered: resp.records,
+          data: resp.list
+        });
+      }, error => {
+        callback({
+          recordsTotal: 0,
+          recordsFiltered: 0,
+          data: []
+        });
       }
     );
   };
@@ -120,6 +121,7 @@ export class EventListComponent implements OnInit {
         {
           orderable: false,
           className: 'ui center aligned',
+          visible: this.authService.userHasRole(USER_ROLES.ROLE_ADMIN),
           render: () => {
             return ('<i class="trash link icon" delete></i>');
           },

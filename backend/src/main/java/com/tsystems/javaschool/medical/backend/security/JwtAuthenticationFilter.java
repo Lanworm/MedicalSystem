@@ -70,7 +70,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jwtCookie.setHttpOnly(true);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().print(this.objectMapper.writeValueAsString(new JwtResponse(token, expiresAt)));
+        response.getWriter().print(this.objectMapper.writeValueAsString(new JwtResponse(token, expiresAt, user.getAuthorities())));
         // jwtCookie.setSecure(true);
         response.addCookie(jwtCookie);
         // response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);

@@ -9,6 +9,7 @@ import {tap} from 'rxjs/operators';
 export class AuthService {
 
   private expiresAt: number = null;
+  private roles: Array<any> = [];
 
   constructor(private http: HttpClient) {
     const expiresAt = localStorage.getItem('jwt_expires_at');
@@ -23,6 +24,7 @@ export class AuthService {
       .append('password', password);
     return this.http.post('/api/authenticate', body).pipe(tap(response => {
       this.expiresAt = response.expiresAt;
+      this.roles = response.authorities;
       localStorage.setItem('jwt_expires_at', String(this.expiresAt));
     }));
   }
@@ -31,8 +33,13 @@ export class AuthService {
     return this.http.post('/api/logout', {}).pipe(tap(response => {
       localStorage.removeItem('jwt_expires_at');
       this.expiresAt = null;
+      this.roles = [];
     }));
   }
+
+  public userHasRole = (role): boolean => {
+    return Boolean(this.roles.find(item => item.authority === role));
+  };
 
   public isAuthenticated(): boolean {
     return this.expiresAt != null && (new Date().getTime() <= this.expiresAt);
