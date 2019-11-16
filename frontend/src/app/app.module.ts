@@ -15,18 +15,20 @@ import {MenuComponent} from './menu/menu.component';
 import {LoginComponent} from './login/login.component';
 import {DashboardsComponent} from './dashboards/dashboards.component';
 import {HttpErrorInterceptor} from './utils/http-error.interceptor';
-import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
-import {ErrorDialogService} from './services/error/error-dialog.service';
+import {ErrorDialogComponent} from './error-dialog/error-dialog.component';
+import {AuthGuard} from './services/auth/auth.guard';
 
 const routes: Routes = [
 
   {
     path: 'dashboard',
     component: DashboardsComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'events',
         component: EventsComponent,
+        canActivate: [AuthGuard]
       },
     ]
   },

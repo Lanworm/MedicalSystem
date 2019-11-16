@@ -1,41 +1,42 @@
-
 <div class="login_wrapper">
-
-  <h2 class="ui center aligned icon header">
-    <i class="medrt red icon"></i>
-    <div class="content">
-      Independent Medicine
-      <div class="sub header">Your health is in our hands</div>
-    </div>
-  </h2>
-  <div class="ui  centered grid">
-    <div class="three column centered row">
-      <div class="column">
-        <div class="ui labeled input input_wrapper">
-          <div class="ui label label_wraper">
-            Login
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h2 class="ui center aligned icon header">
+      <i class="medrt red icon"></i>
+      <div class="content">
+        Independent Medicine
+        <div class="sub header">Your health is in our hands</div>
+      </div>
+    </h2>
+    <div class="ui  centered grid">
+      <div class="three column centered row">
+        <div class="column">
+          <div class="ui labeled input input_wrapper">
+            <div class="ui label label_wraper">
+              Login
+            </div>
+            <input type="text" placeholder="Login..." formControlName="username">
           </div>
-          <input type="text" placeholder="Login...">
+        </div>
+      </div>
+      <div class="three column centered row">
+        <div class="column">
+          <div class="ui labeled input input_wrapper">
+            <div class="ui label label_wraper">
+              Password
+            </div>
+            <input type="password" placeholder="Password..." formControlName="password">
+          </div>
+        </div>
+      </div>
+      <div class="three column centered row">
+        <div class="column center aligned">
+          <button class="ui green button" type="submit" [disabled]="!loginForm.valid">
+            Log in
+          </button>
         </div>
       </div>
     </div>
-    <div class="three column centered row">
-      <div class="column">
-        <div class="ui labeled input input_wrapper">
-          <div class="ui label label_wraper">
-            Password
-          </div>
-          <input type="password" placeholder="Password">
-        </div>
-      </div>
-    </div>
-    <div class="three column centered row">
-      <div class="column center aligned">
-        <button class="ui green button">
-          Login
-        </button>
-    </div>
-  </div>
+  </form>
 </div>
 
 
