@@ -1,15 +1,28 @@
-<div class="ui secondary pointing menu">
+<div class="ui pointing menu">
   <a class="item" routerLink="events" routerLinkActive="active">
+    <i class="clipboard list icon"></i>
     Events
   </a>
   <a class="item" routerLink="patients" routerLinkActive="active">
+    <i class="address card icon"></i>
     Patients
   </a>
   <a class="item" routerLink="rooms" routerLinkActive="active">
+    <i class="bed icon"></i>
     Rooms
   </a>
+  <a class="item" routerLink="rooms" routerLinkActive="active">
+    <i class="calendar alternate outline icon"></i>
+    Schedule
+  </a>
   <div class="right menu">
+    <div class="item">
+      <i class="user icon"></i>
+      <span>Username</span>
+    </div>
+
     <a class="ui item" (click)="onLogout()">
+      <i class="sign out alternate icon"></i>
       Logout
     </a>
   </div>
