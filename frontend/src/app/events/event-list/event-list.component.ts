@@ -4,6 +4,9 @@ import {TIME_FORMAT, USER_ROLES} from '../../constants';
 import {EventsService} from '../../services/events/events.service';
 import {AuthService} from '../../services/auth/auth.service';
 
+declare var $: any;
+
+
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
@@ -47,7 +50,7 @@ export class EventListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // @ts-ignore
+
     $('#eventTableList').DataTable({
       searching: false,
       serverSide: true,

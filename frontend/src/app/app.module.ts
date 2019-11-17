@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {EventsComponent} from './events/events.component';
 import {EventListComponent} from './events/event-list/event-list.component';
-import {DataTablesModule} from 'angular-datatables';
 import {EventFormComponent} from './events/event-form/event-form.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DialogComponent} from './services/dialog/dialog/dialog.component';
@@ -64,7 +63,6 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    DataTablesModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],

@@ -7,6 +7,7 @@ import {RoomService} from '../../services/rooms/room.service';
 import {StaffService} from '../../services/staff/staff.service';
 import * as moment from 'moment';
 
+declare var $: any;
 
 @Component({
   selector: 'app-event-form',

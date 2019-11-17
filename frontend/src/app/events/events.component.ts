@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {EventsService} from '../services/events/events.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
