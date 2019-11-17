@@ -2,14 +2,10 @@ package com.tsystems.javaschool.medical.backend.services;
 
 import com.tsystems.javaschool.medical.backend.component.EventStatusChangerImpl;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
-import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
-import com.tsystems.javaschool.medical.backend.dto.EventUpdateDto;
-import com.tsystems.javaschool.medical.backend.dto.EventsDto;
-import com.tsystems.javaschool.medical.backend.dto.MsgDto;
+import com.tsystems.javaschool.medical.backend.dto.*;
 import com.tsystems.javaschool.medical.backend.dto.enums.MsgStatus;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
 import com.tsystems.javaschool.medical.backend.exception.EventStatusChangerExeption;
-import com.tsystems.javaschool.medical.backend.util.BaseResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
@@ -36,9 +32,9 @@ public class EventsService {
     }
 
     @Transactional(readOnly = true)
-    public BaseResponse getEventsList(int start, int length, String orderBy, String orderDir) {
+    public EventListResponse getEventsList(int start, int length, String orderBy, String orderDir) {
 
-        BaseResponse baseResponse = new BaseResponse();
+        EventListResponse eventListResponse = new EventListResponse();
         List<EventsDto> eventsList = new ArrayList<>();
         List<EventsEntity> eventsEntityList = eventRepository.getAll(start, length, orderBy, orderDir);
         long count = eventRepository.getCount();
@@ -48,9 +44,9 @@ public class EventsService {
             eventsList.add(eventsDto);
         }
 
-        baseResponse.getList().addAll(eventsList);
-        baseResponse.setRecords(count);
-        return baseResponse;
+        eventListResponse.setList(eventsList);
+        eventListResponse.setRecords(count);
+        return eventListResponse;
     }
 
     public void addEvent(EventRequestDto params) {

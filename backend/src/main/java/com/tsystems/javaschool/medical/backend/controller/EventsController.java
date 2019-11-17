@@ -1,9 +1,9 @@
 package com.tsystems.javaschool.medical.backend.controller;
 
+import com.tsystems.javaschool.medical.backend.dto.EventListResponse;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.dto.EventUpdateDto;
 import com.tsystems.javaschool.medical.backend.services.EventsService;
-import com.tsystems.javaschool.medical.backend.util.BaseResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +18,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.GET)
-    public BaseResponse getEventsList(
+    public EventListResponse getEventsList(
             @RequestParam(value = "start") int page,
             @RequestParam(value = "length") int size,
             @RequestParam(value = "orderBy") String orderBy,
