@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.medical.backend;
+package com.tsystems.javaschool.medical.backend.exception;
 
 public class EventStatusChangerExeption extends RuntimeException {
 

@@ -1,9 +1,9 @@
 package com.tsystems.javaschool.medical.backend.component;
 
-import com.tsystems.javaschool.medical.backend.EventStatusChangerExeption;
 import com.tsystems.javaschool.medical.backend.component.enums.EventStatus;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
+import com.tsystems.javaschool.medical.backend.exception.EventStatusChangerExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

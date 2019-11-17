@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.medical.backend.component;
 
-import com.tsystems.javaschool.medical.backend.EventStatusChangerExeption;
+import com.tsystems.javaschool.medical.backend.exception.EventStatusChangerExeption;
 
 public interface EventStatusChanger {
 

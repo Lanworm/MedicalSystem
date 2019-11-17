@@ -1,6 +1,5 @@
 package com.tsystems.javaschool.medical.backend.services;
 
-import com.tsystems.javaschool.medical.backend.EventStatusChangerExeption;
 import com.tsystems.javaschool.medical.backend.component.EventStatusChangerImpl;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
@@ -9,6 +8,7 @@ import com.tsystems.javaschool.medical.backend.dto.EventsDto;
 import com.tsystems.javaschool.medical.backend.dto.MsgDto;
 import com.tsystems.javaschool.medical.backend.dto.enums.MsgStatus;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
+import com.tsystems.javaschool.medical.backend.exception.EventStatusChangerExeption;
 import com.tsystems.javaschool.medical.backend.util.BaseResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
