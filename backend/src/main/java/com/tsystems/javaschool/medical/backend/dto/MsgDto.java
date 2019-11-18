@@ -3,8 +3,8 @@ package com.tsystems.javaschool.medical.backend.dto;
 import com.tsystems.javaschool.medical.backend.dto.enums.MsgStatus;
 
 public class MsgDto {
-    String message;
-    MsgStatus status= MsgStatus.SUCCESS;
+    private String message;
+    private MsgStatus status= MsgStatus.SUCCESS;
 
     public String getMessage() {
         return message;

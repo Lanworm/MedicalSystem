@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class EventsService {
 
-    static final Logger rootLogger = LogManager.getLogger(EventsService.class);
+    private static final Logger Logger = LogManager.getLogger(EventsService.class);
     private final ModelMapper modelMapper;
     private final EventRepository eventRepository;
     private final EventStatusChangerImpl eventStatusChanger;
@@ -70,7 +70,7 @@ public class EventsService {
             msgDto.setStatus(MsgStatus.ERROR);
             msgDtoList.add(msgDto);
             eventUpdateDto.setMsg(msgDtoList);
-            rootLogger.error(e.getMessage());
+            Logger.error(e.getMessage(),e);
         }
         return eventUpdateDto;
     }

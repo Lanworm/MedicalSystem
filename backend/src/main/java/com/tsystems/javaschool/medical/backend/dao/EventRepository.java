@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +21,34 @@ import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentT
 @Repository
 public class EventRepository {
 
+    private static final HashMap<String, HashMap<String, String>> FILTER_MAP;
+    private static final String TABLE_KEY = "table";
+    private static final String FIELD_KEY = "field";
+
+    static {
+        FILTER_MAP = new HashMap<>();
+        FILTER_MAP.put("patient", prepareFilterMapValue("patientByPatientId", "firstName"));
+        FILTER_MAP.put("room", prepareFilterMapValue("roomByRoomId", "description"));
+        FILTER_MAP.put("procedure", prepareFilterMapValue("procedureByProcedureId", "description"));
+        FILTER_MAP.put("doctor", prepareFilterMapValue("staffByStaffId", "firstName"));
+        FILTER_MAP.put("from", prepareFilterMapValue(null, "startDate"));
+        FILTER_MAP.put("to", prepareFilterMapValue(null, "endDate"));
+        FILTER_MAP.put("status", prepareFilterMapValue(null, "status"));
+    }
+
     private SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @NonNull
+    private static HashMap<String, String> prepareFilterMapValue(@NonNull String key, @NonNull String value) {
+        final HashMap<String, String> result = new HashMap<>();
+        result.put(TABLE_KEY, key);
+        result.put(FIELD_KEY, value);
+        return result;
     }
 
 
@@ -35,30 +59,20 @@ public class EventRepository {
         criteria.setMaxResults(length);
         criteria.setFirstResult(start);
 
-        HashMap filterMap = new HashMap() {{
-            put("patient", new HashMap() {{ put("table", "patientByPatientId");put("field", "firstName"); }});
-            put("room", new HashMap() {{ put("table", "roomByRoomId");put("field", "description"); }});
-            put("procedure", new HashMap() {{ put("table", "procedureByProcedureId");put("field", "description"); }});
-            put("doctor", new HashMap() {{ put("table", "staffByStaffId");put("field", "firstName"); }});
-            put("from", new HashMap() {{put("table", null);put("field", "startDate"); }});
-            put("to", new HashMap() {{ put("table", null);put("field", "endDate"); }});
-            put("status", new HashMap() {{put("table", null);put("field", "status"); }});
-        }};
-
-        if (filterMap.containsKey(orderBy)) {
-            HashMap params = (HashMap) filterMap.get(orderBy);
-            if (params.get("table") == null) {
+        if (FILTER_MAP.containsKey(orderBy)) {
+            HashMap params = FILTER_MAP.get(orderBy);
+            if (params.get(TABLE_KEY) == null) {
                 if (orderDir.equals("desc")) {
-                    criteria.addOrder(Order.desc(params.get("field").toString()));
+                    criteria.addOrder(Order.desc(params.get(FIELD_KEY).toString()));
                 } else if (orderDir.equals("asc")) {
-                    criteria.addOrder(Order.asc(params.get("field").toString()));
+                    criteria.addOrder(Order.asc(params.get(FIELD_KEY).toString()));
                 }
             } else {
-                Criteria secondCriteria = criteria.createCriteria(params.get("table").toString());
+                Criteria secondCriteria = criteria.createCriteria(params.get(TABLE_KEY).toString());
                 if (orderDir.equals("desc")) {
-                    secondCriteria.addOrder(Order.desc(params.get("field").toString()));
+                    secondCriteria.addOrder(Order.desc(params.get(FIELD_KEY).toString()));
                 } else if (orderDir.equals("asc")) {
-                    secondCriteria.addOrder(Order.asc(params.get("field").toString()));
+                    secondCriteria.addOrder(Order.asc(params.get(FIELD_KEY).toString()));
                 }
             }
         }
