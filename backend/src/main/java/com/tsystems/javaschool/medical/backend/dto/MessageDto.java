@@ -1,10 +1,10 @@
 package com.tsystems.javaschool.medical.backend.dto;
 
-import com.tsystems.javaschool.medical.backend.dto.enums.MsgStatus;
+import com.tsystems.javaschool.medical.backend.dto.enums.MessageStatus;
 
-public class MsgDto {
+public class MessageDto {
     private String message;
-    private MsgStatus status= MsgStatus.SUCCESS;
+    private MessageStatus status= MessageStatus.SUCCESS;
 
     public String getMessage() {
         return message;
@@ -14,11 +14,11 @@ public class MsgDto {
         this.message = message;
     }
 
-    public MsgStatus getStatus() {
+    public MessageStatus getStatus() {
         return status;
     }
 
-    public void setStatus(MsgStatus status) {
+    public void setStatus(MessageStatus status) {
         this.status = status;
     }
 }

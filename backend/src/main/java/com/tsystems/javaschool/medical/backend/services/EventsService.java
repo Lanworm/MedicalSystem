@@ -3,7 +3,7 @@ package com.tsystems.javaschool.medical.backend.services;
 import com.tsystems.javaschool.medical.backend.component.EventStatusChangerImpl;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.dto.*;
-import com.tsystems.javaschool.medical.backend.dto.enums.MsgStatus;
+import com.tsystems.javaschool.medical.backend.dto.enums.MessageStatus;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;
 import com.tsystems.javaschool.medical.backend.exception.EventStatusChangerExeption;
 import org.apache.log4j.LogManager;
@@ -59,17 +59,17 @@ public class EventsService {
 
     public EventUpdateDto updateEvent(EventRequestDto params) {
         EventUpdateDto eventUpdateDto = new EventUpdateDto();
-        List<MsgDto> msgDtoList = new ArrayList<>();
-        MsgDto msgDto = new MsgDto();
+        List<MessageDto> messageDtoList = new ArrayList<>();
+        MessageDto messageDto = new MessageDto();
         try {
             eventStatusChanger.changeStatus(params.getId(), params.getStatus());
             eventRepository.update(params);
         }
         catch (EventStatusChangerExeption e){
-            msgDto.setMessage(e.getMessage());
-            msgDto.setStatus(MsgStatus.ERROR);
-            msgDtoList.add(msgDto);
-            eventUpdateDto.setMsg(msgDtoList);
+            messageDto.setMessage(e.getMessage());
+            messageDto.setStatus(MessageStatus.ERROR);
+            messageDtoList.add(messageDto);
+            eventUpdateDto.setMsg(messageDtoList);
             Logger.info(e.getMessage());
         }
         return eventUpdateDto;

@@ -3,13 +3,13 @@ package com.tsystems.javaschool.medical.backend.dto;
 import java.util.List;
 
 public class EventUpdateDto {
-    private List<MsgDto> msg;
+    private List<MessageDto> msg;
 
-    public List<MsgDto> getMsg() {
+    public List<MessageDto> getMsg() {
         return msg;
     }
 
-    public void setMsg(List<MsgDto> msg) {
+    public void setMsg(List<MessageDto> msg) {
         this.msg = msg;
     }
 }
