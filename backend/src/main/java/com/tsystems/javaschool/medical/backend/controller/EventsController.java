@@ -17,7 +17,7 @@ public class EventsController {
         this.eventsService = eventsService;
     }
 
-    @RequestMapping(value = "/events", method = RequestMethod.GET)
+    @GetMapping(value = "/events")
     public EventListResponse getEventsList(
             @RequestParam(value = "start") int page,
             @RequestParam(value = "length") int size,
@@ -27,17 +27,17 @@ public class EventsController {
         return eventsService.getEventsList(page, size, orderBy, orderDir);
     }
 
-    @RequestMapping(value = "/events", method = RequestMethod.PUT)
+    @PutMapping(value = "/events")
     public void addEvent(@RequestBody EventRequestDto params) {
         eventsService.addEvent(params);
     }
 
-    @RequestMapping(value = "/events/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/events/{id}")
     public void deleteEvent(@PathVariable("id") int id) {
         eventsService.deleteEvent(id);
     }
 
-    @RequestMapping(value = "/events", method = RequestMethod.POST)
+    @PostMapping(value = "/events")
     public EventUpdateDto editEvent(@RequestBody EventRequestDto params) {
         return eventsService.updateEvent(params);
     }

@@ -70,7 +70,7 @@ public class EventsService {
             msgDto.setStatus(MsgStatus.ERROR);
             msgDtoList.add(msgDto);
             eventUpdateDto.setMsg(msgDtoList);
-            Logger.error(e.getMessage(),e);
+            Logger.info(e.getMessage());
         }
         return eventUpdateDto;
     }

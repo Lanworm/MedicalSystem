@@ -11,12 +11,14 @@
     <tx:annotation-driven/>
     <context:component-scan base-package="com.tsystems.javaschool.medical.backend"/>
     <bean class="org.modelmapper.ModelMapper"/>
+
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver"/>
         <property name="url" value="jdbc:postgresql://localhost:5432/med"/>
         <property name="username" value="postgres"/>
         <property name="password" value="127001"/>
     </bean>
+
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="hibernateProperties">
