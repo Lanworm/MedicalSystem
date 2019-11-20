@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet author="a.goloschapov" id="create table patients" context="all">
+        <sql>
+            CREATE TABLE "patients"
+            (
+            "id"               int4 NOT NULL,
+            "first_name"       varchar(255),
+            "second_name"      varchar(255),
+            "last_name"        varchar(255),
+            "insurance_number" varchar,
+            "created_at"       timestamptz(0),
+            "updated_at"       timestamptz(0),
+            "deleted"          varchar,
+            PRIMARY KEY ("id")
+            )
+        </sql>
+    </changeSet>
+</databaseChangeLog>
