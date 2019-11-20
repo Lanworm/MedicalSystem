@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -11,13 +12,6 @@
     <tx:annotation-driven/>
     <context:component-scan base-package="com.tsystems.javaschool.medical.backend"/>
     <bean class="org.modelmapper.ModelMapper"/>
-
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost:5432/med"/>
-        <property name="username" value="postgres"/>
-        <property name="password" value="127001"/>
-    </bean>
 
     <bean class="liquibase.integration.spring.SpringLiquibase" id="liquibase" lazy-init="false">
         <property name="dataSource" ref="dataSource"/>
@@ -34,6 +28,22 @@
         <property name="packagesToScan" value="com.tsystems.javaschool.medical.backend.entities"/>
     </bean>
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <beans profile="dev">
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="url" value="jdbc:postgresql://localhost:5432/med"/>
+            <property name="username" value="postgres"/>
+            <property name="password" value="127001"/>
+        </bean>
+    </beans>
+    <beans profile="prod">
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="url" value="jdbc:postgresql://ec2-54-75-249-16.eu-west-1.compute.amazonaws.com:5432/da38hf5aua9mr1"/>
+            <property name="username" value="axzfdbhwaqngyg"/>
+            <property name="password" value="7c06c4ca5321e8479d8d916624d126133e0d9d9a9453498065a26c3dbc9b356a"/>
+        </bean>
+    </beans>
 </beans>
