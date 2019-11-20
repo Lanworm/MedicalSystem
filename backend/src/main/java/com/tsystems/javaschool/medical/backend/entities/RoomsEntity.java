@@ -1,8 +1,10 @@
 package com.tsystems.javaschool.medical.backend.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,20 +15,6 @@ public class RoomsEntity {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private String deleted;
-//    private List<EventsEntity> eventsByRoom;
-//
-//    @OneToMany(
-//            mappedBy = "roomByRoomId",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true
-//    )
-//    public List<EventsEntity> getEventsByRoom() {
-//        return eventsByRoom;
-//    }
-//
-//    public void setEventsByRoom(List<EventsEntity> eventsByRoom) {
-//        this.eventsByRoom = eventsByRoom;
-//    }
 
     @Id
     @Column(name = "id")
@@ -52,6 +40,7 @@ public class RoomsEntity {
 
     @Basic
     @Column(name = "created_at")
+    @CreationTimestamp
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -62,6 +51,7 @@ public class RoomsEntity {
 
     @Basic
     @Column(name = "updated_at")
+    @UpdateTimestamp
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }

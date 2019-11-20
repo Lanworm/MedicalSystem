@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
-
 @Repository
 public class RoomRepository {
 
@@ -39,9 +37,6 @@ public class RoomRepository {
     public void create(String description) {
         RoomsEntity roomsEntity = new RoomsEntity();
         roomsEntity.setDescription(description);
-        roomsEntity.setCreatedAt(getCurrentTimestamp());
-        roomsEntity.setUpdatedAt(getCurrentTimestamp());
-        roomsEntity.setDeleted("N");
         Session session = sessionFactory.getCurrentSession();
         session.persist(roomsEntity);
     }
@@ -51,8 +46,6 @@ public class RoomRepository {
         Session session = sessionFactory.getCurrentSession();
         RoomsEntity roomsEntity = session.load(RoomsEntity.class, id);
         roomsEntity.setDeleted("Y");
-        roomsEntity.setUpdatedAt(getCurrentTimestamp());
-        roomsEntity.setId(id);
         session.update(roomsEntity);
     }
 
@@ -60,8 +53,6 @@ public class RoomRepository {
     public void update(RoomsDto params) {
         Session session = sessionFactory.getCurrentSession();
         RoomsEntity roomsEntity = session.load(RoomsEntity.class, params.getId());
-        roomsEntity.setUpdatedAt(getCurrentTimestamp());
-        roomsEntity.setId(params.getId());
         roomsEntity.setDescription(params.getDescription());
         session.update(roomsEntity);
     }
