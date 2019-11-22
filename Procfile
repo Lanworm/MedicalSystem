@@ -1,1 +1,1 @@
-web: bin/start-nginx java -Dspring.profiles.active=prod $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT backend/target/*.war
+web: bin/start-nginx bundle java -Dspring.profiles.active=prod $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT backend/target/*.war
