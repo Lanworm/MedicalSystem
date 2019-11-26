@@ -74,4 +74,16 @@ public class EventsService {
         }
         return eventUpdateDto;
     }
+
+    @Transactional(readOnly = true)
+    public List<EventsDto> getEventsListByPatient(int id) {
+        List<EventsDto> eventsList = new ArrayList<>();
+        List<EventsEntity> eventsEntityList = eventRepository.getEventByPatientId(id);
+
+        for (Object a : eventsEntityList) {
+            EventsDto eventsDto = modelMapper.map(a, EventsDto.class);
+            eventsList.add(eventsDto);
+        }
+        return eventsList;
+    }
 }

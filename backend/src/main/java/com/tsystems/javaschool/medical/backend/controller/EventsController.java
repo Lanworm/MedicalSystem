@@ -3,8 +3,11 @@ package com.tsystems.javaschool.medical.backend.controller;
 import com.tsystems.javaschool.medical.backend.dto.EventListResponse;
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.dto.EventUpdateDto;
+import com.tsystems.javaschool.medical.backend.dto.EventsDto;
 import com.tsystems.javaschool.medical.backend.services.EventsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -40,5 +43,10 @@ public class EventsController {
     @PostMapping(value = "/events")
     public EventUpdateDto editEvent(@RequestBody EventRequestDto params) {
         return eventsService.updateEvent(params);
+    }
+
+    @GetMapping(value = "/eventsByPatient")
+    public List<EventsDto> getEventsListByPatient(@RequestParam(value = "id") int id) {
+        return eventsService.getEventsListByPatient(id);
     }
 }

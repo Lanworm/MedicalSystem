@@ -154,4 +154,14 @@ public class EventRepository {
         EventsEntity result = (EventsEntity) criteria.uniqueResult();
         return result;
     }
+
+    @Transactional
+    public List<EventsEntity> getEventByPatientId(int patientId) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(EventsEntity.class);
+        Criteria secondCriteria = criteria.createCriteria("patientByPatientId");
+        secondCriteria.add(Restrictions.eq("patient_id", patientId));
+        List<EventsEntity> eventsEntityList = criteria.list();
+        return eventsEntityList;
+    }
 }
