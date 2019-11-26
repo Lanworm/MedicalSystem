@@ -1,1 +1,56 @@
-<p>card works!</p>
+<div class="ui grid">
+  <div class="row">
+    <div class="four wide column">
+      <div class="ui card">
+        <div class="image">
+          <img src="/assets/images/avatar/tom.jpg">
+        </div>
+        <div class="content">
+          <a
+            class="header">{{patientInfo?.last_name + ' ' + patientInfo?.first_name + ' ' + patientInfo?.second_name}}</a>
+          <div class="meta">
+            <span class="date">Age: 23</span>
+            <span class="date">Sex: Male</span>
+          </div>
+          <div class="description">
+            Art director living in New York.
+          </div>
+        </div>
+        <div class="extra content">
+          <a>
+            <i class="shield alternate icon"></i>
+            Insurance: {{patientInfo?.insurance_number}}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="twelve wide column">
+
+      <div class="ui top attached tabular menu">
+        <a class="active item" data-tab="first">Common info</a>
+        <a class="item" data-tab="second">Personal info</a>
+      </div>
+      <div class="ui bottom attached active tab segment" data-tab="first">
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="second">
+        Second
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="sixteen wide column">
+
+
+    </div>
+  </div>
+</div>
