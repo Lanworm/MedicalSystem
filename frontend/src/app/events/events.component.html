@@ -13,7 +13,11 @@
     </div>
   </div>
 
-  <app-event-list [openDialog]="openDialog" [openDeleteDialog]="openDeleteDialog"></app-event-list>
+  <app-event-list
+    [openDialog]="openDialog"
+    [openDeleteDialog]="openDeleteDialog"
+    [getTableData]="getTableData"
+  ></app-event-list>
 
   <app-event-form *ngIf="showDialog"
                   [dialogData]="dialogData"

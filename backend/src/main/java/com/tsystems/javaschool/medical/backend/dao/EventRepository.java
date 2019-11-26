@@ -160,7 +160,7 @@ public class EventRepository {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(EventsEntity.class);
         Criteria secondCriteria = criteria.createCriteria("patientByPatientId");
-        secondCriteria.add(Restrictions.eq("patient_id", patientId));
+        secondCriteria.add(Restrictions.eq("id", patientId));
         List<EventsEntity> eventsEntityList = criteria.list();
         return eventsEntityList;
     }

@@ -16,6 +16,7 @@ export class EventListComponent implements OnInit {
   @Input() openDialog;
   @Input() update;
   @Input() openDeleteDialog;
+  @Input() getTableData;
 
   statusColors = {
     DONE: 'green',
@@ -27,26 +28,6 @@ export class EventListComponent implements OnInit {
   constructor(private eventService: EventsService, private authService: AuthService) {
   }
 
-  getTableData = (dataTablesParameters: any, callback) => {
-    const {start, length, order, columns} = dataTablesParameters;
-    const orderDir = order[0].dir;
-    const orderBy = columns[order[0].column].name;
-
-    this.eventService.getAll({start, length, orderBy, orderDir}).subscribe(resp => {
-        callback({
-          recordsTotal: resp.records,
-          recordsFiltered: resp.records,
-          data: resp.list
-        });
-      }, error => {
-        callback({
-          recordsTotal: 0,
-          recordsFiltered: 0,
-          data: []
-        });
-      }
-    );
-  };
 
   ngOnInit(): void {
 
