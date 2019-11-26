@@ -17,12 +17,17 @@ public class PatientsController {
         this.patientsService = patientsService;
     }
 
-    @RequestMapping(value = "/patients", method = RequestMethod.GET)
+    @GetMapping(value = "/patients")
     public List<PatientsDto> getPatientsList() {
         return patientsService.getPatientsList();
     }
 
-    @RequestMapping(value = "/patients", method = RequestMethod.PUT)
+    @GetMapping(value = "/patient/{id}")
+    public PatientsDto getPatientById(@PathVariable("id") final int id) {
+        return patientsService.getPatientById(id);
+    }
+
+    @PutMapping(value = "/patients")
     public List<PatientsDto> addPatients(
             @RequestParam(value = "first_name") String firstName,
             @RequestParam(value = "second_name") String secondName,
@@ -33,13 +38,13 @@ public class PatientsController {
         return patientsService.getPatientsList();
     }
 
-    @RequestMapping(value = "/patients/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/patients/{id}")
     public List<PatientsDto> deletePatients(@PathVariable("id") final int Id) {
         patientsService.deletePatient(Id);
         return patientsService.getPatientsList();
     }
 
-    @RequestMapping(value = "/patients", method = RequestMethod.POST)
+    @PostMapping(value = "/patients")
     public List<PatientsDto> editPatients(@RequestBody final PatientsDto params) {
         patientsService.updatePatient(params);
         return patientsService.getPatientsList();

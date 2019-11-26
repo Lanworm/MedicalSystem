@@ -72,4 +72,12 @@ public class PatientRepository {
         patientsEntity.setInsuranceNumber(params.getInsuranceNumber());
         session.update(patientsEntity);
     }
+
+    @Transactional
+    public PatientsEntity getById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(PatientsEntity.class);
+        criteria.add(Restrictions.eq("id", id));
+        return (PatientsEntity) criteria.uniqueResult();
+    }
 }

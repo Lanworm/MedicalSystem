@@ -4,7 +4,6 @@ import com.tsystems.javaschool.medical.backend.dao.PatientRepository;
 import com.tsystems.javaschool.medical.backend.dto.PatientsDto;
 import com.tsystems.javaschool.medical.backend.entities.PatientsEntity;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,11 +12,13 @@ import java.util.List;
 @Service
 public class PatientsService {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+    private final PatientRepository patientRepository;
 
-    @Autowired
-    PatientRepository patientRepository;
+    public PatientsService(ModelMapper modelMapper, PatientRepository patientRepository) {
+        this.modelMapper = modelMapper;
+        this.patientRepository = patientRepository;
+    }
 
     public List<PatientsDto> getPatientsList() {
 
@@ -29,6 +30,10 @@ public class PatientsService {
         }
 
         return result;
+    }
+
+    public PatientsDto getPatientById(int id) {
+        return modelMapper.map(patientRepository.getById(id), PatientsDto.class);
     }
 
     public void addPatient(String firstName, String secondName, String lastName, String insuranceNumber) {
