@@ -55,6 +55,7 @@ export class EventListComponent implements OnInit {
       searching: false,
       serverSide: true,
       processing: true,
+      lengthChange: false,
       rowCallback: (row: Node, data: any[]) => {
         $('td i[edit]', row).unbind('click');
         $('td i[edit]', row).bind('click', () => {
@@ -85,7 +86,12 @@ export class EventListComponent implements OnInit {
         {
           name: 'patient',
           render: (data, type, row) => {
-            return row.patient.first_name + ' ' + row.patient.second_name + ' ' + row.patient.last_name;
+            return (
+              '<a href="/card/' + row.patient.id + '">'
+              + row.patient.first_name + ' '
+              + row.patient.second_name + ' '
+              + row.patient.last_name +
+              '</a>');
           },
           title: 'Patient'
         },

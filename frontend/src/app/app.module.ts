@@ -16,6 +16,8 @@ import {DashboardsComponent} from './dashboards/dashboards.component';
 import {HttpErrorInterceptor} from './utils/http-error.interceptor';
 import {ErrorDialogComponent} from './error-dialog/error-dialog.component';
 import {AuthGuard} from './services/auth/auth.guard';
+import {PatientsComponent} from './patients/patients.component';
+import {CardComponent} from './patients/card/card.component';
 
 const routes: Routes = [
 
@@ -29,7 +31,18 @@ const routes: Routes = [
         component: EventsComponent,
         canActivate: [AuthGuard]
       },
+      {
+        path: 'patients',
+        component: PatientsComponent,
+        canActivate: [AuthGuard],
+
+      },
     ]
+  },
+  {
+    path: 'card/:patientId',
+    component: CardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -59,6 +72,8 @@ const routes: Routes = [
     LoginComponent,
     DashboardsComponent,
     ErrorDialogComponent,
+    PatientsComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
