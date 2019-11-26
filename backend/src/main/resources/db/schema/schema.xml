@@ -3,219 +3,229 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <changeSet author="a.goloschapov" id="create tables" context="all" failOnError="false">
-        <sql>
-            CREATE TABLE IF NOT EXISTS "patients"
-            (
-            "id"               int4 NOT NULL,
-            "first_name"       varchar(255),
-            "second_name"      varchar(255),
-            "last_name"        varchar(255),
-            "insurance_number" varchar,
-            "created_at"       timestamptz(0),
-            "updated_at"       timestamptz(0),
-            "deleted"          varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "staff"
-            (
-            "id"                int4 NOT NULL,
-            "first_name"        varchar(255),
-            "second_name"       varchar(255),
-            "last_name"         varchar(255),
-            "specialization_id" int4 NOT NULL,
-            "created_at"        timestamptz(0),
-            "updated_at"        timestamptz(0),
-            "deleted"           varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "specializations"
-            (
-            "id"          int4    NOT NULL,
-            "description" varchar NOT NULL,
-            "created_at"  timestamptz(0),
-            "updated_at"  timestamptz(0),
-            "deleted"     varchar(255),
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "prescriptions"
-            (
-            "id"              int4 NOT NULL,
-            "patient_id"      int4,
-            "procedure_id"    int4,
-            "drug_id"         int4,
-            "time_pattern_id" int4,
-            "start_date"      timestamptz(0),
-            "end_date"        timestamptz(0),
-            "dosage"          varchar(255),
-            "description"     varchar,
-            "updated_at"      timestamptz(0),
-            "created_at"      timestamptz(0),
-            "deleted"         varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "procedures"
-            (
-            "id"          int4 NOT NULL,
-            "description" varchar,
-            "created_at"  timestamptz(0),
-            "updated_at"  timestamptz(0),
-            "deleted"     varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "events"
-            (
-            "id"           int4 NOT NULL,
-            "patient_id"   int4,
-            "procedure_id" int4,
-            "room_id"      int4,
-            "staff_id"     int4,
-            "status"       varchar(255),
-            "start_date"   timestamptz(0),
-            "end_date"     timestamptz(0),
-            "created_at"   timestamptz(0),
-            "updated_at"   timestamptz(0),
-            "deleted"      varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "rooms"
-            (
-            "id"          int4 NOT NULL,
-            "description" varchar,
-            "created_at"  timestamptz(0) DEFAULT NOW(),
-            "updated_at"  timestamptz(0),
-            "deleted"     varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "drugs"
-            (
-            "id"          int4 NOT NULL,
-            "description" varchar,
-            "type"        varchar(255),
-            "created_at"  timestamptz(0),
-            "updated_at"  timestamptz(0),
-            "deleted"     varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "therapy_log"
-            (
-            "id"               int4 NOT NULL,
-            "patient_id"       int4,
-            "prescriptionn_id" int4,
-            "diagnose_id"      int4,
-            "description"      varchar,
-            "created_at"       timestamptz(0),
-            "updated_at"       timestamptz(0),
-            "deleted"          varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "schedule"
-            (
-            "id"         int4 NOT NULL,
-            "staff_id"   int4,
-            "date"       timestamptz(255),
-            "start_time" timestamptz(0),
-            "end_time"   timestamptz(0),
-            "created_at" timestamptz(0),
-            "updated_at" timestamptz(0),
-            "deleted"    varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            CREATE TABLE IF NOT EXISTS "diagnoses"
-            (
-            "id"          int4 NOT NULL,
-            "description" varchar,
-            "created_at"  timestamptz(0),
-            "updated_at"  timestamptz(0),
-            "deleted"     varchar,
-            PRIMARY KEY ("id")
-            )
-            WITHOUT OIDS;
-
-            ALTER TABLE "staff"
-            ADD CONSTRAINT "fk_doctors_specializations_1" FOREIGN KEY ("specialization_id") REFERENCES "specializations" ("id");
-            ALTER TABLE "prescriptions"
-            ADD CONSTRAINT "fk_prescriptions_procedures_1" FOREIGN KEY ("procedure_id") REFERENCES "procedures" ("id");
-            ALTER TABLE "prescriptions"
-            ADD CONSTRAINT "fk_prescriptions_drugs_1" FOREIGN KEY ("drug_id") REFERENCES "drugs" ("id");
-            ALTER TABLE "therapy_log"
-            ADD CONSTRAINT "fk_card_records_patients_1" FOREIGN KEY ("patient_id") REFERENCES "patients" ("id");
-            ALTER TABLE "therapy_log"
-            ADD CONSTRAINT "fk_therapy_log_prescriptions_1" FOREIGN KEY ("prescriptionn_id") REFERENCES "prescriptions" ("id");
-            ALTER TABLE "schedule"
-            ADD CONSTRAINT "fk_schedule_staff_1" FOREIGN KEY ("staff_id") REFERENCES "staff" ("id");
-            ALTER TABLE "events"
-            ADD CONSTRAINT "fk_events_patients_1" FOREIGN KEY ("patient_id") REFERENCES "patients" ("id");
-            ALTER TABLE "events"
-            ADD CONSTRAINT "fk_events_procedures_1" FOREIGN KEY ("procedure_id") REFERENCES "procedures" ("id");
-            ALTER TABLE "events"
-            ADD CONSTRAINT "fk_events_rooms_1" FOREIGN KEY ("room_id") REFERENCES "rooms" ("id");
-            ALTER TABLE "events"
-            ADD CONSTRAINT "fk_events_staff_1" FOREIGN KEY ("staff_id") REFERENCES "staff" ("id");
-            ALTER TABLE "therapy_log"
-            ADD CONSTRAINT "fk_therapy_log_diagnoses_1" FOREIGN KEY ("diagnose_id") REFERENCES "diagnoses" ("id");
-
-            CREATE SEQUENCE public.specializations_item_id
-            INCREMENT 1
-            START 1
-            MINVALUE 1
-            MAXVALUE 9223372036854775807
-            CACHE 1;
-
-            CREATE SEQUENCE public.staff_item_id
-            INCREMENT 1
-            START 1
-            MINVALUE 1
-            MAXVALUE 9223372036854775807
-            CACHE 1;
-
-            CREATE SEQUENCE public.patients_item_id
-            INCREMENT 1
-            START 1
-            MINVALUE 1
-            MAXVALUE 9223372036854775807
-            CACHE 1;
-
-            CREATE SEQUENCE public.rooms_item_id
-            INCREMENT 1
-            START 1
-            MINVALUE 1
-            MAXVALUE 9223372036854775807
-            CACHE 1;
-
-            CREATE SEQUENCE public.procedures_item_id
-            INCREMENT 1
-            START 1
-            MINVALUE 1
-            MAXVALUE 9223372036854775807
-            CACHE 1;
-
-            CREATE SEQUENCE public.events_item_id
-            INCREMENT 1
-            START 1
-            MINVALUE 1
-            MAXVALUE 9223372036854775807
-            CACHE 1;
-        </sql>
+    <changeSet id="create table patients" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="patients"/>
+            </not>
+        </preConditions>
+        <createTable tableName="patients">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="second_name" type="varchar(255)"/>
+            <column name="last_name" type="varchar(255)"/>
+            <column name="insurance_number" type="varchar"/>
+            <column name="created_at" type="timestamptz"/>
+            <column name="updated_at" type="timestamptz"/>
+            <column name="deleted" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
+
+    <changeSet id="create table staff" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="staff"/>
+            </not>
+        </preConditions>
+        <createTable tableName="staff">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="second_name" type="varchar(255)"/>
+            <column name="last_name" type="varchar(255)"/>
+            <column name="specialization_id" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table specializations" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="specializations"/>
+            </not>
+        </preConditions>
+        <createTable tableName="specializations">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar(0)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table prescriptions" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="prescriptions"/>
+            </not>
+        </preConditions>
+        <createTable tableName="prescriptions">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="patient_id" type="int4"/>
+            <column name="procedure_id" type="int4"/>
+            <column name="drug_id" type="int4"/>
+            <column name="time_pattern_id" type="int4"/>
+            <column name="start_date" type="timestamptz(0)"/>
+            <column name="end_date" type="timestamptz(0)"/>
+            <column name="dosage" type="varchar(255)"/>
+            <column name="description" type="varchar"/>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table procedures" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="procedures"/>
+            </not>
+        </preConditions>
+        <createTable tableName="procedures">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table events" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="events"/>
+            </not>
+        </preConditions>
+        <createTable tableName="events">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="patient_id" type="int4"/>
+            <column name="procedure_id" type="int4"/>
+            <column name="room_id" type="int4"/>
+            <column name="staff_id" type="int4"/>
+            <column name="status" type="varchar(255)"/>
+            <column name="start_date" type="timestamptz(0)"/>
+            <column name="end_date" type="timestamptz(0)"/>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table rooms" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="rooms"/>
+            </not>
+        </preConditions>
+        <createTable tableName="rooms">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table drugs" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="drugs"/>
+            </not>
+        </preConditions>
+        <createTable tableName="drugs">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)"/>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table therapy_log" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="therapy_log"/>
+            </not>
+        </preConditions>
+        <createTable tableName="therapy_log">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="patient_id" type="int4"/>
+            <column name="prescriptionn_id" type="int4"/>
+            <column name="diagnose_id" type="int4"/>
+            <column name="description" type="varchar"/>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table schedule" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="schedule"/>
+            </not>
+        </preConditions>
+        <createTable tableName="schedule">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="staff_id" type="int4"/>
+            <column name="date" type="timestamptz(0)"/>
+            <column name="start_time" type="timestamptz(0)"/>
+            <column name="end_time" type="timestamptz(0)"/>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create table diagnoses" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="diagnoses"/>
+            </not>
+        </preConditions>
+        <createTable tableName="diagnoses">
+            <column name="id" type="int4">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar"/>
+            <column name="created_at" type="timestamptz(0)"/>
+            <column name="updated_at" type="timestamptz(0)"/>
+            <column name="deleted" type="varchar"/>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

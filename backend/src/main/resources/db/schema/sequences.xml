@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="create sequence public.specializations_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="specializations_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="specializations_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.staff_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="staff_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="staff_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.patients_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="patients_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="patients_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.rooms_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="rooms_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="rooms_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.procedures_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="procedures_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="procedures_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.events_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="events_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="events_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.diagnoses_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="diagnoses_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="diagnoses_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.drugs_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="drugs_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="drugs_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.prescriptions_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="prescriptions_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="prescriptions_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.schedule_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="schedule_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="schedule_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+    <changeSet id="create sequence public.therapy_log_item_id" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="therapy_log_item_id"/>
+            </not>
+        </preConditions>
+        <createSequence
+                sequenceName="therapy_log_item_id"
+                startValue="1"
+                minValue="1"
+                maxValue="9223372036854775807"
+        />
+    </changeSet>
+
+</databaseChangeLog>

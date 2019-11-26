@@ -7,5 +7,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     
     <include file="db/schema/schema.xml"/>
+    <include file="db/schema/fk_constraints.xml"/>
+    <include file="db/schema/sequences.xml"/>
 
 </databaseChangeLog>

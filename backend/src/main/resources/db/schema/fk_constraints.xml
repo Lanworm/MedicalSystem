@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="create fk fk_staff_specializations" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_staff_specializations_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="staff"
+                baseColumnNames="specialization_id"
+                constraintName="fk_staff_specializations_1"
+                referencedTableName="specializations"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_prescriptions_procedures_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_prescriptions_procedures_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="prescriptions"
+                baseColumnNames="procedure_id"
+                constraintName="fk_prescriptions_procedures_1"
+                referencedTableName="procedures"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_prescriptions_drugs_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_prescriptions_drugs_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="prescriptions"
+                baseColumnNames="drug_id"
+                constraintName="fk_prescriptions_drugs_1"
+                referencedTableName="drugs"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_therapy_log_prescriptions_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_therapy_log_prescriptions_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="therapy_log"
+                baseColumnNames="prescriptionn_id"
+                constraintName="fk_therapy_log_prescriptions_1"
+                referencedTableName="prescriptions"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_therapy_log_diagnoses_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_therapy_log_diagnoses_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="therapy_log"
+                baseColumnNames="diagnose_id"
+                constraintName="fk_therapy_log_diagnoses_1"
+                referencedTableName="diagnoses"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_schedule_staff_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_schedule_staff_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="schedule"
+                baseColumnNames="staff_id"
+                constraintName="fk_schedule_staff_1"
+                referencedTableName="staff"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_events_patients_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_events_patients_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="events"
+                baseColumnNames="patient_id"
+                constraintName="fk_events_patients_1"
+                referencedTableName="patients"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_events_procedures_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_events_procedures_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="events"
+                baseColumnNames="procedure_id"
+                constraintName="fk_events_procedures_1"
+                referencedTableName="procedures"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_events_rooms_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_events_rooms_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="events"
+                baseColumnNames="room_id"
+                constraintName="fk_events_rooms_1"
+                referencedTableName="rooms"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_events_staff_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_events_staff_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="events"
+                baseColumnNames="staff_id"
+                constraintName="fk_events_staff_1"
+                referencedTableName="staff"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+</databaseChangeLog>
