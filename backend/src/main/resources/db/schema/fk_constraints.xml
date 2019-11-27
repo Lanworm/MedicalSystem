@@ -153,4 +153,34 @@
         />
     </changeSet>
 
+    <changeSet id="create fk fk_prescriptions_patients_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_prescriptions_patients_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="prescriptions"
+                baseColumnNames="patient_id"
+                constraintName="fk_prescriptions_patients_1"
+                referencedTableName="patients"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="create fk fk_events_prescriptions_1" author="a.goloschapov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_events_prescriptions_1"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint
+                baseTableName="events"
+                baseColumnNames="prescription_id"
+                constraintName="fk_events_prescriptions_1"
+                referencedTableName="prescriptions"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
 </databaseChangeLog>

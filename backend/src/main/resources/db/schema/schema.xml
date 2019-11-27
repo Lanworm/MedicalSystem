@@ -228,4 +228,35 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="delete fk_prescriptions_time_patterns_1" author="a.goloschapov">
+        <dropForeignKeyConstraint baseTableName="prescriptions" constraintName="fk_prescriptions_time_patterns_1"/>
+    </changeSet>
+
+    <changeSet id="drop table time_patterns" author="a.goloschapov">
+        <preConditions>
+            <tableExists tableName="time_patterns"/>
+        </preConditions>
+        <dropTable tableName="time_patterns"/>
+    </changeSet>
+
+    <changeSet id="renameColumn time_pattern_id" author="a.goloschapov">
+        <renameColumn tableName="prescriptions" oldColumnName="time_pattern_id" newColumnName="time_pattern"/>
+    </changeSet>
+
+    <changeSet id="modifyDataType time_pattern" author="a.goloschapov">
+        <modifyDataType tableName="prescriptions" columnName="time_pattern" newDataType="varchar"/>
+    </changeSet>
+    
+    <changeSet id="addColumn prescription_id to events" author="a.goloschapov">
+        <addColumn tableName="events">
+            <column name="prescription_id" type="int4"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="addColumn type to prescriptions" author="a.goloschapov">
+        <addColumn tableName="prescriptions">
+            <column name="type" type="varchar"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
