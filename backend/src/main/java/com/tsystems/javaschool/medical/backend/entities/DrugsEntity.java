@@ -1,5 +1,9 @@
 package com.tsystems.javaschool.medical.backend.entities;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -15,6 +19,8 @@ public class DrugsEntity {
     private String deleted;
 
     @Id
+    @SequenceGenerator(name = "drugs_item_id", sequenceName = "drugs_item_id", allocationSize = 1)
+    @GeneratedValue(generator = "drugs_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -45,6 +51,7 @@ public class DrugsEntity {
     }
 
     @Basic
+    @CreationTimestamp
     @Column(name = "created_at")
     public Timestamp getCreatedAt() {
         return createdAt;
@@ -55,6 +62,7 @@ public class DrugsEntity {
     }
 
     @Basic
+    @UpdateTimestamp
     @Column(name = "updated_at")
     public Timestamp getUpdatedAt() {
         return updatedAt;
@@ -65,7 +73,8 @@ public class DrugsEntity {
     }
 
     @Basic
-    @Column(name = "deleted")
+    @ColumnDefault("N")
+    @Column(name = "deleted" )
     public String getDeleted() {
         return deleted;
     }
