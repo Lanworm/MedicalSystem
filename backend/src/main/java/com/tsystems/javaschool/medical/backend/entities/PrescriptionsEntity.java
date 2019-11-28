@@ -5,10 +5,10 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "prescriptions", schema = "public" )
+@Table(name = "prescriptions", schema = "public", catalog = "med")
 public class PrescriptionsEntity {
     private int id;
-    private Integer patientId;
+    private String timePattern;
     private Timestamp startDate;
     private Timestamp endDate;
     private String dosage;
@@ -16,10 +16,13 @@ public class PrescriptionsEntity {
     private Timestamp updatedAt;
     private Timestamp createdAt;
     private String deleted;
+    private String type;
+    private PatientsEntity patientsByPatientId;
+    private ProceduresEntity proceduresByProcedureId;
     private DrugsEntity drugsByDrugId;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -29,13 +32,13 @@ public class PrescriptionsEntity {
     }
 
     @Basic
-    @Column(name = "patient_id")
-    public Integer getPatientId() {
-        return patientId;
+    @Column(name = "time_pattern")
+    public String getTimePattern() {
+        return timePattern;
     }
 
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
+    public void setTimePattern(String timePattern) {
+        this.timePattern = timePattern;
     }
 
     @Basic
@@ -108,25 +111,56 @@ public class PrescriptionsEntity {
         this.deleted = deleted;
     }
 
+    @Basic
+    @Column(name = "type")
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PrescriptionsEntity that = (PrescriptionsEntity) o;
         return id == that.id &&
-                Objects.equals(patientId, that.patientId) &&
+                Objects.equals(timePattern, that.timePattern) &&
                 Objects.equals(startDate, that.startDate) &&
                 Objects.equals(endDate, that.endDate) &&
                 Objects.equals(dosage, that.dosage) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(updatedAt, that.updatedAt) &&
                 Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(deleted, that.deleted);
+                Objects.equals(deleted, that.deleted) &&
+                Objects.equals(type, that.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, patientId, startDate, endDate, dosage, description, updatedAt, createdAt, deleted);
+        return Objects.hash(id, timePattern, startDate, endDate, dosage, description, updatedAt, createdAt, deleted, type);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    public PatientsEntity getPatientsByPatientId() {
+        return patientsByPatientId;
+    }
+
+    public void setPatientsByPatientId(PatientsEntity patientsByPatientId) {
+        this.patientsByPatientId = patientsByPatientId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "procedure_id", referencedColumnName = "id")
+    public ProceduresEntity getProceduresByProcedureId() {
+        return proceduresByProcedureId;
+    }
+
+    public void setProceduresByProcedureId(ProceduresEntity proceduresByProcedureId) {
+        this.proceduresByProcedureId = proceduresByProcedureId;
     }
 
     @ManyToOne
