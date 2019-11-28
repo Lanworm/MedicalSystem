@@ -28,4 +28,15 @@ public class PrescriptionService {
         }
         return prescriptionDtos;
     }
+
+    public List<PrescriptionDto> getListByPatient(int id) {
+        List<PrescriptionsEntity> prescriptionsEntities = prescriptionRepository.getByUserId(id);
+        List<PrescriptionDto> prescriptionDtos = new ArrayList<>();
+        for (Object entity : prescriptionsEntities) {
+            PrescriptionDto prescriptionDto = modelMapper.map(entity, PrescriptionDto.class);
+            prescriptionDtos.add(prescriptionDto);
+        }
+        return prescriptionDtos;
+    }
+
 }
