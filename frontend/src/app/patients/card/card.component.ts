@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PatientService} from '../../services/patients/patient.service';
-import {EventsService} from '../../services/events/events.service';
+import {PrescriptionService} from '../../services/prescription/prescription.service';
 
 declare var $: any;
 
@@ -12,7 +12,10 @@ declare var $: any;
 })
 export class CardComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private patientService: PatientService, private eventsService: EventsService) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private patientService: PatientService,
+    private prescriptionService: PrescriptionService) {
     this.activatedRoute.params.subscribe(params => {
       this.params = params;
     });
@@ -20,19 +23,10 @@ export class CardComponent implements OnInit {
 
   private params: any = {};
   public patientInfo: Array<any>;
-  public patientEvents: Array<any>;
-  public openDialog = () => {
-  };
-  public openDeleteDialog = () => {
-  };
 
   public getTableData = (dataTablesParameters: any, callback) => {
-    const {start, length, order, columns} = dataTablesParameters;
     const {patientId} = this.params;
-    const orderDir = order[0].dir;
-    const orderBy = columns[order[0].column].name;
-
-    this.eventsService.getEventByPatientId(patientId).subscribe(resp => {
+    this.prescriptionService.getById(patientId).subscribe(resp => {
         callback({
           recordsTotal: resp.lenght,
           recordsFiltered: resp.lenght,
@@ -47,6 +41,7 @@ export class CardComponent implements OnInit {
       }
     );
   };
+
 
   ngOnInit() {
     const {patientId} = this.params;

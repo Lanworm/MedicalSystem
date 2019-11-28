@@ -18,6 +18,7 @@ import {ErrorDialogComponent} from './error-dialog/error-dialog.component';
 import {AuthGuard} from './services/auth/auth.guard';
 import {PatientsComponent} from './patients/patients.component';
 import {CardComponent} from './patients/card/card.component';
+import {PrescriptionsListComponent} from './prescription/prescriptions-list/prescriptions-list.component';
 
 const routes: Routes = [
 
@@ -74,6 +75,7 @@ const routes: Routes = [
     ErrorDialogComponent,
     PatientsComponent,
     CardComponent,
+    PrescriptionsListComponent,
   ],
   imports: [
     BrowserModule,
