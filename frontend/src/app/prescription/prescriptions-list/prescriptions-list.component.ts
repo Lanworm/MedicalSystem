@@ -35,63 +35,31 @@ export class PrescriptionsListComponent implements OnInit {
       ajax: this.getTableData,
       columns: [
         {
-          name: 'from',
-          title: 'From',
+          name: 'Date',
+          title: 'Date',
           render: (data, type, row) => {
-            return moment(row.start_date).format(TIME_FORMAT);
+            return moment(row.updated_at).format(TIME_FORMAT);
           },
         },
         {
-          name: 'to',
-          title: 'To',
-          render: (data, type, row) => {
-            return moment(row.end_date).format(TIME_FORMAT);
-          },
-        },
-        {
-          name: 'patient',
-          render: (data, type, row) => {
-            return (
-              '<a href="/card/' + row.patient.id + '">'
-              + row.patient.first_name + ' '
-              + row.patient.second_name + ' '
-              + row.patient.last_name +
-              '</a>');
-          },
-          title: 'Patient'
-        },
-        {
-          name: 'procedure',
+          name: 'Procedure',
           title: 'Procedure',
           data: 'procedure.description'
         },
         {
-          name: 'room',
-          title: 'Room',
-          data: 'room.description'
+          name: 'Drug',
+          title: 'drug',
+          data: 'drug.description'
         },
         {
-          name: 'doctor',
-          render: (data, type, row) => {
-            return row.staff.first_name + ' ' + row.staff.second_name + ' ' + row.staff.last_name;
-          },
-          title: 'Doctor'
-        },
-
-        {
-          orderable: false,
-          className: 'ui center aligned',
-          render: () => {
-            return ('<i class="edit link icon" edit></i>');
-          },
+          name: 'Dosage',
+          title: 'dosage',
+          data: 'dosage'
         },
         {
-          orderable: false,
-          className: 'ui center aligned',
-          // visible: this.authService.userHasRole(USER_ROLES.ROLE_ADMIN),
-          render: () => {
-            return ('<i class="trash link icon" delete></i>');
-          },
+          name: 'description',
+          title: 'description',
+          data: 'description'
         },
       ]
     });

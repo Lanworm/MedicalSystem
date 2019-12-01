@@ -1,27 +1,59 @@
 package com.tsystems.javaschool.medical.backend.services;
 
+import com.tsystems.javaschool.medical.backend.component.enums.EventStatus;
+import com.tsystems.javaschool.medical.backend.dao.EventRepository;
+import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
+import com.tsystems.javaschool.medical.backend.dto.prescriptions.PrescriptionRequestDto;
 import org.quartz.CronExpression;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 @Service
 public class PrescriptionCronService {
+    private final EventRepository eventRepository;
 
-    void generateEventsByPrescription(String cronExpression, int dosage, ArrayList<Date> timeSet) {
+    public PrescriptionCronService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
 
+    void generateEventsByPrescription(PrescriptionRequestDto prescriptionParams) {
+
+        ArrayList<Date> timeSet = new ArrayList<>();
+        final int dosage = Integer.parseInt(prescriptionParams.getDosage());
         try {
-            if(dosage>0) {
-                CronExpression cron = new CronExpression(cronExpression);
-                final Date firstExecution = cron.getNextValidTimeAfter(timeSet.isEmpty() ? new Date(System.currentTimeMillis()) : timeSet.get(timeSet.size() - 1));
+            for (int i = dosage; i > 0; i--) {
+                CronExpression cron = new CronExpression(prescriptionParams.getTimePattern());
+                final Date firstExecution = cron.getNextValidTimeAfter(timeSet.isEmpty() ? prescriptionParams.getStartDate() : timeSet.get(timeSet.size() - 1));
                 timeSet.add(new Date(firstExecution.getTime()));
-                generateEventsByPrescription(cronExpression, dosage-1, timeSet);
+                eventRepository.create(prepareEventRequestDto(firstExecution.getTime(), prescriptionParams));
             }
-
         } catch (ParseException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
+    }
+
+    private static EventRequestDto prepareEventRequestDto(final long startDate, PrescriptionRequestDto prescriptionParams) {
+
+
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date(startDate));
+        now.add(Calendar.MINUTE, 30);
+        Date endDate = now.getTime();
+
+        EventRequestDto eventRequestDto = new EventRequestDto();
+        eventRequestDto.setStartDate(new Timestamp(startDate));
+        eventRequestDto.setEndDate(new Timestamp(endDate.getTime()));
+        eventRequestDto.setStatus(EventStatus.ASSIGNED.getValue());
+        eventRequestDto.setPatientId(prescriptionParams.getPatientId());
+        eventRequestDto.setProcedureId(prescriptionParams.getProcedureId());
+        eventRequestDto.setStaffId(1);
+        eventRequestDto.setRoomId(1);
+
+        return eventRequestDto;
     }
 }

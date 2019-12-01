@@ -23,14 +23,12 @@ public class EventsService {
     private final ModelMapper modelMapper;
     private final EventRepository eventRepository;
     private final EventStatusChangerImpl eventStatusChanger;
-    private final PrescriptionCronService prescriptionCronService;
 
     @Autowired
-    public EventsService(ModelMapper modelMapper, EventRepository eventRepository, EventStatusChangerImpl eventStatusChanger, PrescriptionCronService prescriptionCronService) {
+    public EventsService(ModelMapper modelMapper, EventRepository eventRepository, EventStatusChangerImpl eventStatusChanger) {
         this.modelMapper = modelMapper;
         this.eventRepository = eventRepository;
         this.eventStatusChanger = eventStatusChanger;
-        this.prescriptionCronService = prescriptionCronService;
     }
 
     @Transactional(readOnly = true)
@@ -48,7 +46,6 @@ public class EventsService {
 
         eventListResponse.setList(eventsList);
         eventListResponse.setRecords(count);
-        prescriptionCronService.generateEventsByPrescription("0 30 10 ? * SUN,TUE *", 10, new ArrayList<>());
         return eventListResponse;
     }
 

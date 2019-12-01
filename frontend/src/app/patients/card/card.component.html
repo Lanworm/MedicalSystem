@@ -1,7 +1,7 @@
 <div class="ui grid">
   <div class="row">
     <div class="four wide column">
-      <div class="ui card card_tab_content_wrapper">
+      <div class="ui card">
         <div class="image">
           <img src="/assets/images/avatar/tom.jpg">
         </div>
@@ -29,11 +29,11 @@
         <a class="active item" data-tab="first">Info</a>
         <a class="item" data-tab="second">Prescriptions</a>
       </div>
-      <div class="ui bottom attached active tab segment tab_content_wrapper" data-tab="first" >
+      <div class="ui bottom attached active tab segment" data-tab="first" >
         <p>Content</p>
 
       </div>
-      <div class="ui bottom attached tab segment tab_content_wrapper" data-tab="second">
+      <div class="ui bottom attached tab segment" data-tab="second">
         <app-prescriptions-list [getTableData]="getTableData"> </app-prescriptions-list>
       </div>
     </div>

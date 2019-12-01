@@ -69,4 +69,13 @@ public class ProcedureRepository {
         session.update(proceduresEntity);
     }
 
+    @Transactional
+    public ProceduresEntity getById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(ProceduresEntity.class);
+        criteria.add(Restrictions.eq("id", id));
+        ProceduresEntity result = (ProceduresEntity) criteria.uniqueResult();
+        return result;
+    }
+
 }

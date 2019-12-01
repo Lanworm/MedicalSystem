@@ -1,6 +1,9 @@
-package com.tsystems.javaschool.medical.backend.dto;
+package com.tsystems.javaschool.medical.backend.dto.prescriptions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tsystems.javaschool.medical.backend.dto.DrugDto;
+import com.tsystems.javaschool.medical.backend.dto.PatientsDto;
+import com.tsystems.javaschool.medical.backend.dto.ProceduresDto;
 
 import java.sql.Timestamp;
 

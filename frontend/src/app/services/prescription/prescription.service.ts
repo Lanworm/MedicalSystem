@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {getQuerySearch} from '../../utils/url';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,6 @@ export class PrescriptionService {
   }
 
   getById(id: number): Observable<any> {
-    return this.http.get('/api/prescription/' + id);
+    return this.http.get('/api/prescriptionsByPatient/' + getQuerySearch({id}));
   }
 }
