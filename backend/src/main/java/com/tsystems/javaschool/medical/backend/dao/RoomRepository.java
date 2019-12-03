@@ -2,6 +2,7 @@ package com.tsystems.javaschool.medical.backend.dao;
 
 import com.tsystems.javaschool.medical.backend.dto.RoomsDto;
 import com.tsystems.javaschool.medical.backend.entities.RoomsEntity;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,7 +29,7 @@ public class RoomRepository {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(RoomsEntity.class);
         criteria.addOrder(Order.asc("description"));
-        criteria.add(Restrictions.eq("deleted", "N"));
+        criteria.add(Restrictions.eq("deleted", IsDeleted.N));
         List<RoomsEntity> roomsEntities = criteria.list();
         return roomsEntities;
     }
@@ -45,7 +46,7 @@ public class RoomRepository {
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         RoomsEntity roomsEntity = session.load(RoomsEntity.class, id);
-        roomsEntity.setDeleted("Y");
+        roomsEntity.setDeleted(IsDeleted.Y);
         session.update(roomsEntity);
     }
 

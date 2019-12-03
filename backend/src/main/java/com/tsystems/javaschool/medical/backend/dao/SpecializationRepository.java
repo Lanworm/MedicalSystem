@@ -2,6 +2,7 @@ package com.tsystems.javaschool.medical.backend.dao;
 
 import com.tsystems.javaschool.medical.backend.dto.SpecializationsDto;
 import com.tsystems.javaschool.medical.backend.entities.SpecializationsEntity;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,7 +31,7 @@ public class SpecializationRepository {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(SpecializationsEntity.class);
         criteria.addOrder(Order.asc("description"));
-        criteria.add(Restrictions.eq("deleted", "N"));
+        criteria.add(Restrictions.eq("deleted", IsDeleted.N));
 
         List<SpecializationsEntity> specializationsEntities = criteria.list();
 
@@ -43,7 +44,7 @@ public class SpecializationRepository {
         specializationsEntity.setDescription(description);
         specializationsEntity.setCreatedAt(getCurrentTimestamp());
         specializationsEntity.setUpdatedAt(getCurrentTimestamp());
-        specializationsEntity.setDeleted("N");
+        specializationsEntity.setDeleted(IsDeleted.N);
         Session session = sessionFactory.getCurrentSession();
         session.persist(specializationsEntity);
     }
@@ -52,7 +53,7 @@ public class SpecializationRepository {
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         SpecializationsEntity specializationsEntity = session.load(SpecializationsEntity.class, id);
-        specializationsEntity.setDeleted("Y");
+        specializationsEntity.setDeleted(IsDeleted.Y);
         specializationsEntity.setUpdatedAt(getCurrentTimestamp());
         specializationsEntity.setId(id);
         session.update(specializationsEntity);

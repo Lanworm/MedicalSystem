@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.medical.backend.entities;
 
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,7 +19,7 @@ public class PrescriptionsEntity {
     private String description;
     private Timestamp updatedAt;
     private Timestamp createdAt;
-    private String deleted;
+    private IsDeleted deleted;
     private String type;
     private PatientsEntity patientsByPatientId;
     private ProceduresEntity proceduresByProcedureId;
@@ -109,12 +110,13 @@ public class PrescriptionsEntity {
     }
 
     @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "deleted")
-    public String getDeleted() {
+    public IsDeleted getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(String deleted) {
+    public void setDeleted(IsDeleted deleted) {
         this.deleted = deleted;
     }
 

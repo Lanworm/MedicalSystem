@@ -2,6 +2,7 @@ package com.tsystems.javaschool.medical.backend.dao;
 
 import com.tsystems.javaschool.medical.backend.dto.ProceduresDto;
 import com.tsystems.javaschool.medical.backend.entities.ProceduresEntity;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +32,7 @@ public class ProcedureRepository {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(ProceduresEntity.class);
         criteria.addOrder(Order.asc("description"));
-        criteria.add(Restrictions.eq("deleted", "N"));
+        criteria.add(Restrictions.eq("deleted", IsDeleted.N));
         List<ProceduresEntity> proceduresEntities = criteria.list();
 
         return proceduresEntities;
@@ -43,7 +44,7 @@ public class ProcedureRepository {
         proceduresEntity.setDescription(description);
         proceduresEntity.setCreatedAt(getCurrentTimestamp());
         proceduresEntity.setUpdatedAt(getCurrentTimestamp());
-        proceduresEntity.setDeleted("N");
+        proceduresEntity.setDeleted(IsDeleted.N);
 
         Session session = sessionFactory.getCurrentSession();
         session.persist(proceduresEntity);
@@ -53,7 +54,7 @@ public class ProcedureRepository {
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         ProceduresEntity proceduresEntity = session.load(ProceduresEntity.class, id);
-        proceduresEntity.setDeleted("Y");
+        proceduresEntity.setDeleted(IsDeleted.Y);
         proceduresEntity.setUpdatedAt(getCurrentTimestamp());
         proceduresEntity.setId(id);
         session.update(proceduresEntity);

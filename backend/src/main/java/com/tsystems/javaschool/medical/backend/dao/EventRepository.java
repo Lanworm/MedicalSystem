@@ -2,6 +2,7 @@ package com.tsystems.javaschool.medical.backend.dao;
 
 import com.tsystems.javaschool.medical.backend.dto.EventRequestDto;
 import com.tsystems.javaschool.medical.backend.entities.*;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -55,7 +56,7 @@ public class EventRepository {
     public List<EventsEntity> getAll(int start, int length, String orderBy, String orderDir) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(EventsEntity.class);
-        criteria.add(Restrictions.eq("deleted", "N"));
+        criteria.add(Restrictions.eq("deleted", IsDeleted.N));
         criteria.setMaxResults(length);
         criteria.setFirstResult(start);
 
@@ -111,7 +112,7 @@ public class EventRepository {
         eventsEntity.setEndDate(params.getEndDate());
         eventsEntity.setCreatedAt(getCurrentTimestamp());
         eventsEntity.setUpdatedAt(getCurrentTimestamp());
-        eventsEntity.setDeleted("N");
+        eventsEntity.setDeleted(IsDeleted.N);
         session.persist(eventsEntity);
 
     }
@@ -120,7 +121,7 @@ public class EventRepository {
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         EventsEntity eventsEntity = session.load(EventsEntity.class, id);
-        eventsEntity.setDeleted("Y");
+        eventsEntity.setDeleted(IsDeleted.Y);
         eventsEntity.setUpdatedAt(getCurrentTimestamp());
         eventsEntity.setId(id);
         session.update(eventsEntity);

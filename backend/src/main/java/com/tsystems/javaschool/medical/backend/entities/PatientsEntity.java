@@ -1,5 +1,7 @@
 package com.tsystems.javaschool.medical.backend.entities;
 
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -14,7 +16,7 @@ public class PatientsEntity {
     private String insuranceNumber;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private String deleted;
+    private IsDeleted deleted;
 
     @Id
     @javax.persistence.SequenceGenerator(name = "patients_item_id", sequenceName = "patients_item_id", allocationSize = 1)
@@ -90,11 +92,12 @@ public class PatientsEntity {
 
     @Basic
     @Column(name = "deleted")
-    public String getDeleted() {
+    @Enumerated(EnumType.STRING)
+    public IsDeleted getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(String deleted) {
+    public void setDeleted(IsDeleted deleted) {
         this.deleted = deleted;
     }
 

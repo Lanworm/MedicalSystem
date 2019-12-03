@@ -2,6 +2,7 @@ package com.tsystems.javaschool.medical.backend.services;
 
 import com.tsystems.javaschool.medical.backend.dto.SpecializationsDto;
 import com.tsystems.javaschool.medical.backend.entities.SpecializationsEntity;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,7 +30,7 @@ public class ScheduleService {
         session.getTransaction().begin();
         Criteria criteria = session.createCriteria(SpecializationsEntity.class);
         criteria.addOrder(Order.asc("description"));
-        criteria.add(Restrictions.eq("deleted", "N"));
+        criteria.add(Restrictions.eq("deleted", IsDeleted.N));
 
         List list = criteria.list();
         List<SpecializationsDto> result = new ArrayList<>();
@@ -50,7 +51,7 @@ public class ScheduleService {
         specializationsEntity.setDescription(description);
         specializationsEntity.setCreatedAt(getCurrentTimestamp());
         specializationsEntity.setUpdatedAt(getCurrentTimestamp());
-        specializationsEntity.setDeleted("N");
+        specializationsEntity.setDeleted(IsDeleted.N);
 
         Session session = sessionFactory.openSession();
         session.getTransaction().begin();
@@ -64,7 +65,7 @@ public class ScheduleService {
         session.getTransaction().begin();
 
         SpecializationsEntity specializationsEntity = session.load(SpecializationsEntity.class, id);
-        specializationsEntity.setDeleted("Y");
+        specializationsEntity.setDeleted(IsDeleted.Y);
         specializationsEntity.setUpdatedAt(getCurrentTimestamp());
         specializationsEntity.setId(id);
 

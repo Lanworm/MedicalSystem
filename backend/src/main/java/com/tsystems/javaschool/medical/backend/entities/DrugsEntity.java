@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.medical.backend.entities;
 
-import org.hibernate.annotations.ColumnDefault;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,7 +16,7 @@ public class DrugsEntity {
     private String type;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private String deleted;
+    private IsDeleted deleted;
 
     @Id
     @SequenceGenerator(name = "drugs_item_id", sequenceName = "drugs_item_id", allocationSize = 1)
@@ -73,13 +73,13 @@ public class DrugsEntity {
     }
 
     @Basic
-    @ColumnDefault("N")
+    @Enumerated(EnumType.STRING)
     @Column(name = "deleted" )
-    public String getDeleted() {
+    public IsDeleted getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(String deleted) {
+    public void setDeleted(IsDeleted deleted) {
         this.deleted = deleted;
     }
 

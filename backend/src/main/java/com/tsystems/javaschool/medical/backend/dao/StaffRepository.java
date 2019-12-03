@@ -3,6 +3,7 @@ package com.tsystems.javaschool.medical.backend.dao;
 import com.tsystems.javaschool.medical.backend.dto.StaffDto;
 import com.tsystems.javaschool.medical.backend.entities.SpecializationsEntity;
 import com.tsystems.javaschool.medical.backend.entities.StaffEntity;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +32,7 @@ public class StaffRepository {
 
         Criteria criteria = session.createCriteria(StaffEntity.class);
         criteria.addOrder(Order.asc("lastName"));
-        criteria.add(Restrictions.eq("deleted", "N"));
+        criteria.add(Restrictions.eq("deleted", IsDeleted.N));
 
         List<StaffEntity> staffEntityList = criteria.list();
         return staffEntityList;
@@ -50,7 +51,7 @@ public class StaffRepository {
         staffEntity.setSpecializationsBySpecializationId(specializationsEntity);
         staffEntity.setCreatedAt(getCurrentTimestamp());
         staffEntity.setUpdatedAt(getCurrentTimestamp());
-        staffEntity.setDeleted("N");
+        staffEntity.setDeleted(IsDeleted.N);
 
         session.persist(staffEntity);
     }
@@ -60,7 +61,7 @@ public class StaffRepository {
         Session session = sessionFactory.getCurrentSession();
 
         StaffEntity staffsEntity = session.load(StaffEntity.class, id);
-        staffsEntity.setDeleted("Y");
+        staffsEntity.setDeleted(IsDeleted.Y);
         staffsEntity.setUpdatedAt(getCurrentTimestamp());
         staffsEntity.setId(id);
 

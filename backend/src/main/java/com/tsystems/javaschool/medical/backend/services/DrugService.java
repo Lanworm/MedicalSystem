@@ -3,6 +3,7 @@ package com.tsystems.javaschool.medical.backend.services;
 import com.tsystems.javaschool.medical.backend.dao.DrugRepository;
 import com.tsystems.javaschool.medical.backend.dto.DrugDto;
 import com.tsystems.javaschool.medical.backend.entities.DrugsEntity;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class DrugService {
 
     public void add(DrugDto params) {
         DrugsEntity drugsEntity = modelMapper.map(params, DrugsEntity.class);
-        drugsEntity.setDeleted("N");
+        drugsEntity.setDeleted(IsDeleted.N);
         drugRepository.save(drugsEntity);
     }
 }

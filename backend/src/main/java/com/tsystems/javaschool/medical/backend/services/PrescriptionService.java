@@ -10,6 +10,7 @@ import com.tsystems.javaschool.medical.backend.entities.DrugsEntity;
 import com.tsystems.javaschool.medical.backend.entities.PatientsEntity;
 import com.tsystems.javaschool.medical.backend.entities.PrescriptionsEntity;
 import com.tsystems.javaschool.medical.backend.entities.ProceduresEntity;
+import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,7 @@ public class PrescriptionService {
         prescriptionsEntity.setPatientsByPatientId(patientsEntity);
         prescriptionsEntity.setProceduresByProcedureId(proceduresEntity);
         prescriptionsEntity.setDrugsByDrugId(drugsEntity);
-        prescriptionsEntity.setDeleted("N");
+        prescriptionsEntity.setDeleted(IsDeleted.N);
         prescriptionRepository.save(prescriptionsEntity);
         prescriptionCronService.generateEventsByPrescription(params);
     }
