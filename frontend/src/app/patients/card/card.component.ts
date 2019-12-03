@@ -23,6 +23,20 @@ export class CardComponent implements OnInit {
 
   private params: any = {};
   public patientInfo: Array<any>;
+  public showDialog = false;
+  public dialogData;
+  public dialogError;
+
+
+  public openDialog = (data) => {
+    this.showDialog = true;
+    this.dialogData = data;
+  };
+
+  public closeDialog = () => {
+    this.showDialog = false;
+    this.dialogError = null;
+  };
 
   public getTableData = (dataTablesParameters: any, callback) => {
     const {patientId} = this.params;
@@ -42,6 +56,37 @@ export class CardComponent implements OnInit {
     );
   };
 
+  submitForm = (params) => {
+    const {patientId} = this.params;
+    params.patient_id = patientId;
+    if (this.dialogData) {
+      params.id = this.dialogData.id;
+      this.prescriptionService.update(params).subscribe((res) => {
+          if (res.msg) {
+            this.dialogError = res.msg;
+          } else {
+            this.dialogError = null;
+            this.closeDialog();
+            const table = $('#PrescriptionsTableList').DataTable();
+            table.ajax.reload();
+          }
+        }, error => {
+          console.error(error);
+          this.closeDialog();
+        }
+      );
+    } else {
+      this.prescriptionService.add(params).subscribe(() => {
+          this.closeDialog();
+          const table = $('#PrescriptionsTableList').DataTable();
+          table.ajax.reload();
+        }, error => {
+          console.error(error);
+          this.closeDialog();
+        }
+      );
+    }
+  };
 
   ngOnInit() {
     const {patientId} = this.params;

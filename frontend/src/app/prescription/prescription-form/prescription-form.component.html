@@ -1,0 +1,81 @@
+<div class="ui dimmer modals page transition visible active" style="display: flex !important;">
+  <div class="ui modal active ">
+    <i class="close icon" (click)="closeDialog()"></i>
+    <div class="header">
+      {{dialogData?'Edit':'Add'}} prescription
+    </div>
+    <div class="content">
+
+      <div class="ui equal width grid">
+        <div class="ui row">
+          <div class="eight wide column">
+            <label>From</label>
+            <div class="ui calendar" id="startDate">
+              <div class="ui input left icon select_full_width">
+                <i class="calendar icon"></i>
+                <input type="text" placeholder="From" [formControl]="fromControl">
+              </div>
+            </div>
+          </div>
+          <div class="eight wide column">
+            <label>To</label>
+            <div class="ui calendar" id="endDate">
+              <div class="ui input left icon select_full_width">
+                <i class="calendar icon"></i>
+                <input type="text" placeholder="To" [formControl]="toControl">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ui row">
+          <div class="four wide column">
+            <label>Procedure</label>
+            <select class="ui dropdown select_full_width" [formControl]="procedureControl">
+              <option *ngFor="let item of procedureList" [value]="item.id">
+                {{item.description}}
+              </option>
+            </select>
+          </div>
+          <div class="four wide column ">
+            <label>Drug</label>
+            <select class="ui dropdown select_full_width" [formControl]="drugControl">
+              <option *ngFor="let item of drugList" [value]="item.id">
+                {{item.description}}
+              </option>
+            </select>
+          </div>
+          <div class="two wide column ">
+            <label>Dosage</label>
+            <div class="ui input select_full_width">
+              <input type="text" placeholder="Dosage" [formControl]="dosageControl">
+            </div>
+          </div>
+          <div class="six wide column ">
+            <label>Description</label>
+            <div class="ui input select_full_width">
+              <input type="text" placeholder="Description" [formControl]="descriptionControl">
+            </div>
+          </div>
+        </div>
+        <div class="ui row">
+          <div class="sixteen wide column">
+            <label>Procedure frequency</label>
+          <cron-jobs [formControl]="freqControl" [config]="cronConfig"></cron-jobs>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+    <div class="actions">
+
+      <div class="dialog_error" *ngFor="let error of dialogError"><div class="ui red label">{{error.message}}</div></div>
+      <div class="ui black deny button" (click)="closeDialog()">
+        Cancel
+      </div>
+      <div class="ui positive right labeled icon button" (click)="onSubmit()">
+        Save
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -59,7 +59,7 @@ public class PrescriptionService {
 
         PrescriptionsEntity prescriptionsEntity = modelMapper.map(params, PrescriptionsEntity.class);
         PatientsEntity patientsEntity = patientRepository.getById(params.getPatientId());
-        ProceduresEntity proceduresEntity = procedureRepository.getById(params.getPatientId());
+        ProceduresEntity proceduresEntity = procedureRepository.getById(params.getProcedureId());
 
         Integer drugId = params.getDrugId();
         DrugsEntity drugsEntity = drugRepository.findById(drugId).orElse(new DrugsEntity());
@@ -67,7 +67,7 @@ public class PrescriptionService {
         prescriptionsEntity.setPatientsByPatientId(patientsEntity);
         prescriptionsEntity.setProceduresByProcedureId(proceduresEntity);
         prescriptionsEntity.setDrugsByDrugId(drugsEntity);
-
+        prescriptionsEntity.setDeleted("N");
         prescriptionRepository.save(prescriptionsEntity);
         prescriptionCronService.generateEventsByPrescription(params);
     }

@@ -19,6 +19,8 @@ import {AuthGuard} from './services/auth/auth.guard';
 import {PatientsComponent} from './patients/patients.component';
 import {CardComponent} from './patients/card/card.component';
 import {PrescriptionsListComponent} from './prescription/prescriptions-list/prescriptions-list.component';
+import {PrescriptionFormComponent} from './prescription/prescription-form/prescription-form.component';
+import {CronJobsModule} from 'ngx-cron-jobs';
 
 const routes: Routes = [
 
@@ -76,12 +78,14 @@ const routes: Routes = [
     PatientsComponent,
     CardComponent,
     PrescriptionsListComponent,
+    PrescriptionFormComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    CronJobsModule
   ],
   providers: [
     {

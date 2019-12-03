@@ -12,6 +12,14 @@ export class PrescriptionService {
 
   }
 
+  add(params): Observable<any> {
+    return this.http.post('/api/prescription', params);
+  }
+
+  update(params): Observable<any> {
+    return this.http.post('/api/prescription', params);
+  }
+
   getAll(): Observable<any> {
     return this.http.get('/api/prescriptions');
   }

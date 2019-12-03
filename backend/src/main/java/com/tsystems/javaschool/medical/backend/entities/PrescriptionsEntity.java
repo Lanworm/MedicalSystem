@@ -120,7 +120,6 @@ public class PrescriptionsEntity {
 
     @Basic
     @Column(name = "type")
-    @Enumerated
     public String getType() {
         return type;
     }

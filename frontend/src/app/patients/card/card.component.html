@@ -25,22 +25,23 @@
       </div>
     </div>
     <div class="twelve wide column">
-      <div class="ui top attached tabular menu">
-        <a class="active item" data-tab="first">Info</a>
-        <a class="item" data-tab="second">Prescriptions</a>
-      </div>
-      <div class="ui bottom attached active tab segment" data-tab="first" >
-        <p>Content</p>
 
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="second">
-        <app-prescriptions-list [getTableData]="getTableData"> </app-prescriptions-list>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="sixteen wide column">
+        <div class="ui right aligned grid">
+          <div class="right floated right aligned six wide column">
+            <div class="ui right floated small primary labeled icon button" (click)="openDialog(null)">
+              <i class="plus circle icon"></i> Add Prescription
+            </div>
+          </div>
+        </div>
+        <app-prescriptions-list [getTableData]="getTableData"></app-prescriptions-list>
 
     </div>
   </div>
 </div>
+<app-prescription-form *ngIf="showDialog"
+                       [closeDialog]="closeDialog"
+                       [dialogData]="dialogData"
+                       [dialogError]="dialogError"
+                       [submitForm]="submitForm"
+
+></app-prescription-form>
