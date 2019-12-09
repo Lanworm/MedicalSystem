@@ -14,6 +14,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.List;
 
@@ -163,6 +165,32 @@ public class EventRepository {
         Criteria secondCriteria = criteria.createCriteria("patientByPatientId");
         secondCriteria.add(Restrictions.eq("id", patientId));
         List<EventsEntity> eventsEntityList = criteria.list();
+        return eventsEntityList;
+    }
+
+    @Transactional
+    public List<EventsEntity> getEventListByPatientIdBetweenDate(int patientId, long startDate, long endDate) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(EventsEntity.class,"ev").createAlias("ev.procedureByProcedureId", "pr");
+
+        criteria.add(Restrictions.between("startDate", new Timestamp(startDate), new Timestamp(endDate)));
+        Criteria secondCriteria = criteria.createCriteria("patientByPatientId");
+        secondCriteria.add(Restrictions.eq("id", patientId));
+
+//        ProjectionList projectionList = Projections.projectionList();
+//        projectionList.add(Projections.groupProperty("pr.description"));
+//        projectionList.add(Property.forName("id"),"ev");
+//        criteria.setProjection(projectionList);
+//        List result = criteria.setResultTransformer(Transformers.aliasToBean(EventsEntity.class)).list();
+
+
+        Period period = Period.between(new Timestamp(startDate).toLocalDateTime().toLocalDate(), new Timestamp(endDate).toLocalDateTime().toLocalDate());
+        int diff = period.getDays();
+        System.out.println(diff);
+        System.out.println(new Timestamp(startDate).toLocalDateTime().toLocalDate());
+        System.out.println(new Timestamp(endDate).toLocalDateTime().toLocalDate());
+        List<EventsEntity> eventsEntityList = criteria.list();
+
         return eventsEntityList;
     }
 }

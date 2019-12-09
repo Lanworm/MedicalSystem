@@ -27,8 +27,8 @@ export class EventsService {
     return this.http.post('/api/events', params);
   }
 
-  getEventByPatientId(id: number): Observable<any> {
-    return this.http.get('/api/eventsByPatient' + getQuerySearch({id}));
+  getEventByPatientId(id, startDate, endDate ): Observable<any> {
+    return this.http.get('/api/getEventListByPatientIdBetweenDate' + getQuerySearch({id, startDate, endDate}));
   }
 
 }

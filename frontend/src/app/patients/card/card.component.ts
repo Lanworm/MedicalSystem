@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PatientService} from '../../services/patients/patient.service';
 import {PrescriptionService} from '../../services/prescription/prescription.service';
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -18,6 +19,7 @@ export class CardComponent implements OnInit {
     private prescriptionService: PrescriptionService) {
     this.activatedRoute.params.subscribe(params => {
       this.params = params;
+      this.patientId = params.patientId;
     });
   }
 
@@ -26,7 +28,29 @@ export class CardComponent implements OnInit {
   public showDialog = false;
   public dialogData;
   public dialogError;
+  public patientId;
+  public startDate = moment();
+  public endDate = moment().add(3, 'day');
+  public buttonClass = (days) => {
+    const dayDiff = this.endDate.diff(this.startDate, 'days');
+    return dayDiff === days ? 'ui button active' : 'ui button';
+  };
 
+
+  public changeFreq = (direction) => {
+    const dayDiff = this.endDate.diff(this.startDate, 'days');
+    if (direction === 'prev') {
+      this.endDate = moment(this.endDate).subtract(dayDiff, 'day');
+      this.startDate = moment(this.startDate).subtract(dayDiff, 'day');
+    } else if (direction === 'next') {
+      this.endDate = moment(this.endDate).add(dayDiff, 'day');
+      this.startDate = moment(this.startDate).add(dayDiff, 'day');
+    }
+  };
+
+  public changeInteval = (days) => {
+    this.endDate = moment(this.startDate).add(days, 'day');
+  };
 
   public openDialog = (data) => {
     this.showDialog = true;

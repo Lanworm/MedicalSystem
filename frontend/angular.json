@@ -33,6 +33,7 @@
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/datatables.net-se/js/dataTables.semanticui.min.js",
+              "node_modules/datatables.net-rowgroup/js/dataTables.rowGroup.min.js",
               "node_modules/semantic-ui-css/semantic.min.js",
               "node_modules/semantic-ui-calendar/dist/calendar.min.js"
             ]

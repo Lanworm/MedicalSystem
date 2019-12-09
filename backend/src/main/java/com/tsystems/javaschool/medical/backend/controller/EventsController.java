@@ -45,8 +45,11 @@ public class EventsController {
         return eventsService.updateEvent(params);
     }
 
-    @GetMapping(value = "/eventsByPatient")
-    public List<EventsDto> getEventsListByPatient(@RequestParam(value = "id") int id) {
-        return eventsService.getEventsListByPatient(id);
+    @GetMapping(value = "/getEventListByPatientIdBetweenDate")
+    public List<EventsDto> getEventsListByPatient(
+            @RequestParam(value = "id") int id,
+            @RequestParam(value = "startDate") long startDate,
+            @RequestParam(value = "endDate") long endDate) {
+        return eventsService.getEventListByPatientIdBetweenDate(id, startDate, endDate);
     }
 }

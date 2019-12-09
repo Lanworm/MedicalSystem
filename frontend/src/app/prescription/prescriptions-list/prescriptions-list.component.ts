@@ -35,11 +35,23 @@ export class PrescriptionsListComponent implements OnInit {
       ajax: this.getTableData,
       columns: [
         {
-          name: 'Date',
-          title: 'Date',
+          name: 'From',
+          title: 'From',
           render: (data, type, row) => {
-            return moment(row.updated_at).format(TIME_FORMAT);
+            return moment(row.start_date).format(TIME_FORMAT);
           },
+        },
+        {
+          name: 'To',
+          title: 'To',
+          render: (data, type, row) => {
+            return moment(row.end_date).format(TIME_FORMAT);
+          },
+        },
+        {
+          name: 'Pattern',
+          title: 'Pattern',
+          data: 'time_pattern'
         },
         {
           name: 'Procedure',
@@ -48,17 +60,17 @@ export class PrescriptionsListComponent implements OnInit {
         },
         {
           name: 'Drug',
-          title: 'drug',
+          title: 'Drug',
           data: 'drug.description'
         },
         {
           name: 'Dosage',
-          title: 'dosage',
+          title: 'Dosage',
           data: 'dosage'
         },
         {
-          name: 'description',
-          title: 'description',
+          name: 'Description',
+          title: 'Description',
           data: 'description'
         },
       ]

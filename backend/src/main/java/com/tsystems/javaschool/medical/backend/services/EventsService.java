@@ -85,4 +85,18 @@ public class EventsService {
         }
         return eventsList;
     }
+
+    @Transactional(readOnly = true)
+    public List<EventsDto> getEventListByPatientIdBetweenDate(int patientId, long startDate, long endDate) {
+        List<EventsDto> eventsList = new ArrayList<>();
+        List<EventsEntity> eventsEntityList = eventRepository.getEventListByPatientIdBetweenDate(patientId, startDate, endDate);
+
+        for (Object a : eventsEntityList) {
+            EventsDto eventsDto = modelMapper.map(a, EventsDto.class);
+            eventsList.add(eventsDto);
+        }
+        return eventsList;
+    }
+
+
 }

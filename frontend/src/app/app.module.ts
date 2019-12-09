@@ -21,6 +21,7 @@ import {CardComponent} from './patients/card/card.component';
 import {PrescriptionsListComponent} from './prescription/prescriptions-list/prescriptions-list.component';
 import {PrescriptionFormComponent} from './prescription/prescription-form/prescription-form.component';
 import {CronJobsModule} from 'ngx-cron-jobs';
+import {ActionListComponent} from './patients/action-list/action-list.component';
 
 const routes: Routes = [
 
@@ -79,6 +80,7 @@ const routes: Routes = [
     CardComponent,
     PrescriptionsListComponent,
     PrescriptionFormComponent,
+    ActionListComponent
   ],
   imports: [
     BrowserModule,

@@ -37,6 +37,24 @@
 
     </div>
   </div>
+  <div class="row">
+    <div class="one wide column center middle aligned"><i class="chevron circle link left icon" (click)="changeFreq('prev')"></i></div>
+    <div class="fourteen wide column">
+      <div class="ui buttons">
+        <button [class]="buttonClass(1)" (click)="changeInteval(1)">Day</button>
+        <button [class]="buttonClass(3)" (click)="changeInteval(3)">Three</button>
+        <button [class]="buttonClass(7)" (click)="changeInteval(7)">Week</button>
+      </div>
+    </div>
+    <div class="left floated right aligned one wide column"><i class="chevron circle link right icon" (click)="changeFreq('next')"></i></div>
+  </div>
+
+  <div class="row">
+    <div class="wide column">
+      <app-action-list [endDate]="endDate" [startDate]="startDate" [patientId]="patientId"></app-action-list>
+    </div>
+
+  </div>
 </div>
 <app-prescription-form *ngIf="showDialog"
                        [closeDialog]="closeDialog"

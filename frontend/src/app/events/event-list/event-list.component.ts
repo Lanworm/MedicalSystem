@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
-import {TIME_FORMAT, USER_ROLES} from '../../constants';
+import {STATUS_COLORS, TIME_FORMAT, USER_ROLES} from '../../constants';
 import {EventsService} from '../../services/events/events.service';
 import {AuthService} from '../../services/auth/auth.service';
 
@@ -17,13 +17,6 @@ export class EventListComponent implements OnInit {
   @Input() update;
   @Input() openDeleteDialog;
   @Input() getTableData;
-
-  statusColors = {
-    DONE: 'green',
-    IN_WORK: 'yellow',
-    CANCELED: 'red',
-    ASSIGNED: 'blue'
-  };
 
   constructor(private eventService: EventsService, private authService: AuthService) {
   }
@@ -98,7 +91,7 @@ export class EventListComponent implements OnInit {
           data: 'status',
           title: 'Status',
           render: (data, type, row) => {
-            return ('<a class="ui ' + this.statusColors[row.status] + ' label">' + row.status + '</a>');
+            return ('<a class="ui ' + STATUS_COLORS[row.status] + ' label">' + row.status + '</a>');
           },
         },
         {
