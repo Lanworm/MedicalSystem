@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.time.Period;
 import java.util.HashMap;
 import java.util.List;
 
@@ -177,18 +176,6 @@ public class EventRepository {
         Criteria secondCriteria = criteria.createCriteria("patientByPatientId");
         secondCriteria.add(Restrictions.eq("id", patientId));
 
-//        ProjectionList projectionList = Projections.projectionList();
-//        projectionList.add(Projections.groupProperty("pr.description"));
-//        projectionList.add(Property.forName("id"),"ev");
-//        criteria.setProjection(projectionList);
-//        List result = criteria.setResultTransformer(Transformers.aliasToBean(EventsEntity.class)).list();
-
-
-        Period period = Period.between(new Timestamp(startDate).toLocalDateTime().toLocalDate(), new Timestamp(endDate).toLocalDateTime().toLocalDate());
-        int diff = period.getDays();
-        System.out.println(diff);
-        System.out.println(new Timestamp(startDate).toLocalDateTime().toLocalDate());
-        System.out.println(new Timestamp(endDate).toLocalDateTime().toLocalDate());
         List<EventsEntity> eventsEntityList = criteria.list();
 
         return eventsEntityList;

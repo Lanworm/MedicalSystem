@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,9 +25,10 @@ public class PrescriptionCronService {
     void generateEventsByPrescription(PrescriptionRequestDto prescriptionParams) {
 
         ArrayList<Date> timeSet = new ArrayList<>();
-        final int dosage = Integer.parseInt(prescriptionParams.getDosage());
+        Period period = Period.between(prescriptionParams.getStartDate().toLocalDateTime().toLocalDate(), prescriptionParams.getEndDate().toLocalDateTime().toLocalDate());
+        int diff = period.getDays();
         try {
-            for (int i = dosage; i > 0; i--) {
+            for (long i = diff; i > 0; i--) {
                 CronExpression cron = new CronExpression(prescriptionParams.getTimePattern());
                 final Date firstExecution = cron.getNextValidTimeAfter(timeSet.isEmpty() ? prescriptionParams.getStartDate() : timeSet.get(timeSet.size() - 1));
                 timeSet.add(new Date(firstExecution.getTime()));
