@@ -38,6 +38,8 @@ export class EventFormComponent implements OnInit {
   statusControl: FormControl;
   fromControl: FormControl;
   toControl: FormControl;
+  fromDate;
+  toDate;
 
   constructor(
     private patientService: PatientService,
@@ -50,8 +52,8 @@ export class EventFormComponent implements OnInit {
 
   onSubmit = () => {
     const params = {
-      end_date: +moment(this.toControl.value),
-      start_date: +moment(this.fromControl.value),
+      end_date: +moment(this.toDate),
+      start_date: +moment(this.fromDate),
       patient_id: this.patientControl.value,
       procedure_id: this.procedureControl.value,
       room_id: this.roomControl.value,
@@ -62,8 +64,7 @@ export class EventFormComponent implements OnInit {
   };
 
   ngOnInit() {
-    (<any> $('#startDate')).calendar({endCalendar: $('#endDate')});
-    (<any> $('#endDate')).calendar({startCalendar: $('#startDate')});
+
     const nowDate = new Date;
     const {
       patient: {id: patientId = null} = {},
@@ -72,8 +73,24 @@ export class EventFormComponent implements OnInit {
       staff: {id: staffId = null} = {},
       status = null,
       start_date = nowDate,
-      end_date = nowDate
+      end_date = nowDate,
     } = this.dialogData || {};
+
+    console.log(moment(start_date).toDate());
+
+    (<any> $('#startDate')).calendar({
+      endCalendar: $('#endDate'),
+      onChange: (date, text) => {
+        this.fromDate = date;
+      },
+    });
+    (<any> $('#endDate')).calendar({
+      startCalendar: $('#startDate'),
+      onChange: (date, text) => {
+        this.toDate = date;
+      },
+    });
+
     Promise.all([
       this.patientService.getAll().toPromise(),
       this.procedureService.getAll().toPromise(),

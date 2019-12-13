@@ -30,11 +30,12 @@ export class PrescriptionFormComponent implements OnInit {
 
   procedureControl: FormControl;
   drugControl: FormControl;
-  fromControl: FormControl;
-  toControl: FormControl;
   freqControl: FormControl;
   dosageControl: FormControl;
   descriptionControl: FormControl;
+
+  fromDate;
+  toDate;
 
   public cronConfig = {
     multiple: true,
@@ -44,8 +45,8 @@ export class PrescriptionFormComponent implements OnInit {
 
   onSubmit = () => {
     const params = {
-      end_date: +moment(this.toControl.value),
-      start_date: +moment(this.fromControl.value),
+      end_date: +moment(this.toDate),
+      start_date: +moment(this.fromDate),
       procedure_id: this.procedureControl.value,
       drug_id: this.drugControl.value,
       time_pattern: this.freqControl.value,
@@ -56,8 +57,7 @@ export class PrescriptionFormComponent implements OnInit {
   };
 
   ngOnInit() {
-    (<any> $('#startDate')).calendar({endCalendar: $('#endDate')});
-    (<any> $('#endDate')).calendar({startCalendar: $('#startDate')});
+
     const nowDate = new Date;
     const {
       procedure: {id: procedureId = null} = {},
@@ -76,10 +76,23 @@ export class PrescriptionFormComponent implements OnInit {
       this.drugList = result[1];
     });
 
+    (<any> $('#startDate')).calendar({
+      endCalendar: $('#endDate'),
+      onChange: (date, text) => {
+        this.fromDate = date;
+      },
+      initialDate: moment(start_date).toDate()
+    });
+    (<any> $('#endDate')).calendar({
+      startCalendar: $('#startDate'),
+      onChange: (date, text) => {
+        this.toDate = date;
+      },
+      initialDate: moment(end_date).toDate()
+    });
+
     this.procedureControl = new FormControl(procedureId);
     this.drugControl = new FormControl(drugId);
-    this.fromControl = new FormControl(moment(start_date).toDate());
-    this.toControl = new FormControl(moment(end_date).toDate());
     this.freqControl = new FormControl(time_pattern);
     this.dosageControl = new FormControl(dosage);
     this.descriptionControl = new FormControl(description);
