@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {PatientService} from '../../services/patients/patient.service';
 import {PrescriptionService} from '../../services/prescription/prescription.service';
 import * as moment from 'moment';
+import {FormControl} from '@angular/forms';
 
 declare var $: any;
 
@@ -31,8 +32,10 @@ export class CardComponent implements OnInit {
   public patientId;
   public startDate = moment();
   public endDate = moment().add(3, 'day');
+  public dateControl: FormControl;
   public buttonClass = (days) => {
     const dayDiff = this.endDate.diff(this.startDate, 'days');
+    console.log(dayDiff);
     return dayDiff === days ? 'ui button active' : 'ui button';
   };
 
@@ -113,9 +116,19 @@ export class CardComponent implements OnInit {
   };
 
   ngOnInit() {
+    (<any> $('#dateControl')).calendar({
+      type: 'date',
+      onChange: (date) => {
+        const dayDiff = this.endDate.diff(this.startDate, 'days');
+        this.startDate = moment(date);
+        this.endDate = moment(date).add(dayDiff, 'day');
+      }
+    });
     const {patientId} = this.params;
+    this.dateControl = new FormControl(this.startDate);
     $('.menu .item').tab();
     this.patientService.getById(patientId).subscribe(value => this.patientInfo = value);
+    this.dateControl = new FormControl(this.startDate);
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component, DoCheck, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {EventsService} from '../../services/events/events.service';
 import * as moment from 'moment';
 import {STATUS_COLORS} from '../../constants';
@@ -10,7 +10,7 @@ declare var $: any;
   templateUrl: './action-list.component.html',
   styleUrls: ['./action-list.component.css']
 })
-export class ActionListComponent implements OnInit, OnChanges, DoCheck {
+export class ActionListComponent implements OnInit, OnChanges {
 
   @Input() startDate;
   @Input() endDate;
@@ -31,7 +31,7 @@ export class ActionListComponent implements OnInit, OnChanges, DoCheck {
         const toolTip = moment(item.start_date).format('dddd D MMM HH:mm') + ' ' + item.status + ' ' + item.procedure.description;
         return (
           '<div data-tooltip="' + toolTip + '" style="width: 24px; display: inline; position:absolute; left: ' + margin + '%">' +
-          '<i class="tiny heartbeat icon ' + STATUS_COLORS[item.status] + '"></i>' +
+          '<i class="heartbeat icon ' + STATUS_COLORS[item.status] + '"></i>' +
           '</div>'
         );
       }).join(' ');
@@ -125,6 +125,7 @@ export class ActionListComponent implements OnInit, OnChanges, DoCheck {
   }
 
   ngOnChanges(changes) {
+    const {startDate, endDate} = changes;
     this.tableOptions = {
       columns: this.getColumns(),
       deferRender: true,
@@ -136,16 +137,13 @@ export class ActionListComponent implements OnInit, OnChanges, DoCheck {
       info: false,
       ajax: this.getTableData,
     };
-    if (!changes.endDate.firstChange) {
+    console.log(changes);
+    if (startDate && !startDate.firstChange || endDate && !endDate.firstChange) {
       const table = $('#eventTable').DataTable();
       table.destroy();
       $('#eventTable').empty();
       $('#eventTable').DataTable(this.tableOptions);
     }
-  }
-
-  ngDoCheck() {
-
   }
 
 }

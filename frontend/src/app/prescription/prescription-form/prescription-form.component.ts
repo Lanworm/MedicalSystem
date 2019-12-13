@@ -81,14 +81,16 @@ export class PrescriptionFormComponent implements OnInit {
       onChange: (date, text) => {
         this.fromDate = date;
       },
-      initialDate: moment(start_date).toDate()
+      initialDate: moment(start_date).toDate(),
+      type:'date'
     });
     (<any> $('#endDate')).calendar({
       startCalendar: $('#startDate'),
       onChange: (date, text) => {
         this.toDate = date;
       },
-      initialDate: moment(end_date).toDate()
+      initialDate: moment(end_date).toDate(),
+      type:'date'
     });
 
     this.procedureControl = new FormControl(procedureId);
