@@ -5,6 +5,7 @@ import com.tsystems.javaschool.medical.backend.dto.prescriptions.PrescriptionReq
 import com.tsystems.javaschool.medical.backend.services.PrescriptionService;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class PrescriptionController {
     }
 
     @GetMapping(value = "/prescriptionsByPatient")
-    public List<PrescriptionDto> getListByPatient(@RequestParam(value = "id") int id) {
+    public List<PrescriptionDto> getListByPatient(@RequestParam(value = "id") BigInteger id) {
         return prescriptionService.getListByPatient(id);
     }
 

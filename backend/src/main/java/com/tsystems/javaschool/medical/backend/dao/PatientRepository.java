@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
@@ -53,7 +54,7 @@ public class PatientRepository {
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(BigInteger id) {
         Session session = sessionFactory.getCurrentSession();
         PatientsEntity patientsEntity = session.load(PatientsEntity.class, id);
         patientsEntity.setDeleted(IsDeleted.Y);
@@ -75,7 +76,7 @@ public class PatientRepository {
     }
 
     @Transactional
-    public PatientsEntity getById(int id) {
+    public PatientsEntity getById(BigInteger id) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(PatientsEntity.class);
         criteria.add(Restrictions.eq("id", id));

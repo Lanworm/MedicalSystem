@@ -4,6 +4,7 @@ import com.tsystems.javaschool.medical.backend.dto.SpecializationsDto;
 import com.tsystems.javaschool.medical.backend.services.SpecializationsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class SpecializationsController {
     }
 
     @RequestMapping(value = "/specializations/{id}", method = RequestMethod.DELETE)
-    public List<SpecializationsDto> deleteSpecialization(@PathVariable("id") final int specializationId) {
+    public List<SpecializationsDto> deleteSpecialization(@PathVariable("id") final BigInteger specializationId) {
         specializationsService.deleteSpecialization(specializationId);
         return specializationsService.getSpecializationsList();
     }

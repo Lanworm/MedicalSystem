@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class StaffService {
         staffRepository.create(firstName, secondName, lastName, specializationId);
     }
 
-    public void deleteStaff(int id) {
+    public void deleteStaff(BigInteger id) {
         staffRepository.delete(id);
     }
 

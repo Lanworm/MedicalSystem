@@ -3,11 +3,12 @@ package com.tsystems.javaschool.medical.backend.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 public class StaffDto implements Serializable, Comparable<StaffDto>{
     @JsonProperty("id")
-    private int id;
+    private BigInteger id;
     @JsonProperty("first_name")
     private String firstName;
     @JsonProperty("second_name")
@@ -15,7 +16,7 @@ public class StaffDto implements Serializable, Comparable<StaffDto>{
     @JsonProperty("last_name")
     private String lastName;
     @JsonProperty("specialization_id")
-    private int specializationId;
+    private BigInteger specializationId;
     @JsonProperty("created_at")
     private Timestamp createdAt;
     @JsonProperty("updated_at")
@@ -23,19 +24,19 @@ public class StaffDto implements Serializable, Comparable<StaffDto>{
     @JsonProperty("deleted")
     private String deleted;
 
-    public int getSpecializationId() {
+    public BigInteger getSpecializationId() {
         return specializationId;
     }
 
-    public void setSpecializationId(int specializationId) {
+    public void setSpecializationId(BigInteger specializationId) {
         this.specializationId = specializationId;
     }
 
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

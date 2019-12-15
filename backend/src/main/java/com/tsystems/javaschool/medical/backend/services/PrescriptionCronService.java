@@ -9,6 +9,7 @@ import com.tsystems.javaschool.medical.backend.entities.StaffEntity;
 import org.quartz.CronExpression;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.Period;
@@ -34,7 +35,7 @@ public class PrescriptionCronService {
         int diff = period.getDays();
         List<StaffEntity> staffEntities = staffRepository.getAll();
         int staffIndex = (int) (Math.random() * ((staffEntities.size()) + 1));
-        int stuffId = staffEntities.get(staffIndex).getId();
+        BigInteger stuffId = staffEntities.get(staffIndex).getId();
         try {
             for (long i = diff; i > 0; i--) {
                 CronExpression cron = new CronExpression(prescriptionParams.getTimePattern());
@@ -47,7 +48,7 @@ public class PrescriptionCronService {
         }
     }
 
-    private static EventRequestDto prepareEventRequestDto(final long startDate, PrescriptionRequestDto prescriptionParams, final int stuffId) {
+    private static EventRequestDto prepareEventRequestDto(final long startDate, PrescriptionRequestDto prescriptionParams, final BigInteger stuffId) {
 
 
         Calendar now = Calendar.getInstance();
@@ -62,7 +63,7 @@ public class PrescriptionCronService {
         eventRequestDto.setPatientId(prescriptionParams.getPatientId());
         eventRequestDto.setProcedureId(prescriptionParams.getProcedureId());
         eventRequestDto.setStaffId(stuffId);
-        eventRequestDto.setRoomId(1);
+        eventRequestDto.setRoomId(BigInteger.valueOf(1));
 
         return eventRequestDto;
     }

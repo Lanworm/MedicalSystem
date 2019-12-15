@@ -2,11 +2,12 @@ package com.tsystems.javaschool.medical.backend.dto.prescriptions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 public class PrescriptionRequestDto {
     @JsonProperty("id")
-    private int id;
+    private BigInteger id;
     @JsonProperty("time_pattern")
     private String timePattern;
     @JsonProperty("start_date")
@@ -26,17 +27,17 @@ public class PrescriptionRequestDto {
     @JsonProperty("type")
     private String type;
     @JsonProperty("patient_id")
-    private int patientId;
+    private BigInteger patientId;
     @JsonProperty("procedure_id")
-    private int procedureId;
+    private BigInteger procedureId;
     @JsonProperty("drug_id")
-    private int drugId;
+    private BigInteger drugId;
 
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
@@ -112,27 +113,27 @@ public class PrescriptionRequestDto {
         this.type = type;
     }
 
-    public int getPatientId() {
+    public BigInteger getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(BigInteger patientId) {
         this.patientId = patientId;
     }
 
-    public int getProcedureId() {
+    public BigInteger getProcedureId() {
         return procedureId;
     }
 
-    public void setProcedureId(int procedureId) {
+    public void setProcedureId(BigInteger procedureId) {
         this.procedureId = procedureId;
     }
 
-    public int getDrugId() {
+    public BigInteger getDrugId() {
         return drugId;
     }
 
-    public void setDrugId(int drugId) {
+    public void setDrugId(BigInteger drugId) {
         this.drugId = drugId;
     }
 }

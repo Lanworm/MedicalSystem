@@ -4,6 +4,7 @@ import com.tsystems.javaschool.medical.backend.dto.ProceduresDto;
 import com.tsystems.javaschool.medical.backend.services.ProceduresService;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class ProceduresController {
     }
 
     @RequestMapping(value = "/procedures/{id}", method = RequestMethod.DELETE)
-    public List<ProceduresDto> deleteProcedure(@PathVariable("id") final int Id) {
+    public List<ProceduresDto> deleteProcedure(@PathVariable("id") final BigInteger Id) {
         proceduresService.deleteProcedure(Id);
         return proceduresService.getProceduresList();
     }

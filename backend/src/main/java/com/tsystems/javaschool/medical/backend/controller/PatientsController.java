@@ -4,6 +4,7 @@ import com.tsystems.javaschool.medical.backend.dto.PatientsDto;
 import com.tsystems.javaschool.medical.backend.services.PatientsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class PatientsController {
     }
 
     @GetMapping(value = "/patient/{id}")
-    public PatientsDto getPatientById(@PathVariable("id") final int id) {
+    public PatientsDto getPatientById(@PathVariable("id") final BigInteger id) {
         return patientsService.getPatientById(id);
     }
 
@@ -39,7 +40,7 @@ public class PatientsController {
     }
 
     @DeleteMapping(value = "/patients/{id}")
-    public List<PatientsDto> deletePatients(@PathVariable("id") final int Id) {
+    public List<PatientsDto> deletePatients(@PathVariable("id") final BigInteger Id) {
         patientsService.deletePatient(Id);
         return patientsService.getPatientsList();
     }

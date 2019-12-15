@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class EventsService {
         eventRepository.create(params);
     }
 
-    public void deleteEvent(int id) {
+    public void deleteEvent(BigInteger id) {
         eventRepository.delete(id);
     }
 
@@ -74,20 +75,9 @@ public class EventsService {
         return eventUpdateDto;
     }
 
-    @Transactional(readOnly = true)
-    public List<EventsDto> getEventsListByPatient(int id) {
-        List<EventsDto> eventsList = new ArrayList<>();
-        List<EventsEntity> eventsEntityList = eventRepository.getEventByPatientId(id);
-
-        for (Object a : eventsEntityList) {
-            EventsDto eventsDto = modelMapper.map(a, EventsDto.class);
-            eventsList.add(eventsDto);
-        }
-        return eventsList;
-    }
 
     @Transactional(readOnly = true)
-    public List<EventsDto> getEventListByPatientIdBetweenDate(int patientId, long startDate, long endDate) {
+    public List<EventsDto> getEventListByPatientIdBetweenDate(BigInteger patientId, long startDate, long endDate) {
         List<EventsDto> eventsList = new ArrayList<>();
         List<EventsEntity> eventsEntityList = eventRepository.getEventListByPatientIdBetweenDate(patientId, startDate, endDate);
 

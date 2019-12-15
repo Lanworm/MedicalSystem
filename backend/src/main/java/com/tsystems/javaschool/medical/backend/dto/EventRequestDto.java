@@ -2,6 +2,7 @@ package com.tsystems.javaschool.medical.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 public class EventRequestDto {
@@ -10,23 +11,23 @@ public class EventRequestDto {
     @JsonProperty("start_date")
     private Timestamp startDate;
     @JsonProperty("patient_id")
-    private int patientId;
+    private BigInteger patientId;
     @JsonProperty("procedure_id")
-    private int procedureId;
+    private BigInteger procedureId;
     @JsonProperty("room_id")
-    private int roomId;
+    private BigInteger roomId;
     @JsonProperty("staff_id")
-    private int staffId;
+    private BigInteger staffId;
     @JsonProperty("status")
     private String status;
     @JsonProperty("id")
-    private int id;
+    private BigInteger id;
 
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
@@ -46,35 +47,35 @@ public class EventRequestDto {
         this.startDate = startDate;
     }
 
-    public int getPatientId() {
+    public BigInteger getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(BigInteger patientId) {
         this.patientId = patientId;
     }
 
-    public int getProcedureId() {
+    public BigInteger getProcedureId() {
         return procedureId;
     }
 
-    public void setProcedureId(int procedureId) {
+    public void setProcedureId(BigInteger procedureId) {
         this.procedureId = procedureId;
     }
 
-    public int getRoomId() {
+    public BigInteger getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(BigInteger roomId) {
         this.roomId = roomId;
     }
 
-    public int getStaffId() {
+    public BigInteger getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(int staffId) {
+    public void setStaffId(BigInteger staffId) {
         this.staffId = staffId;
     }
 

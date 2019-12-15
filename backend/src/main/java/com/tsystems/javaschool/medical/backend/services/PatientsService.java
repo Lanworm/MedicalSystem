@@ -6,6 +6,7 @@ import com.tsystems.javaschool.medical.backend.entities.PatientsEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class PatientsService {
         return result;
     }
 
-    public PatientsDto getPatientById(int id) {
+    public PatientsDto getPatientById(BigInteger id) {
         return modelMapper.map(patientRepository.getById(id), PatientsDto.class);
     }
 
@@ -40,7 +41,7 @@ public class PatientsService {
         patientRepository.create(firstName, secondName, lastName, insuranceNumber);
     }
 
-    public void deletePatient(int id) {
+    public void deletePatient(BigInteger id) {
         patientRepository.delete(id);
     }
 

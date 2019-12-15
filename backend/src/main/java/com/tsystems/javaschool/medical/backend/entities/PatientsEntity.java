@@ -3,13 +3,14 @@ package com.tsystems.javaschool.medical.backend.entities;
 import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "patients", schema = "public" )
 public class PatientsEntity {
-    private int id;
+    private BigInteger id;
     private String firstName;
     private String secondName;
     private String lastName;
@@ -22,11 +23,11 @@ public class PatientsEntity {
     @javax.persistence.SequenceGenerator(name = "patients_item_id", sequenceName = "patients_item_id", allocationSize = 1)
     @javax.persistence.GeneratedValue(generator = "patients_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
     @Column(name = "id")
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

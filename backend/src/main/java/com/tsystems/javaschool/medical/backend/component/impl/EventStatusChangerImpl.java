@@ -8,6 +8,8 @@ import com.tsystems.javaschool.medical.backend.exception.EventStatusChangerExept
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
+
 @Component
 public class EventStatusChangerImpl implements EventStatusChanger {
 
@@ -19,7 +21,7 @@ public class EventStatusChangerImpl implements EventStatusChanger {
     }
 
     @Override
-    public void changeStatus(int eventId, String newStatus) throws EventStatusChangerExeption {
+    public void changeStatus(BigInteger eventId, String newStatus) throws EventStatusChangerExeption {
         EventsEntity eventsEntity = eventRepository.getEventById(eventId);
         String eventStatus = eventsEntity.getStatus();
         if (eventStatus.equals(EventStatus.IN_WORK.getValue())  && newStatus.equals(EventStatus.ASSIGNED.getValue())) {

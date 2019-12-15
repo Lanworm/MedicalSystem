@@ -5,13 +5,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "drugs", schema = "public")
 public class DrugsEntity {
-    private int id;
+    private BigInteger id;
     private String description;
     private String type;
     private Timestamp createdAt;
@@ -22,11 +23,11 @@ public class DrugsEntity {
     @SequenceGenerator(name = "drugs_item_id", sequenceName = "drugs_item_id", allocationSize = 1)
     @GeneratedValue(generator = "drugs_item_id", strategy = javax.persistence.GenerationType.SEQUENCE)
     @Column(name = "id")
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

@@ -7,6 +7,7 @@ import com.tsystems.javaschool.medical.backend.dto.EventsDto;
 import com.tsystems.javaschool.medical.backend.services.EventsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class EventsController {
     }
 
     @DeleteMapping(value = "/events/{id}")
-    public void deleteEvent(@PathVariable("id") int id) {
+    public void deleteEvent(@PathVariable("id") BigInteger id) {
         eventsService.deleteEvent(id);
     }
 
@@ -47,7 +48,7 @@ public class EventsController {
 
     @GetMapping(value = "/getEventListByPatientIdBetweenDate")
     public List<EventsDto> getEventsListByPatient(
-            @RequestParam(value = "id") int id,
+            @RequestParam(value = "id") BigInteger id,
             @RequestParam(value = "startDate") long startDate,
             @RequestParam(value = "endDate") long endDate) {
         return eventsService.getEventListByPatientIdBetweenDate(id, startDate, endDate);

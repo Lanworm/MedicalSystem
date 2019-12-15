@@ -3,13 +3,14 @@ package com.tsystems.javaschool.medical.backend.entities;
 import com.tsystems.javaschool.medical.backend.entities.enums.IsDeleted;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "schedule", schema = "public" )
 public class ScheduleEntity {
-    private int id;
+    private BigInteger id;
     private Timestamp date;
     private Timestamp startTime;
     private Timestamp endTime;
@@ -19,11 +20,11 @@ public class ScheduleEntity {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

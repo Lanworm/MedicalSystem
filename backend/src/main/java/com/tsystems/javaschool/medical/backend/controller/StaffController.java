@@ -4,6 +4,7 @@ import com.tsystems.javaschool.medical.backend.dto.StaffDto;
 import com.tsystems.javaschool.medical.backend.services.StaffService;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class StaffController {
     }
 
     @RequestMapping(value = "/staff/{id}", method = RequestMethod.DELETE)
-    public List<StaffDto> deleteStaff(@PathVariable("id") final int staffId) {
+    public List<StaffDto> deleteStaff(@PathVariable("id") final BigInteger staffId) {
         staffService.deleteStaff(staffId);
         return staffService.getStaffList();
     }

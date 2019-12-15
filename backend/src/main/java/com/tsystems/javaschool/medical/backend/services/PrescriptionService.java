@@ -6,6 +6,7 @@ import com.tsystems.javaschool.medical.backend.dto.prescriptions.PrescriptionReq
 import com.tsystems.javaschool.medical.backend.entities.PrescriptionsEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class PrescriptionService {
         return prescriptionDtos;
     }
 
-    public List<PrescriptionDto> getListByPatient(int id) {
+    public List<PrescriptionDto> getListByPatient(BigInteger id) {
         List<PrescriptionsEntity> prescriptionsEntities = prescriptionRepository.getByUserId(id);
         List<PrescriptionDto> prescriptionDtos = new ArrayList<>();
         for (PrescriptionsEntity entity : prescriptionsEntities) {

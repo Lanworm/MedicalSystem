@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface PrescriptionRepository extends CrudRepository<PrescriptionsEntity, BigInteger> {
     @Query("from PrescriptionsEntity pe where pe.patientsByPatientId.id = :id")
-    List<PrescriptionsEntity> getByUserId(@Param("id") int id);
+    List<PrescriptionsEntity> getByUserId(@Param("id") BigInteger id);
 }

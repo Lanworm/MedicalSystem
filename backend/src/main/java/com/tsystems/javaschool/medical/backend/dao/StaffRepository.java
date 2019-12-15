@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import static com.tsystems.javaschool.medical.backend.util.DateUtils.getCurrentTimestamp;
@@ -57,7 +58,7 @@ public class StaffRepository {
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(BigInteger id) {
         Session session = sessionFactory.getCurrentSession();
 
         StaffEntity staffsEntity = session.load(StaffEntity.class, id);

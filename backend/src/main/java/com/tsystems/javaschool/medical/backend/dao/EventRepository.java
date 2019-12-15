@@ -14,6 +14,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -119,7 +120,7 @@ public class EventRepository {
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(BigInteger id) {
         Session session = sessionFactory.getCurrentSession();
         EventsEntity eventsEntity = session.load(EventsEntity.class, id);
         eventsEntity.setDeleted(IsDeleted.Y);
@@ -149,7 +150,7 @@ public class EventRepository {
     }
 
     @Transactional
-    public EventsEntity getEventById(int eventId) {
+    public EventsEntity getEventById(BigInteger eventId) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(EventsEntity.class);
         criteria.add(Restrictions.eq("id", eventId));
@@ -158,7 +159,7 @@ public class EventRepository {
     }
 
     @Transactional
-    public List<EventsEntity> getEventByPatientId(int patientId) {
+    public List<EventsEntity> getEventByPatientId(BigInteger patientId) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(EventsEntity.class);
         Criteria secondCriteria = criteria.createCriteria("patientByPatientId");
@@ -168,7 +169,7 @@ public class EventRepository {
     }
 
     @Transactional
-    public List<EventsEntity> getEventListByPatientIdBetweenDate(int patientId, long startDate, long endDate) {
+    public List<EventsEntity> getEventListByPatientIdBetweenDate(BigInteger patientId, long startDate, long endDate) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(EventsEntity.class,"ev").createAlias("ev.procedureByProcedureId", "pr");
 
