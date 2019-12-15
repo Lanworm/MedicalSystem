@@ -1,5 +1,6 @@
-package com.tsystems.javaschool.medical.backend.component;
+package com.tsystems.javaschool.medical.backend.component.impl;
 
+import com.tsystems.javaschool.medical.backend.component.EventStatusChanger;
 import com.tsystems.javaschool.medical.backend.component.enums.EventStatus;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.entities.EventsEntity;

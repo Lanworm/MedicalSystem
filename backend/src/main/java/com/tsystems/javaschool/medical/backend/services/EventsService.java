@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.medical.backend.services;
 
-import com.tsystems.javaschool.medical.backend.component.EventStatusChangerImpl;
+import com.tsystems.javaschool.medical.backend.component.impl.EventStatusChangerImpl;
 import com.tsystems.javaschool.medical.backend.dao.EventRepository;
 import com.tsystems.javaschool.medical.backend.dto.*;
 import com.tsystems.javaschool.medical.backend.dto.enums.MessageStatus;
