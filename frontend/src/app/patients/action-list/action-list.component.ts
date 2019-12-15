@@ -78,10 +78,7 @@ export class ActionListComponent implements OnInit, OnChanges {
         resp.forEach((item) => {
           const procItem = result.find(i => item.procedure.id === i.id);
           const dayKey = moment(item.start_date).format('MMDDYYYY');
-          console.log(dayKey);
-          console.log(item.procedure.id,);
           if (!!procItem) {
-
             if (!Array.isArray(procItem[dayKey])) {
               procItem[dayKey] = [];
             }
