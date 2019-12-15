@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.authService.auth(this.loginForm.get('username').value, this.loginForm.get('password').value).subscribe(response => {
-      console.log(response);
       this.router.navigate(['']);
     });
   }

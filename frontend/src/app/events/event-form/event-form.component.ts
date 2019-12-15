@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PatientService} from '../../services/patients/patient.service';
 import {EventsService} from '../../services/events/events.service';
 import {ProcedureService} from '../../services/procedures/procedure.service';
@@ -31,13 +31,7 @@ export class EventFormComponent implements OnInit {
     {key: 'ASSIGNED', value: 'Assigned'},
   ];
 
-  patientControl: FormControl;
-  procedureControl: FormControl;
-  roomControl: FormControl;
-  staffControl: FormControl;
-  statusControl: FormControl;
-  fromControl: FormControl;
-  toControl: FormControl;
+  eventForm = new FormGroup({});
   fromDate;
   toDate;
 
@@ -54,12 +48,13 @@ export class EventFormComponent implements OnInit {
     const params = {
       end_date: +moment(this.toDate),
       start_date: +moment(this.fromDate),
-      patient_id: this.patientControl.value,
-      procedure_id: this.procedureControl.value,
-      room_id: this.roomControl.value,
-      staff_id: this.staffControl.value,
-      status: this.statusControl.value,
+      patient_id: this.eventForm.get('patientControl').value,
+      procedure_id: this.eventForm.get('procedureControl').value,
+      room_id: this.eventForm.get('roomControl').value,
+      staff_id: this.eventForm.get('staffControl').value,
+      status: this.eventForm.get('statusControl').value,
     };
+    console.log(this.eventForm);
     this.submitForm(params);
   };
 
@@ -102,13 +97,15 @@ export class EventFormComponent implements OnInit {
       this.roomList = result[2];
       this.staffList = result[3];
     });
-    this.patientControl = new FormControl(patientId);
-    this.procedureControl = new FormControl(procedureId);
-    this.roomControl = new FormControl(roomId);
-    this.staffControl = new FormControl(staffId);
-    this.statusControl = new FormControl(status);
-    this.fromControl = new FormControl(moment(start_date).toDate());
-    this.toControl = new FormControl(moment(end_date).toDate());
+
+    this.eventForm.addControl('patientControl', new FormControl(patientId, Validators.required));
+    this.eventForm.addControl('procedureControl', new FormControl(procedureId, Validators.required));
+    this.eventForm.addControl('roomControl', new FormControl(roomId, Validators.required));
+    this.eventForm.addControl('staffControl', new FormControl(staffId, Validators.required));
+    this.eventForm.addControl('statusControl', new FormControl(status, Validators.required));
+    this.eventForm.addControl('fromControl', new FormControl(moment(start_date).toDate(), Validators.required));
+    this.eventForm.addControl('toControl', new FormControl(moment(end_date).toDate(), Validators.required));
+
   }
 
 }

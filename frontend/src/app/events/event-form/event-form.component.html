@@ -4,65 +4,65 @@
     <div class="header">
       {{dialogData?'Edit':'Add'}} event
     </div>
-    <div class="content">
+    <div class="content" [formGroup]="eventForm">
 
       <div class="ui equal width grid">
         <div class="ui row">
           <div class="eight wide column">
             <div class="ui calendar" id="startDate">
-              <label>From</label>
+              <label>From*</label>
               <div class="ui input left icon select_full_width">
                 <i class="calendar icon"></i>
-                <input type="text" placeholder="Date/Time" [formControl]="fromControl">
+                <input type="text" placeholder="Date/Time" formControlName="fromControl">
               </div>
             </div>
           </div>
           <div class="eight wide column">
             <div class="ui calendar" id="endDate">
-              <label>To</label>
+              <label>To*</label>
               <div class="ui input left icon select_full_width">
                 <i class="calendar icon"></i>
-                <input type="text" placeholder="Date/Time" [formControl]="toControl">
+                <input type="text" placeholder="Date/Time" formControlName="toControl">
               </div>
             </div>
           </div>
         </div>
         <div class="ui row">
           <div class="four wide column">
-            <label>Patient</label>
-            <select class="ui dropdown select_full_width" [formControl]="patientControl">
+            <label>Patient*</label>
+            <select class="ui dropdown select_full_width" formControlName="patientControl">
               <option *ngFor="let item of patientsList" [value]="item.id">
                 {{item.first_name + ' ' + item.second_name + ' ' + item.last_name}}
               </option>
             </select>
           </div>
           <div class="four wide column">
-            <label>Procedure</label>
-            <select class="ui dropdown select_full_width" [formControl]="procedureControl">
+            <label>Procedure*</label>
+            <select class="ui dropdown select_full_width" formControlName="procedureControl">
               <option *ngFor="let item of procedureList" [value]="item.id">
                 {{item.description}}
               </option>
             </select>
           </div>
           <div class="two wide column ">
-            <label>Room</label>
-            <select class="ui dropdown select_full_width" [formControl]="roomControl">
+            <label>Room*</label>
+            <select class="ui dropdown select_full_width" formControlName="roomControl">
               <option *ngFor="let item of roomList" [value]="item.id">
                 {{item.description}}
               </option>
             </select>
           </div>
           <div class="four wide column">
-            <label>Doctor</label>
-            <select class="ui dropdown select_full_width" [formControl]="staffControl">
+            <label>Doctor*</label>
+            <select class="ui dropdown select_full_width" formControlName="staffControl">
               <option *ngFor="let item of staffList" [value]="item.id">
                 {{item.first_name + ' ' + item.second_name + ' ' + item.last_name}}
               </option>
             </select>
           </div>
           <div class="two wide column">
-            <label>Status</label>
-            <select class="ui dropdown select_full_width" [formControl]="statusControl">
+            <label>Status*</label>
+            <select class="ui dropdown select_full_width" formControlName="statusControl">
               <option *ngFor="let item of eventStatus" [value]="item.key">
                 {{item.value}}
               </option>
@@ -78,10 +78,10 @@
       <div class="ui black deny button" (click)="closeDialog()">
         Cancel
       </div>
-      <div class="ui positive right labeled icon button" (click)="onSubmit()">
+      <button class="ui positive right labeled icon button" (click)="onSubmit()" [disabled]="!eventForm.valid">
         Save
         <i class="checkmark icon"></i>
-      </div>
+      </button>
     </div>
   </div>
 </div>
