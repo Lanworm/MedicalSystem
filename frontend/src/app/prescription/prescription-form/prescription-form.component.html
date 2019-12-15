@@ -4,12 +4,12 @@
     <div class="header">
       {{dialogData?'Edit':'Add'}} prescription
     </div>
-    <div class="content">
+    <div class="content" [formGroup]="prescriptionForm">
 
       <div class="ui equal width grid">
         <div class="ui row">
           <div class="eight wide column">
-            <label>From</label>
+            <label>From*</label>
             <div class="ui calendar" id="startDate">
               <div class="ui input left icon select_full_width">
                 <i class="calendar icon"></i>
@@ -18,7 +18,7 @@
             </div>
           </div>
           <div class="eight wide column">
-            <label>To</label>
+            <label>To*</label>
             <div class="ui calendar" id="endDate">
               <div class="ui input left icon select_full_width">
                 <i class="calendar icon"></i>
@@ -29,38 +29,38 @@
         </div>
         <div class="ui row">
           <div class="four wide column">
-            <label>Procedure</label>
-            <select class="ui dropdown select_full_width" [formControl]="procedureControl">
+            <label>Procedure*</label>
+            <select class="ui dropdown select_full_width" formControlName="procedureControl">
               <option *ngFor="let item of procedureList" [value]="item.id">
                 {{item.description}}
               </option>
             </select>
           </div>
           <div class="four wide column ">
-            <label>Drug</label>
-            <select class="ui dropdown select_full_width" [formControl]="drugControl">
+            <label>Drug*</label>
+            <select class="ui dropdown select_full_width" formControlName="drugControl">
               <option *ngFor="let item of drugList" [value]="item.id">
                 {{item.description}}
               </option>
             </select>
           </div>
           <div class="two wide column ">
-            <label>Dosage</label>
+            <label>Dosage*</label>
             <div class="ui input select_full_width">
-              <input type="text" placeholder="Dosage" [formControl]="dosageControl">
+              <input type="text" placeholder="Dosage" formControlName="dosageControl">
             </div>
           </div>
           <div class="six wide column ">
-            <label>Description</label>
+            <label>Description*</label>
             <div class="ui input select_full_width">
-              <input type="text" placeholder="Description" [formControl]="descriptionControl">
+              <input type="text" placeholder="Description" formControlName="descriptionControl">
             </div>
           </div>
         </div>
         <div class="ui row">
           <div class="sixteen wide column">
-            <label>Procedure frequency</label>
-          <cron-jobs [formControl]="freqControl" [config]="cronConfig"></cron-jobs>
+            <label>Procedure frequency*</label>
+          <cron-jobs formControlName="freqControl" [config]="cronConfig"></cron-jobs>
           </div>
         </div>
       </div>
@@ -72,10 +72,10 @@
       <div class="ui black deny button" (click)="closeDialog()">
         Cancel
       </div>
-      <div class="ui positive right labeled icon button" (click)="onSubmit()">
+      <button class="ui positive right labeled icon button" (click)="onSubmit()" [disabled]="!prescriptionForm.valid">
         Save
         <i class="checkmark icon"></i>
-      </div>
+      </button>
     </div>
   </div>
 </div>

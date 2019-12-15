@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProcedureService} from '../../services/procedures/procedure.service';
 import {DrugService} from '../../services/drug/drug.service';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
 
 declare var $: any;
@@ -28,12 +28,7 @@ export class PrescriptionFormComponent implements OnInit {
   public procedureList: Array<any> = [];
   public drugList: Array<any> = [];
 
-  procedureControl: FormControl;
-  drugControl: FormControl;
-  freqControl: FormControl;
-  dosageControl: FormControl;
-  descriptionControl: FormControl;
-
+  prescriptionForm = new FormGroup({});
   fromDate;
   toDate;
 
@@ -47,11 +42,11 @@ export class PrescriptionFormComponent implements OnInit {
     const params = {
       end_date: +moment(this.toDate),
       start_date: +moment(this.fromDate),
-      procedure_id: this.procedureControl.value,
-      drug_id: this.drugControl.value,
-      time_pattern: this.freqControl.value,
-      dosage: this.dosageControl.value,
-      description: this.descriptionControl.value
+      procedure_id: this.prescriptionForm.get('procedureControl').value,
+      drug_id: this.prescriptionForm.get('drugControl').value,
+      time_pattern: this.prescriptionForm.get('freqControl').value,
+      dosage: this.prescriptionForm.get('dosageControl').value,
+      description: this.prescriptionForm.get('descriptionControl').value
     };
     this.submitForm(params);
   };
@@ -82,7 +77,7 @@ export class PrescriptionFormComponent implements OnInit {
         this.fromDate = date;
       },
       initialDate: moment(start_date).toDate(),
-      type:'date'
+      type: 'date'
     });
     (<any> $('#endDate')).calendar({
       startCalendar: $('#startDate'),
@@ -90,14 +85,14 @@ export class PrescriptionFormComponent implements OnInit {
         this.toDate = date;
       },
       initialDate: moment(end_date).toDate(),
-      type:'date'
+      type: 'date'
     });
 
-    this.procedureControl = new FormControl(procedureId);
-    this.drugControl = new FormControl(drugId);
-    this.freqControl = new FormControl(time_pattern);
-    this.dosageControl = new FormControl(dosage);
-    this.descriptionControl = new FormControl(description);
+    this.prescriptionForm.addControl('procedureControl', new FormControl(procedureId, Validators.required));
+    this.prescriptionForm.addControl('drugControl', new FormControl(drugId, Validators.required));
+    this.prescriptionForm.addControl('freqControl', new FormControl(time_pattern, Validators.required));
+    this.prescriptionForm.addControl('dosageControl', new FormControl(dosage, Validators.required));
+    this.prescriptionForm.addControl('descriptionControl', new FormControl(description, Validators.required));
   }
 
 }
