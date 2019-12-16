@@ -5,12 +5,13 @@ import com.tsystems.javaschool.medical.backend.dto.DrugDto;
 import com.tsystems.javaschool.medical.backend.dto.PatientsDto;
 import com.tsystems.javaschool.medical.backend.dto.ProceduresDto;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 public class PrescriptionDto {
 
     @JsonProperty("id")
-    private int id;
+    private BigInteger id;
     @JsonProperty("time_pattern")
     private String timePattern;
     @JsonProperty("start_date")
@@ -36,11 +37,11 @@ public class PrescriptionDto {
     @JsonProperty("drug")
     private DrugDto drugsByDrugId;
 
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
